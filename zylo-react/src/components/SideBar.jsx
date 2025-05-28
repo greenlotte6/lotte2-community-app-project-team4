@@ -104,32 +104,31 @@ export const SideBar = () => {
               <span>휴지통</span>
             </Link>
           </li>
+          <li className="menu-item"></li>
+          <li className="menu-item"></li>
+          <li className="menu-item"></li>
+          <li className="menu-item">
+            <Link to="">
+              <FontAwesomeIcon icon={faStar} className="menu-icon" />
+              <span>플랜 업그레이드</span>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link to="">
+              <FontAwesomeIcon icon={faGears} className="menu-icon" />
+              <span>환경설정</span>
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link to="">
+              <FontAwesomeIcon
+                icon={faRightFromBracket}
+                className="menu-icon"
+              />
+              <span>로그아웃</span>
+            </Link>
+          </li>
         </ul>
-        <footer>
-          <ul className="menu">
-            <li className="menu-item">
-              <Link to="">
-                <FontAwesomeIcon icon={faStar} className="menu-icon" />
-                <span>플랜 업그레이드</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="">
-                <FontAwesomeIcon icon={faGears} className="menu-icon" />
-                <span>환경설정</span>
-              </Link>
-            </li>
-            <li className="menu-item">
-              <Link to="">
-                <FontAwesomeIcon
-                  icon={faRightFromBracket}
-                  className="menu-icon"
-                />
-                <span>로그아웃</span>
-              </Link>
-            </li>
-          </ul>
-        </footer>
       </aside>
     </div>
   );

@@ -16,7 +16,7 @@
 
     #collapse {
       width: 100%;
-      height: 20px;
+      height: 4%;
       color: #fdfdfd;
       font-size: 21px;
       padding: 10px;
@@ -36,7 +36,7 @@
 
     header {
       width: 100%;
-      height: 15%;
+      height: 5%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -67,11 +67,6 @@
         }
       }
     }
-
-    footer {
-      width: 100%;
-      height: 20%;
-    }
   }
 
   /*사이드 바가 접혔을 때 상단의 버튼(집, 앞뒤 버튼) 사라짐*/
@@ -91,9 +86,10 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 100%;
-    height: 60%;
+    width: 300px;
+    height: 90%;
     padding: 20px;
+    box-sizing: border-box;
 
     .menu-item {
       width: 100%;
