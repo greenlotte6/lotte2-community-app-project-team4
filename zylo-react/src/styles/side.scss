@@ -1,0 +1,56 @@
+#side-container {
+  overflow: hidden;
+  #side-bar {
+    width: 15%;
+    height: 100vh;
+    float: left;
+    background-color: #5da9ff;
+    header {
+      width: 100%;
+      height: 15%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .buttons {
+        width: 200px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        color: #fdfdfd;
+
+        .home-btn {
+          font-size: 23px;
+          cursor: pointer;
+        }
+
+        .move-btns {
+          cursor: pointer;
+          font-size: 23px;
+          width: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: 70%;
+    padding: 20px;
+
+    .menu-item {
+      font-size: 19px;
+      color: #fdfdfd;
+    }
+
+    .menu-icon {
+      margin-right: 20px;
+    }
+  }
+}
