@@ -6,7 +6,7 @@ export const BasicLayout = ({ title, children }) => {
     <>
       <div id="container">
         <SideBar />
-        <Content title={title} children={children}></Content>
+        <Content title={title} content={children}></Content>
       </div>
     </>
   );
