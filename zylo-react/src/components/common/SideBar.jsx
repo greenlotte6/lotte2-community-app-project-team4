@@ -39,16 +39,7 @@ export const SideBar = () => {
           />
         </nav>
         <header>
-          <div className="buttons">
-            <FontAwesomeIcon icon={faHome} className="home-btn" />
-            <div className="move-btns">
-              <FontAwesomeIcon icon={faChevronLeft} className="move-btn left" />
-              <FontAwesomeIcon
-                icon={faChevronRight}
-                className="move-btn right"
-              />
-            </div>
-          </div>
+          <h1 className={collapsed ? "collapsed" : ""}>zylo</h1>
         </header>
 
         <ul className="menu">

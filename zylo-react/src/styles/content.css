@@ -6,13 +6,12 @@
 }
 
 #content-area.dark {
-  background-color: #18191b;
+  background-color: #131417;
   color: #fdfdfd;
 }
 
 #content {
   width: inherit;
-  height: auto;
   padding: 20px;
   background-color: inherit;
   transition: background-color 0.3s ease;

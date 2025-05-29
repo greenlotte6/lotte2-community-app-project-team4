@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Wendy+One&display=swap");
+
 #side-container.light {
   background-color: #5da9ff;
 }
@@ -44,30 +46,18 @@
     justify-content: center;
     align-items: center;
 
-    .buttons {
+    h1.collapsed {
+      opacity: 0;
+    }
+
+    h1 {
       opacity: 1;
-      max-height: 100px;
-      transition: opacity 0.3s ease, max-height 0.3s ease;
-      overflow: hidden;
-      width: 200px;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
+      font-size: 44px;
       color: #fdfdfd;
-
-      .home-btn {
-        font-size: 23px;
-        cursor: pointer;
-      }
-
-      .move-btns {
-        cursor: pointer;
-        font-size: 23px;
-        width: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-      }
+      font-family: "Wendy One", sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      transition: opacity 0.3s ease;
     }
   }
 }
