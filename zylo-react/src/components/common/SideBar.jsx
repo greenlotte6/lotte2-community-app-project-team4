@@ -2,8 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAnglesLeft,
   faCalendarDays,
-  faChevronLeft,
-  faChevronRight,
   faClipboard,
   faComments,
   faFileLines,
@@ -12,9 +10,9 @@ import {
   faHome,
   faPenToSquare,
   faRightFromBracket,
-  faStar,
   faTrashCan,
   faUser,
+  faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -102,7 +100,10 @@ export const SideBar = () => {
           <li className="menu-item"></li>
           <li className="menu-item">
             <Link to="">
-              <FontAwesomeIcon icon={faStar} className="menu-icon" />
+              <FontAwesomeIcon
+                icon={faWandMagicSparkles}
+                className="menu-icon"
+              />
               <span>플랜 업그레이드</span>
             </Link>
           </li>
