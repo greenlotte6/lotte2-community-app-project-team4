@@ -18,16 +18,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useTheme } from "../../contexts/ThemeContext";
 
 export const SideBar = () => {
   const [collapsed, setCollapsed] = useState(false);
+  const { toggled } = useTheme();
 
   const toggleCollapse = () => {
     setCollapsed((prev) => !prev);
   };
 
   return (
-    <div id="side-container">
+    <div id="side-container" className={toggled ? "dark" : "light"}>
       <aside id="side-bar" className={collapsed ? "collapsed" : ""}>
         <nav id="collapse">
           <FontAwesomeIcon

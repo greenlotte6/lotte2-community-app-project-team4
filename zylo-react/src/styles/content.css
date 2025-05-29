@@ -1,0 +1,19 @@
+#content-area {
+  flex-grow: 1;
+  height: 100vh;
+  background-color: #fdfdfd;
+  transition: background-color 0.3s ease;
+}
+
+#content-area.dark {
+  background-color: #18191b;
+  color: #fdfdfd;
+}
+
+#content {
+  width: inherit;
+  height: auto;
+  padding: 20px;
+  background-color: inherit;
+  transition: background-color 0.3s ease;
+}
