@@ -2,8 +2,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAnglesLeft,
   faCalendarDays,
-  faChevronLeft,
-  faChevronRight,
   faClipboard,
   faComments,
   faFileLines,
