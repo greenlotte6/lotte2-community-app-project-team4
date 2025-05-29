@@ -1,116 +1,118 @@
-#side-container {
-  transition: width 0.3s ease;
+#side-container.light {
+  background-color: #5da9ff;
+}
+
+#side-container.dark {
+  background-color: #1b115a;
+}
+
+#side-bar.collapsed {
+  width: 60px;
+}
+
+#side-bar {
+  background-color: inherit;
   width: 300px;
-  overflow: hidden;
+  height: 100dvh;
+  max-height: 100vh;
+  transition: all 0.3s ease;
 
-  #side-bar.collapsed {
-    width: 60px;
-  }
-
-  #side-bar {
-    width: 300px;
-    height: 100vh;
-    float: left;
-    background-color: #5da9ff;
-    transition: all 0.3s ease;
-
-    #collapse {
-      width: 100%;
-      height: 4%;
-      color: #fdfdfd;
-      font-size: 21px;
-      padding: 10px;
-      box-sizing: border-box;
-
-      .collapse-btn {
-        float: right;
-        cursor: pointer;
-        transform: rotate(0deg);
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-      }
-
-      .collapse-btn.rotated {
-        transform: rotate(180deg);
-      }
-    }
-
-    header {
-      width: 100%;
-      height: 5%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .buttons {
-        opacity: 1;
-        max-height: 100px;
-        transition: opacity 0.3s ease, max-height 0.3s ease;
-        overflow: hidden;
-        width: 200px;
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        color: #fdfdfd;
-
-        .home-btn {
-          font-size: 23px;
-          cursor: pointer;
-        }
-
-        .move-btns {
-          cursor: pointer;
-          font-size: 23px;
-          width: 50px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-        }
-      }
-    }
-  }
-
-  /*사이드 바가 접혔을 때 상단의 버튼(집, 앞뒤 버튼) 사라짐*/
-  #side-bar.collapsed .buttons {
-    opacity: 0;
-    max-height: 0;
-  }
-
-  /*사이드 바가 접혔을 때 텍스트 사라짐*/
-  #side-bar.collapsed .menu-item span {
-    opacity: 0;
-    max-width: 0;
-    margin-left: 0;
-  }
-
-  .menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 300px;
-    height: 90%;
-    padding: 20px;
+  #collapse {
+    width: 100%;
+    height: 4%;
+    color: #fdfdfd;
+    font-size: 21px;
+    padding: 10px;
     box-sizing: border-box;
 
-    .menu-item {
-      width: 100%;
-      font-size: 19px;
-      color: #fdfdfd;
-      overflow: hidden;
+    .collapse-btn {
+      float: right;
+      cursor: pointer;
+      transform: rotate(0deg);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    .menu-item span {
-      display: inline-block;
+    .collapse-btn.rotated {
+      transform: rotate(180deg);
+    }
+  }
+
+  header {
+    width: 100%;
+    height: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .buttons {
       opacity: 1;
-      width: auto;
-      max-width: 200px;
-      margin-left: 10px;
-      transition: opacity 0.3s ease, max-width 0.3s ease, margin-left 0.3s ease;
+      max-height: 100px;
+      transition: opacity 0.3s ease, max-height 0.3s ease;
       overflow: hidden;
-      white-space: nowrap;
-    }
+      width: 200px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      color: #fdfdfd;
 
-    .menu-icon {
-      margin-right: 20px;
+      .home-btn {
+        font-size: 23px;
+        cursor: pointer;
+      }
+
+      .move-btns {
+        cursor: pointer;
+        font-size: 23px;
+        width: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
     }
+  }
+}
+
+/*사이드 바가 접혔을 때 상단의 버튼(집, 앞뒤 버튼) 사라짐*/
+#side-bar.collapsed .buttons {
+  opacity: 0;
+  max-height: 0;
+}
+
+/*사이드 바가 접혔을 때 텍스트 사라짐*/
+#side-bar.collapsed .menu-item span {
+  opacity: 0;
+  max-width: 0;
+  margin-left: 0;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 300px;
+  height: 90%;
+  padding: 20px;
+  box-sizing: border-box;
+
+  .menu-item {
+    width: 100%;
+    font-size: 19px;
+    color: #fdfdfd;
+    overflow: hidden;
+  }
+
+  .menu-item span {
+    display: inline-block;
+    opacity: 1;
+    width: auto;
+    max-width: 200px;
+    margin-left: 10px;
+    transition: opacity 0.3s ease, max-width 0.3s ease, margin-left 0.3s ease;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .menu-icon {
+    margin-right: 20px;
   }
 }

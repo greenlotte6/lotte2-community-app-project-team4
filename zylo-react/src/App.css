@@ -128,3 +128,8 @@ a {
   text-decoration: none; /* 밑줄 제거 */
   color: inherit;
 }
+
+html,
+body {
+  width: 100%;
+}
