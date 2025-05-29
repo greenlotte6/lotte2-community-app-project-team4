@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Wendy+One&display=swap");
+
 /* reset.css */
 html,
 body,
@@ -132,4 +134,7 @@ a {
 html,
 body {
   width: 100%;
+  font-family: "Noto Sans KR", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
 }
