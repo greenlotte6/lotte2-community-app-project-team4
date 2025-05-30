@@ -1,4 +1,4 @@
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faUpload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext";
@@ -32,6 +32,9 @@ export const FileContainer = () => {
         </div>
         <button id="more" className={toggled ? "dark" : "light"}>
           더보기 <FontAwesomeIcon icon={faPlus} />
+        </button>
+        <button id="upload-btn" className={toggled ? "dark" : "light"}>
+          업로드 <FontAwesomeIcon icon={faUpload} />
         </button>
       </div>
     </>
