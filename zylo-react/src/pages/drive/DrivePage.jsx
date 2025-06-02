@@ -1,6 +1,6 @@
-import { BasicLayout } from "../layouts/BasicLayout";
-import { SearchBox } from "../components/drive/SearchBox";
-import { FileContainer } from "../components/drive/FileContainer";
+import { BasicLayout } from "../../layouts/BasicLayout";
+import { SearchBox } from "../../components/drive/SearchBox";
+import { FileContainer } from "../../components/drive/FileContainer";
 
 export const DrivePage = () => {
   return (

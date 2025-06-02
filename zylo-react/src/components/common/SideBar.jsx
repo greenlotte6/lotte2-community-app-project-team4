@@ -54,7 +54,7 @@ export const SideBar = () => {
             </Link>
           </li>
           <li className="menu-item">
-            <Link to="">
+            <Link to="/markdown">
               <FontAwesomeIcon icon={faFileLines} className="menu-icon" />
               <span>페이지</span>
             </Link>
@@ -84,7 +84,7 @@ export const SideBar = () => {
             </Link>
           </li>
           <li className="menu-item">
-            <Link to="">
+            <Link to="/drive">
               <FontAwesomeIcon icon={faHardDrive} className="menu-icon" />
               <span>드라이브</span>
             </Link>
