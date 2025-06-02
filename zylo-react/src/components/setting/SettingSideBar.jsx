@@ -58,16 +58,23 @@ const SettingSideBar = () => {
               페이지
             </li>
             <li>
-              <span>
-                <FontAwesomeIcon icon={faCalendarDays} className="menu-icon" />
-              </span>
-              일정
+              <Link to="/setting/Calendar">
+                <span>
+                  <FontAwesomeIcon
+                    icon={faCalendarDays}
+                    className="menu-icon"
+                  />
+                </span>
+                캘린더
+              </Link>
             </li>
             <li>
-              <span>
-                <FontAwesomeIcon icon={faComments} className="menu-icon" />
-              </span>
-              메세지
+              <Link to="/setting/Message">
+                <span>
+                  <FontAwesomeIcon icon={faComments} className="menu-icon" />
+                </span>
+                메세지
+              </Link>
             </li>
             <li>
               <span>

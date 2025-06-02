@@ -1,17 +1,15 @@
 import React from "react";
 import { BasicLayout } from "../../layouts/BasicLayout";
-import SettingSideBar from "../../components/setting/SettingSideBar";
-import Profile from "../../components/setting/Profile";
+import SettingSideBar from "../../components/setting/SettingSideBar.jsx";
 
-const ProfilePage = () => {
+const CalendarPage = () => {
   return (
     <BasicLayout title={"설정"}>
       <div id="setting-content-container">
         <SettingSideBar />
-        <Profile />
       </div>
     </BasicLayout>
   );
 };
 
-export default ProfilePage;
+export default CalendarPage;

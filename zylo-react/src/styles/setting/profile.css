@@ -1,9 +1,20 @@
-.profile-photo {
+.profile-photo-wrapper {
+  overflow: hidden;
   width: 200px;
   height: 200px;
   border-radius: 50%;
-  object-fit: cover;
   border: 1px solid #d0d0d0;
+  margin-left: 50px;
+  margin-bottom: 30px;
+}
+.profile-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.myinfo-table tbody tr:nth-child(1) {
+  border-bottom: 1px solid #5da9fc;
 }
 
 .setting-content-subtitle {
@@ -20,4 +31,12 @@
 
 .myinfo-table-submit.dark {
   background-color: #1b115a;
+}
+
+.profile-button:nth-of-type(1) {
+  margin-left: 50px;
+}
+
+.profile-photo.dark {
+  border: 1px solid #1b115a;
 }
