@@ -7,6 +7,7 @@ import { TermPage } from "../pages/main/TermPage";
 import MyInfoPage from "../pages/setting/MyInfoPage";
 import ProfilePage from "../pages/setting/ProfilePage";
 import { MessengerPage } from "../pages/message/MessengerPage";
+import { PlanUpgradePage } from "../pages/plan/PlanUpgradePage";
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -17,4 +18,5 @@ export const router = createBrowserRouter([
   { path: "/setting/MyInfo", element: <MyInfoPage /> },
   { path: "/setting/Profile", element: <ProfilePage /> },
   { path: "/messenger", element: <MessengerPage /> },
+  { path: "/plan/upgrade", element: <PlanUpgradePage /> },
 ]);
