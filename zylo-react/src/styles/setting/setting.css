@@ -1,0 +1,28 @@
+#setting-side-bar {
+  width: 220px;
+  background: #f5f5f5;
+  padding: 20px;
+  border-right: 1px solid #e0e0e0;
+  height: 100dvh;
+}
+#setting-side-header {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 16px;
+}
+.setting-menu {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 16px 0;
+}
+.setting-menu li {
+  padding: 8px 0;
+  cursor: pointer;
+  margin-left: 20px;
+}
+.setting-menu li:hover {
+  background: #e9ecef;
+}
+.setting-title {
+  color: #848484;
+}
