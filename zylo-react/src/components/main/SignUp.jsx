@@ -89,7 +89,7 @@ export const SignUp = () => {
           <div className="checkbox-area">
             <input type="checkbox" name="agreed" onChange={handleChange} />
             <span>
-              <Link to="/term?id=1">이용약관</Link> 및
+              <Link to="/term?id=1">이용약관</Link> 및&nbsp;
               <Link to="/term?id=2">개인정보처리방침</Link>에 동의합니다
             </span>
           </div>

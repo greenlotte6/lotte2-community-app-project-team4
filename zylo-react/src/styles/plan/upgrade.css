@@ -1,0 +1,117 @@
+#plan-container {
+  width: 100%;
+  height: calc(100vh - 90px);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#plan-container > .title {
+  margin-bottom: 30px;
+}
+
+#upgrade-container {
+  width: 50%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.plan {
+  width: 45%;
+  height: 80%;
+  border-radius: 20px;
+  border: 1px solid #e4e9f2;
+  box-sizing: border-box;
+  box-shadow: 1.5px 2px 2px 0px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  padding: 30px;
+  color: #252525;
+}
+
+.plan.dark {
+  color: #fdfdfd;
+  background-color: #353535;
+  box-sizing: border-box;
+  border: none;
+}
+
+.plan.dark:hover {
+  background-color: #353535;
+}
+
+.plan:hover {
+  transform: translate(-5px, -5px);
+  box-shadow: 1.5px 6px 6px 0px rgba(0, 0, 0, 0.3);
+  background-color: #5da9fc;
+  border: none;
+  color: #fdfdfd;
+}
+
+.plan > h3 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.plan > .price {
+  display: block;
+  float: right;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.purchase-btn {
+  display: block;
+  text-align: center;
+  line-height: 45px;
+  width: 100%;
+  height: 45px;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-color: #5da9fc;
+  color: #fdfdfd;
+}
+
+.plan.dark .purchase-btn {
+  background-color: #1b115a;
+}
+
+.plan:hover .purchase-btn {
+  background-color: #151515;
+  color: #fdfdfd;
+}
+
+.purchase-btn.disabled {
+  background-color: #d9d9d9;
+  color: #252525;
+}
+
+.plan.dark > .purchase-btn.disabled {
+  background-color: #252525;
+  color: #fdfdfd;
+}
+
+.plan.dark:hover > .purchase-btn.disabled {
+  background-color: #151515;
+}
+
+.plan:hover .purchase-btn.disabled {
+  background-color: #fdfdfd;
+}
+
+.plan > ul {
+  height: 55%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
+}

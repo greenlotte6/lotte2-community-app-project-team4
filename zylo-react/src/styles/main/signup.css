@@ -38,6 +38,7 @@
   background-color: #fdfdfd;
   border-radius: 10px;
   padding: 5px;
+  color: #252525;
 }
 
 .checkbox-area {
@@ -69,6 +70,7 @@
   box-shadow: 1.5px 2px 2px 0px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   cursor: pointer;
+  color: #252525;
 }
 
 .register-btn:hover {
