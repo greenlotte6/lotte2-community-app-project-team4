@@ -8,6 +8,7 @@ import MyInfoPage from "../pages/setting/MyInfoPage";
 import ProfilePage from "../pages/setting/ProfilePage";
 import { MessengerPage } from "../pages/message/MessengerPage";
 import { PlanUpgradePage } from "../pages/plan/PlanUpgradePage";
+import { OrderSheetPage } from "../pages/plan/OrderSheetPage";
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -19,4 +20,5 @@ export const router = createBrowserRouter([
   { path: "/setting/Profile", element: <ProfilePage /> },
   { path: "/messenger", element: <MessengerPage /> },
   { path: "/plan/upgrade", element: <PlanUpgradePage /> },
+  { path: "/plan/orderSheet", element: <OrderSheetPage /> },
 ]);
