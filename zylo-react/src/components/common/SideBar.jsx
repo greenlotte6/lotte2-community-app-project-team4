@@ -99,7 +99,7 @@ export const SideBar = () => {
           <li className="menu-item"></li>
           <li className="menu-item"></li>
           <li className="menu-item">
-            <Link to="">
+            <Link to="/plan/upgrade">
               <FontAwesomeIcon
                 icon={faWandMagicSparkles}
                 className="menu-icon"

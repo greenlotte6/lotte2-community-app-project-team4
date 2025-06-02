@@ -1,0 +1,10 @@
+#plan-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#plan-container > .title {
+  margin-top: 30px;
+}
