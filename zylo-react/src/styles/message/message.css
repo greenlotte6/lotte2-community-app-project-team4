@@ -4,11 +4,6 @@
   box-sizing: border-box;
 }
 
-.container {
-  display: flex;
-  height: 100%;
-}
-
 .main-content {
   display: flex;
   flex: 1;

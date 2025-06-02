@@ -7,8 +7,8 @@ import { ChatRoomInput } from "./ChatRoomInput";
 
 export const Messenger = () => {
   return (
-    <div className="container">
-      {/* 메인 */}
+    <>
+        {/* 메인 */}
       <main className="main-content">
         {/*채팅 목록 */}
         <MessageSidebar />
@@ -21,7 +21,7 @@ export const Messenger = () => {
         <ChatRoomInput />
         </section>
       </main>
-    </div>
+    </>
   );
 };
 export default Messenger;
