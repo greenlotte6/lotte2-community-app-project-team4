@@ -1,0 +1,98 @@
+/* reset.css */
+@import url("https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@100..900&family=Wendy+One&display=swap");
+
+/* Box sizing reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 기본 여백 제거 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: "Gowun Dodum", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #fff;
+  color: #252525;
+  line-height: 1.5;
+}
+
+/* 텍스트 관련 요소 */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+blockquote {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+/* 리스트 초기화 */
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* 테이블 초기화 */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* 폼 요소 초기화 */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  outline: none;
+}
+
+/* 링크 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 이미지 */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* HTML5 semantic elements block 설정 */
+article,
+aside,
+footer,
+header,
+nav,
+section,
+main {
+  display: block;
+}
+
+/* 마크다운 관련 요소는 reset에서 제외하거나 최소로 */
+.mdxeditor .ProseMirror h1,
+.mdxeditor .ProseMirror h2,
+.mdxeditor .ProseMirror h3,
+.mdxeditor .ProseMirror ul,
+.mdxeditor .ProseMirror ol,
+.mdxeditor .ProseMirror blockquote {
+  all: revert;
+}
