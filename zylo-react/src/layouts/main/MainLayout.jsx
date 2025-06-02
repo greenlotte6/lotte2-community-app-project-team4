@@ -1,4 +1,4 @@
-import { MainHeader } from "../../components/common/main/MainHeader";
+import { MainHeader } from "../../components/main/MainHeader";
 
 export const MainLayout = ({ children }) => {
   return (
