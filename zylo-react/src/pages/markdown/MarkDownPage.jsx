@@ -6,7 +6,7 @@ import "../../styles/markdown/markdown.css";
 
 export const MarkDownPage = () => {
   return (
-    <BasicLayout>
+    <BasicLayout title={"문서 작성"}>
       <MarkDownEditor />
     </BasicLayout>
   );
