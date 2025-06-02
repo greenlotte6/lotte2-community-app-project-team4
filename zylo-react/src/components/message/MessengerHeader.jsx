@@ -1,6 +1,8 @@
 import React from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import { faShareFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const MessengerHeader = () => {
   const { toggled, toggle } = useTheme();

@@ -1,11 +1,12 @@
 import React from 'react'
-import { BasicLayout } from '../../layouts/BasicLayout'
 import Messenger from '../../components/message/mainMessage/Messenger'
+import { MessengerLayout } from '../../layouts/MessengerLayout'
 
 export const MessengerPage = () => {
   return (
-     <BasicLayout>
-           <Messenger />
-     </BasicLayout>
+    <MessengerLayout>
+      <Messenger />
+    </MessengerLayout>
+    
   )
 }
