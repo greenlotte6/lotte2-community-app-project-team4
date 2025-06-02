@@ -5,6 +5,7 @@ import { SingUpPage } from "../pages/main/SingUpPage";
 import { LoginPage } from "../pages/main/LoginPage";
 import { TermPage } from "../pages/main/TermPage";
 import MyInfoPage from "../pages/setting/MyInfoPage";
+import ProfilePage from "../pages/setting/ProfilePage";
 import { MessengerPage } from "../pages/message/MessengerPage";
 
 export const router = createBrowserRouter([
@@ -14,5 +15,6 @@ export const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
   { path: "/term", element: <TermPage /> },
   { path: "/setting/MyInfo", element: <MyInfoPage /> },
+  { path: "/setting/Profile", element: <ProfilePage /> },
   { path: "/messenger", element: <MessengerPage /> },
 ]);
