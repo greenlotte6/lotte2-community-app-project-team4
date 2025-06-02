@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { validator } from "../../lib/validator";
+import { Link } from "react-router-dom";
 
 export const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -88,8 +89,8 @@ export const SignUp = () => {
           <div className="checkbox-area">
             <input type="checkbox" name="agreed" onChange={handleChange} />
             <span>
-              <a href="/term">이용약관</a> 및{" "}
-              <a href="/term">개인정보처리방침</a>에 동의합니다
+              <Link to="/term?id=1">이용약관</Link> 및
+              <Link to="/term?id=2">개인정보처리방침</Link>에 동의합니다
             </span>
           </div>
           <button

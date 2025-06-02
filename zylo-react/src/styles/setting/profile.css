@@ -1,0 +1,23 @@
+.profile-photo {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #d0d0d0;
+}
+
+.setting-content-subtitle {
+  color: #d0d0d0;
+  margin-bottom: 20px;
+}
+
+.content-wrapper {
+  display: flex;
+  margin: 0 auto;
+  flex-direction: column;
+  margin-top: 100px;
+}
+
+.myinfo-table-submit.dark {
+  background-color: #1b115a;
+}

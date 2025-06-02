@@ -1,3 +1,14 @@
-#sign-up-box {
+#login-box {
+  width: 500px;
   height: 400px;
+  margin-top: 85px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: #5da9fc;
+  border-radius: 30px;
+  padding: 20px;
+  color: #fdfdfd;
+  box-shadow: 1.5px 6px 6px 0px rgba(0, 0, 0, 0.3);
 }

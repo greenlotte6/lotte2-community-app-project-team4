@@ -40,7 +40,7 @@ export const Login = () => {
 
   return (
     <div id="sign-up-container">
-      <form id="sign-up-box" onSubmit={handleSubmit}>
+      <form id="login-box" onSubmit={handleSubmit}>
         <h3 className="logo">zylo</h3>
         <input
           className="sign-up-input"
