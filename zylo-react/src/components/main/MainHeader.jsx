@@ -9,14 +9,16 @@ export const MainHeader = () => {
       </Link>
       <nav>
         <HashLink smooth to="/#intro">
-          Home
+          홈
         </HashLink>
         <HashLink smooth to="/#about">
-          About
+          소개
         </HashLink>
         <HashLink smooth to="/#services">
-          Services
+          서비스
         </HashLink>
+        <Link to="/login">로그인</Link>
+        <Link to="/signup">회원가입</Link>
       </nav>
     </header>
   );
