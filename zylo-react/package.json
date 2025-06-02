@@ -17,6 +17,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.1",
+    "react-router-hash-link": "^2.4.3",
     "sass": "^1.89.0"
   },
   "devDependencies": {
