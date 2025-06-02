@@ -1,7 +1,7 @@
 import React from "react";
 import { BasicLayout } from "../../layouts/BasicLayout";
 import SettingSideBar from "../../components/setting/SettingSideBar.jsx";
-import Message from "../../components/setting/Message.jsx";
+import { Message } from "../../components/setting/Message.jsx";
 
 const MessagePage = () => {
   return (
