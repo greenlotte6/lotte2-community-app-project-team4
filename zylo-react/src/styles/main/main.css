@@ -69,9 +69,13 @@
 }
 
 #main-header > nav > a {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  font-size: 20px;
   padding: 8px;
-  height: 25px;
-  line-height: 25px;
+  line-height: 14px;
+  text-align: center;
   border-radius: 20px;
   transition: all 0.3s ease;
 }
