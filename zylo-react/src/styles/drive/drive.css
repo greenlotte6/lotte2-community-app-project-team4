@@ -62,13 +62,16 @@
   width: 280px;
   height: 290px;
   margin-bottom: 20px;
-  background-color: #f8f8f8;
+  background-color: #fdfdfd;
+  border: 1px solid #e4e9f2;
+  box-sizing: border-box;
   box-shadow: 1.5px 2px 2px 0px rgba(0, 0, 0, 0.3);
   transition: all 0.2s ease;
   border-radius: 20px;
 }
 
 .file.dark {
+  border: none;
   background-color: #353535;
   box-sizing: border-box;
 }

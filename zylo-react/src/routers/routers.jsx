@@ -1,4 +1,4 @@
-import { DrivePage } from "../pages/DrivePage";
+import { DrivePage } from "../pages/drive/DrivePage";
 import { createBrowserRouter } from "react-router-dom";
 import { MainPage } from "../pages/main/MainPage";
 import { SingUpPage } from "../pages/main/SingUpPage";
