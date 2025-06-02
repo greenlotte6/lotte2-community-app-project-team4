@@ -9,6 +9,7 @@ import ProfilePage from "../pages/setting/ProfilePage";
 import { MessengerPage } from "../pages/message/MessengerPage";
 import { PlanUpgradePage } from "../pages/plan/PlanUpgradePage";
 import { OrderSheetPage } from "../pages/plan/OrderSheetPage";
+import { MarkDownPage } from "../pages/markdown/MarkDownPage";
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -21,4 +22,5 @@ export const router = createBrowserRouter([
   { path: "/messenger", element: <MessengerPage /> },
   { path: "/plan/upgrade", element: <PlanUpgradePage /> },
   { path: "/plan/orderSheet", element: <OrderSheetPage /> },
+  { path: "/markdown", element: <MarkDownPage /> },
 ]);
