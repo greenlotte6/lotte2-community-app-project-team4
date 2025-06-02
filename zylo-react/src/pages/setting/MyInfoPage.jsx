@@ -2,7 +2,6 @@ import React from "react";
 import { BasicLayout } from "../../layouts/BasicLayout";
 import SettingSideBar from "../../components/setting/SettingSideBar.jsx";
 import MyInfo from "../../components/setting/MyInfo.jsx";
-import "../../styles/setting/myInfo.css";
 
 const MyInfoPage = () => {
   return (

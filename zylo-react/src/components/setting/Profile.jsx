@@ -2,6 +2,7 @@ import { faPortrait } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { useTheme } from "../../contexts/ThemeContext";
+import "../../styles/setting/profile.css";
 
 const Profile = () => {
   const { toggled, toggle } = useTheme();
@@ -31,12 +32,24 @@ const Profile = () => {
                   프로필사진
                 </td>
                 <td>
-                  <img src="" alt="" className="profile-photo" />
+                  <div class="profile-photo-wrapper">
+                    <img
+                      src=""
+                      alt=""
+                      className={`profile-photo ${toggled ? "dark" : "light"}`}
+                    />
+                  </div>
                   <br />
-                  <button className={toggled ? "dark" : "light"}>
+                  <button
+                    className={`profile-button ${toggled ? "dark" : "light"}`}
+                  >
                     사진변경
                   </button>
-                  <button className={toggled ? "dark" : "light"}>삭제</button>
+                  <button
+                    className={`profile-button ${toggled ? "dark" : "light"}`}
+                  >
+                    삭제
+                  </button>
                 </td>
               </tr>
               <tr>

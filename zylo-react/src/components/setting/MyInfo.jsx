@@ -2,6 +2,7 @@ import React from "react";
 import { useTheme } from "../../contexts/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import "../../styles/setting/myInfo.css";
 
 const MyInfo = () => {
   const { toggled, toggle } = useTheme();

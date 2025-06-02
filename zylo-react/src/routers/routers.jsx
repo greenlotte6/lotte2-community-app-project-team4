@@ -7,6 +7,8 @@ import { TermPage } from "../pages/main/TermPage";
 import MyInfoPage from "../pages/setting/MyInfoPage";
 import ProfilePage from "../pages/setting/ProfilePage";
 import { MessengerPage } from "../pages/message/MessengerPage";
+import CalendarPage from "../pages/setting/CalendarPage";
+import MessagePage from "../pages/setting/MessagePage";
 import { PlanUpgradePage } from "../pages/plan/PlanUpgradePage";
 import { OrderSheetPage } from "../pages/plan/OrderSheetPage";
 import { MarkDownPage } from "../pages/markdown/MarkDownPage";
@@ -19,6 +21,8 @@ export const router = createBrowserRouter([
   { path: "/term", element: <TermPage /> },
   { path: "/setting/MyInfo", element: <MyInfoPage /> },
   { path: "/setting/Profile", element: <ProfilePage /> },
+  { path: "/setting/Calendar", element: <CalendarPage /> },
+  { path: "/setting/Message", element: <MessagePage /> },
   { path: "/messenger", element: <MessengerPage /> },
   { path: "/plan/upgrade", element: <PlanUpgradePage /> },
   { path: "/plan/orderSheet", element: <OrderSheetPage /> },

@@ -1,17 +1,17 @@
 import React from "react";
 import { BasicLayout } from "../../layouts/BasicLayout";
-import SettingSideBar from "../../components/setting/SettingSideBar";
-import Profile from "../../components/setting/Profile";
+import SettingSideBar from "../../components/setting/SettingSideBar.jsx";
+import Message from "../../components/setting/Message.jsx";
 
-const ProfilePage = () => {
+const MessagePage = () => {
   return (
     <BasicLayout title={"설정"}>
       <div id="setting-content-container">
         <SettingSideBar />
-        <Profile />
+        <Message />
       </div>
     </BasicLayout>
   );
 };
 
-export default ProfilePage;
+export default MessagePage;
