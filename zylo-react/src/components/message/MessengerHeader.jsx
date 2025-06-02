@@ -4,11 +4,12 @@ import { faShareFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const MessengerHeader = () => {
+export const MessengerHeader = ({ chatroomElements }) => {
   const { toggled, toggle } = useTheme();
 
   return (
     <header id="content-header" className={toggled ? "dark" : "light"}>
+      {chatroomElements}
       <nav>
         <div className="theme">
           <span className="theme-name">Light</span>

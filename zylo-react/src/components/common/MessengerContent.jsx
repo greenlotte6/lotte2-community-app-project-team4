@@ -1,12 +1,12 @@
 import { useTheme } from "../../contexts/ThemeContext";
 import { MessengerHeader } from "../message/MessengerHeader";
 
-export const MessengerContent = ({ title, content }) => {
+export const MessengerContent = ({ chatroomElements, content }) => {
   const { toggled } = useTheme();
 
   return (
     <div id="content-area" className={toggled ? "dark" : "light"}>
-      <MessengerHeader title={title} />
+      <MessengerHeader chatroomElements={chatroomElements} />
       <section id="content">{content}</section>
     </div>
   );
