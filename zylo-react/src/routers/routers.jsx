@@ -12,6 +12,7 @@ import MessagePage from "../pages/setting/MessagePage";
 import { PlanUpgradePage } from "../pages/plan/PlanUpgradePage";
 import { OrderSheetPage } from "../pages/plan/OrderSheetPage";
 import { MarkDownPage } from "../pages/markdown/MarkDownPage";
+import { DashboardPage } from "../pages/dashboard/DashboardPage";
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -27,4 +28,5 @@ export const router = createBrowserRouter([
   { path: "/plan/upgrade", element: <PlanUpgradePage /> },
   { path: "/plan/orderSheet", element: <OrderSheetPage /> },
   { path: "/markdown", element: <MarkDownPage /> },
+  { path: "/dashboard", element: <DashboardPage /> },
 ]);
