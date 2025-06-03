@@ -62,3 +62,7 @@
 .message-item-control {
   display: flex;
 }
+
+#setting-content-container {
+  width: 100%;
+}
