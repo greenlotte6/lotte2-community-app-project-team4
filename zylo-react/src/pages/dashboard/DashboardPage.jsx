@@ -1,10 +1,10 @@
-import { Dashboard } from "../../components/dashboard/DashBoard";
+import { DashBoard } from "../../components/dashboard/DashBoard";
 import { BasicLayout } from "../../layouts/BasicLayout";
 
 export const DashboardPage = () => {
   return (
     <BasicLayout>
-      <Dashboard />
+      <DashBoard />
     </BasicLayout>
   );
 };
