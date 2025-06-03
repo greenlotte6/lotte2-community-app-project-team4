@@ -13,8 +13,12 @@
   object-fit: cover;
 }
 
-.myinfo-table tbody tr:nth-child(1) {
+.myinfo-table > tbody > tr {
   border-bottom: 1px solid #5da9fc;
+}
+
+.myinfo-table > tbody > tr.dark {
+  border-bottom: 1px solid #1b115a;
 }
 
 .setting-content-subtitle {

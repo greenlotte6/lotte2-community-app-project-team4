@@ -18,10 +18,14 @@
 .setting-menu li {
   padding: 8px 0;
   cursor: pointer;
-  margin-left: 20px;
+  padding-left: 20px;
 }
 .setting-menu li:hover {
   background: #e9ecef;
+}
+
+.setting-menu li:hover.dark {
+  background: #1b115a;
 }
 .setting-title {
   color: #848484;

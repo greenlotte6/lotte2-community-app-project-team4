@@ -1,0 +1,92 @@
+.setting-item {
+  width: 500px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.setting-item-title {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.setting-item-subtitle {
+  font-size: 15px;
+  color: #d0d0d0;
+  margin-bottom: 20px;
+}
+
+.setting-item-radio {
+  margin-bottom: 15px;
+}
+.setting-item-control-title {
+  font-size: 18px;
+}
+.setting-item-control-subtitle {
+  font-size: 15px;
+  color: #d0d0d0;
+}
+.setting-item-control-group {
+  margin-bottom: 20px;
+}
+
+.setting-item-control-row {
+  display: flex;
+}
+.setting-item-control-group {
+  flex: 1;
+}
+.setting-item-control-title {
+  margin-bottom: 5px;
+}
+.setting-item-control-group textarea {
+  width: 97%;
+  min-height: 100px;
+  resize: none;
+  font-size: 15px;
+}
+
+.setting-item-check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.setting-item-control-info {
+  flex: 1;
+}
+.setting-item-control-checkbox {
+  width: 18px;
+  height: 18px;
+}
+
+.setting-item select {
+  width: 150px;
+  border: 1px solid #d0d0d0;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.setting-item-control label:nth-child(3) {
+  margin-left: 50px;
+}
+
+.setting-item-control label:nth-child(4) {
+  margin-left: 50px;
+}
+
+#setting-content-container {
+  display: flex;
+  height: calc(100vh - 90px);
+  overflow: hidden; /* 전체 레이아웃은 스크롤 되지 않도록 */
+}
+
+.message-scroll-container {
+  flex: 1; /* 남은 공간을 모두 차지 */
+  overflow-y: auto;
+  height: calc(100vh - 90px);
+  padding: 1rem; /* 필요시 추가 */
+  display: flex;
+}

@@ -1,0 +1,71 @@
+.setting-item {
+  width: 800px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.setting-item-title {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.setting-item-subtitle {
+  font-size: 15px;
+  color: #d0d0d0;
+  margin-bottom: 20px;
+}
+
+.setting-item-radio {
+  margin-bottom: 15px;
+}
+.setting-item-control-title {
+  font-size: 18px;
+}
+.setting-item-control-subtitle {
+  font-size: 15px;
+  color: #d0d0d0;
+}
+.setting-item-control-group {
+  margin-bottom: 20px;
+}
+
+.setting-item-control-row {
+  display: flex;
+}
+.setting-item-control-group {
+  flex: 1;
+}
+.setting-item-control-title {
+  margin-bottom: 5px;
+}
+.setting-item-control-group textarea {
+  width: 97%;
+  min-height: 100px;
+  resize: none;
+  font-size: 15px;
+}
+
+.setting-item-control input[type="text"] {
+  border: 1px solid #d0d0d0;
+  height: 25px;
+  border-radius: 5px;
+  font-size: 15px;
+  width: 210px;
+}
+
+.setting-item-check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+.setting-item-control-info {
+  flex: 1;
+}
+
+.setting-item-check label {
+  margin-right: 20px;
+  font-size: 14px;
+}

@@ -25,7 +25,7 @@ const Profile = () => {
             border="1"
           >
             <tbody>
-              <tr>
+              <tr className={toggled ? "dark" : "light"}>
                 <td
                   className={`myinfo-table-label ${toggled ? "dark" : "light"}`}
                 >
@@ -52,7 +52,7 @@ const Profile = () => {
                   </button>
                 </td>
               </tr>
-              <tr>
+              <tr className={toggled ? "dark" : "light"}>
                 <td
                   className={`myinfo-table-label ${toggled ? "dark" : "light"}`}
                 >

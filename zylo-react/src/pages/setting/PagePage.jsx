@@ -1,19 +1,17 @@
 import React from "react";
 import { BasicLayout } from "../../layouts/BasicLayout";
 import SettingSideBar from "../../components/setting/SettingSideBar.jsx";
-import { Message } from "../../components/setting/Message.jsx";
+import Page from "../../components/setting/Page.jsx";
 
-const MessagePage = () => {
+const PagePage = () => {
   return (
     <BasicLayout title={"설정"}>
       <div id="setting-content-container">
         <SettingSideBar />
-        <div className="message-scroll-container">
-          <Message />
-        </div>
+        <Page />
       </div>
     </BasicLayout>
   );
 };
 
-export default MessagePage;
+export default PagePage;

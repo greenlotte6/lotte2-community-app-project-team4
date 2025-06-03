@@ -1,0 +1,118 @@
+.setting-item {
+  width: 800px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.setting-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.setting-item-title {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.setting-item-subtitle {
+  font-size: 15px;
+  color: #d0d0d0;
+}
+
+.setting-item-radio {
+  margin-bottom: 15px;
+}
+
+.setting-item-control-row {
+  display: flex;
+}
+.setting-item-control-group {
+  flex: 1;
+}
+.setting-item-control-title {
+  margin-bottom: 5px;
+}
+.setting-item-control-group textarea {
+  width: 97%;
+  min-height: 100px;
+  resize: none;
+  font-size: 15px;
+}
+
+.setting-item-control input[type="text"] {
+  border: 1px solid #d0d0d0;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 15px;
+  width: 350px;
+  padding: 10px;
+}
+
+.setting-item-content > div {
+  height: 80px;
+  border: 1px solid #d0d0d0;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.setting-item-content > div > img {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #d0d0d0;
+  border-radius: 50%;
+  margin-left: 20px;
+}
+
+.member-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 15px;
+}
+
+select {
+  border: 1px solid #d0d0d0;
+  border-radius: 5px;
+  width: 100px;
+  height: 40px;
+  margin-left: auto;
+  margin-right: 15px;
+}
+
+.setting-item-header > button {
+  width: 110px;
+  height: 35px;
+  text-align: right;
+  background-color: #000000;
+  color: #fff;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+
+#setting-content-container {
+  display: flex;
+  height: calc(100vh - 90px);
+  overflow: hidden; /* 전체 레이아웃은 스크롤 되지 않도록 */
+}
+
+.message-scroll-container {
+  flex: 1; /* 남은 공간을 모두 차지 */
+  overflow-y: auto;
+  height: calc(100vh - 90px);
+  padding: 1rem; /* 필요시 추가 */
+  display: flex;
+}
+
+.setting-item.dark {
+  background: #131417;
+  color: #fff;
+}
+
+.setting-item-select {
+  height: 100px;
+}

@@ -1,0 +1,64 @@
+.setting-item {
+  width: 800px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  box-shadow: 1.5px 6px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+.setting-item-title {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.setting-item-subtitle {
+  font-size: 15px;
+  color: #d0d0d0;
+  margin-bottom: 20px;
+}
+
+.setting-item-radio {
+  margin-bottom: 15px;
+}
+
+#setting-content-container {
+  display: flex;
+  height: calc(100vh - 90px);
+  overflow: hidden; /* 전체 레이아웃은 스크롤 되지 않도록 */
+}
+
+.message-scroll-container {
+  flex: 1; /* 남은 공간을 모두 차지 */
+  overflow-y: auto;
+  height: calc(100vh - 90px);
+  padding: 1rem; /* 필요시 추가 */
+  display: flex;
+}
+
+.myinfo-table-submit {
+  width: 120px;
+  height: 40px;
+  float: right;
+}
+
+.submit-wrapper input {
+  margin-bottom: 100px;
+}
+
+.setting-item-radio {
+  margin-right: 8px;
+}
+
+.setting-item-textarea {
+  border: 1px solid #d0d0d0;
+  border-radius: 5px;
+  resize: none;
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+}
+
+.message-item-control {
+  display: flex;
+}
