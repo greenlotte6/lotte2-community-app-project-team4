@@ -76,3 +76,7 @@
   color: #555;
   font-style: italic;
 }
+
+.mdxeditor-toolbar {
+  transition: all 0.3s ease;
+}
