@@ -42,7 +42,7 @@ export const SideBar = () => {
 
         <ul className="menu">
           <li className="menu-item">
-            <Link to="">
+            <Link to="/dashboard">
               <FontAwesomeIcon icon={faHome} className="menu-icon" />
               <span>홈</span>
             </Link>
@@ -66,7 +66,7 @@ export const SideBar = () => {
             </Link>
           </li>
           <li className="menu-item">
-            <Link to="">
+            <Link to="/messenger">
               <FontAwesomeIcon icon={faComments} className="menu-icon" />
               <span>다이렉트 메시지</span>
             </Link>
@@ -114,7 +114,7 @@ export const SideBar = () => {
             </Link>
           </li>
           <li className="menu-item">
-            <Link to="">
+            <Link to="/logout">
               <FontAwesomeIcon
                 icon={faRightFromBracket}
                 className="menu-icon"

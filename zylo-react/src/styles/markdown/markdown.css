@@ -1,3 +1,9 @@
+.markdown {
+  flex: 1;
+  padding: 20px;
+  height: 100%;
+}
+
 .markdown h1 {
   font-size: 2em;
   font-weight: 600;
@@ -75,4 +81,8 @@
   padding-left: 1rem;
   color: #555;
   font-style: italic;
+}
+
+.mdxeditor-toolbar {
+  transition: all 0.3s ease;
 }

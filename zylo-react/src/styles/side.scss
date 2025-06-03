@@ -90,6 +90,11 @@
     overflow: hidden;
   }
 
+  .menu-item a {
+    display: flex;
+    align-items: center;
+  }
+
   .menu-item span {
     display: inline-block;
     opacity: 1;

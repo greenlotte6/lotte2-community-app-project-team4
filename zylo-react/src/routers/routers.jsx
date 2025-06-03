@@ -16,6 +16,8 @@ import ArticlePage from "../pages/setting/ArticlePage";
 import PagePage from "../pages/setting/PagePage";
 import ProjectPage from "../pages/setting/ProjectPage";
 import DriveSettingPage from "../pages/setting/DrivePage";
+import { DashboardPage } from "../pages/dashboard/DashboardPage";
+
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -35,4 +37,5 @@ export const router = createBrowserRouter([
   { path: "/plan/upgrade", element: <PlanUpgradePage /> },
   { path: "/plan/orderSheet", element: <OrderSheetPage /> },
   { path: "/markdown", element: <MarkDownPage /> },
+  { path: "/dashboard", element: <DashboardPage /> },
 ]);

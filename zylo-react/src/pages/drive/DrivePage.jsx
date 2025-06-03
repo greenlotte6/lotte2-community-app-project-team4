@@ -1,11 +1,11 @@
 import { BasicLayout } from "../../layouts/BasicLayout";
-import { SearchBox } from "../../components/drive/SearchBox";
 import { FileContainer } from "../../components/drive/FileContainer";
+import { FileBrowser } from "../../components/drive/FileBrowser";
 
 export const DrivePage = () => {
   return (
     <BasicLayout title={"드라이브"}>
-      <SearchBox />
+      <FileBrowser />
       <FileContainer />
     </BasicLayout>
   );

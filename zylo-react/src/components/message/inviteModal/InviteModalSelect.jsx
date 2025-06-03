@@ -1,14 +1,14 @@
-import React from 'react'
-import { InviteSearchBody } from './inviteSearch/InviteSearchBody'
-import { InviteMarksBody } from './inviteMarks/InviteMarksBody'
+import React from "react";
+import { InviteSearchBody } from "./inviteSearch/InviteSearchBody";
+import { InviteMarksBody } from "./inviteMarks/InviteMarksBody";
+import { InviteDepartBody } from "./inviteDepart/InviteDepartBody";
 
-
-export const InviteModalSelect = () => {
+export const InviteModalSelect = ({ activeTab }) => {
   return (
-    <>
-        {/* 사용자 검색 목록 */}
-        <InviteSearchBody />
-        <InviteMarksBody />
-    </>
-  )
-}
+    <div className="invite-select">
+      {activeTab === "search" && <InviteSearchBody />}
+      {activeTab === "org" && <InviteDepartBody />}
+      {activeTab === "favorites" && <InviteMarksBody />}
+    </div>
+  );
+};

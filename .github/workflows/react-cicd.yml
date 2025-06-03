@@ -8,10 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./zylo-react
-    
 
     steps:
       - name: Checkout source
@@ -24,9 +20,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: zylo-react
 
       - name: Build React App
         run: npm run build
+        working-directory: zylo-react
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
@@ -38,10 +36,9 @@ jobs:
 
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
-        with:
-          distribution-id: ${{ secrets.DISTRIBUTION_ID }}
-          paths: "/*"
         env:
+          DISTRIBUTION: ${{ secrets.DISTRIBUTION_ID }}
+          PATHS: "/*"
           AWS_REGION: ap-northeast-2
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
