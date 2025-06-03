@@ -42,7 +42,7 @@ export const SideBar = () => {
 
         <ul className="menu">
           <li className="menu-item">
-            <Link to="/">
+            <Link to="/dashboard">
               <FontAwesomeIcon icon={faHome} className="menu-icon" />
               <span>홈</span>
             </Link>
