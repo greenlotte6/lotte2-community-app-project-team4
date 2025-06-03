@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
-export const InviteSearchList = () => {
-  const [selectedIndex, setSelectedIndex] = useState(null);
+export const InviteDepartMembers = () => {
+ const [selectedIndex, setSelectedIndex] = useState(null); 
 
   return (
     <>
-      {/* 사용자 검색 목록 */}
-      <div className="invite-Searchlist">
-        {[...Array(10)].map((_, i) => (
+      {/* 사용자 목록 */}
+      <div className="invite-DepartMembers">
+        {[...Array(7)].map((_, i) => (
           <div
-            className={`invite-item ${selectedIndex === i ? 'selected' : ''}`}
+            className={`invite-item ${selectedIndex === i ? "selected" : ""}`} 
             key={i}
-            onClick={() => setSelectedIndex(i)}
+            onClick={() => setSelectedIndex(i)} 
           >
             <img
               src="/images/message/avatars.png"
@@ -27,4 +27,4 @@ export const InviteSearchList = () => {
       </div>
     </>
   );
-};
+}
