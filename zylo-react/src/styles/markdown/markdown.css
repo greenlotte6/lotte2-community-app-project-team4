@@ -1,3 +1,9 @@
+.markdown {
+  flex: 1;
+  padding: 20px;
+  height: 100%;
+}
+
 .markdown h1 {
   font-size: 2em;
   font-weight: 600;
