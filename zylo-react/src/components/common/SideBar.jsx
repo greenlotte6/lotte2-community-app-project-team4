@@ -108,7 +108,7 @@ export const SideBar = () => {
             </Link>
           </li>
           <li className="menu-item">
-            <Link to="/setting/MyInfo">
+            <Link to="/setting/myinfo">
               <FontAwesomeIcon icon={faGears} className="menu-icon" />
               <span>환경설정</span>
             </Link>

@@ -1,0 +1,148 @@
+.setting-item {
+  width: 800px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.setting-item-title {
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.setting-item-subtitle {
+  font-size: 15px;
+  color: #d0d0d0;
+  margin-bottom: 20px;
+}
+
+.setting-item-radio {
+  margin-bottom: 15px;
+}
+.setting-item-control-title {
+  font-size: 18px;
+}
+.setting-item-control-subtitle {
+  font-size: 15px;
+  color: #d0d0d0;
+}
+.setting-item-control-group {
+  margin-bottom: 20px;
+}
+
+.setting-item-control-row {
+  display: flex;
+}
+.setting-item-control-group {
+  flex: 1;
+}
+.setting-item-control-title {
+  margin-bottom: 5px;
+}
+.setting-item-control-group textarea {
+  width: 97%;
+  min-height: 100px;
+  resize: none;
+  font-size: 15px;
+}
+
+.setting-item-check {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.setting-item-control-info {
+  flex: 1;
+}
+.setting-item-control-checkbox {
+  width: 18px;
+  height: 18px;
+}
+
+.setting-item select {
+  width: 150px;
+  border: 1px solid #d0d0d0;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.setting-item-control label:nth-child(3) {
+  margin-left: 50px;
+}
+
+.expedite {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+.expedite button {
+  border: none;
+  border-radius: 5px;
+  width: 240px;
+  height: 100px;
+  cursor: pointer;
+  border: 1px solid #d0d0d0;
+}
+.expedite button:hover {
+  background-color: #5da9fc;
+}
+
+/* 그래프 */
+.storage-graph {
+  margin-top: 10px;
+}
+.storage-bar {
+  width: 100%;
+  height: 20px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.storage-used {
+  height: 100%;
+  background: #1b115a;
+  border-radius: 10px;
+  /* 아래 속성 추가 */
+  width: 0;
+  animation: loadStorage 1.5s ease-out forwards;
+}
+
+/* 애니메이션 키프레임 */
+@keyframes loadStorage {
+  from {
+    width: 0;
+  }
+  to {
+    width: 65%;
+  } /* 여기서 65%는 원하는 값으로 바꿔주세요! */
+}
+.type {
+  display: flex;
+}
+
+.type div {
+  font-size: 12px;
+}
+
+.type div:nth-child(2) {
+  margin-left: 50px;
+}
+
+.volume {
+  display: flex;
+  justify-content: space-between;
+}
+
+.setting-item-check {
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 15px;
+}
+
+.volume span {
+  font-size: 25px;
+  font-weight: 800;
+}

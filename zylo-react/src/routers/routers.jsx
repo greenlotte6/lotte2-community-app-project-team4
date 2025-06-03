@@ -12,7 +12,12 @@ import MessagePage from "../pages/setting/MessagePage";
 import { PlanUpgradePage } from "../pages/plan/PlanUpgradePage";
 import { OrderSheetPage } from "../pages/plan/OrderSheetPage";
 import { MarkDownPage } from "../pages/markdown/MarkDownPage";
+import ArticlePage from "../pages/setting/ArticlePage";
+import PagePage from "../pages/setting/PagePage";
+import ProjectPage from "../pages/setting/ProjectPage";
+import DriveSettingPage from "../pages/setting/DrivePage";
 import { DashboardPage } from "../pages/dashboard/DashboardPage";
+
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -20,10 +25,14 @@ export const router = createBrowserRouter([
   { path: "/signup", element: <SingUpPage /> },
   { path: "/login", element: <LoginPage /> },
   { path: "/term", element: <TermPage /> },
-  { path: "/setting/MyInfo", element: <MyInfoPage /> },
-  { path: "/setting/Profile", element: <ProfilePage /> },
-  { path: "/setting/Calendar", element: <CalendarPage /> },
-  { path: "/setting/Message", element: <MessagePage /> },
+  { path: "/setting/myInfo", element: <MyInfoPage /> },
+  { path: "/setting/profile", element: <ProfilePage /> },
+  { path: "/setting/calendar", element: <CalendarPage /> },
+  { path: "/setting/message", element: <MessagePage /> },
+  { path: "/setting/article", element: <ArticlePage /> },
+  { path: "/setting/drive", element: <DriveSettingPage /> },
+  { path: "/setting/page", element: <PagePage /> },
+  { path: "/setting/project", element: <ProjectPage /> },
   { path: "/messenger", element: <MessengerPage /> },
   { path: "/plan/upgrade", element: <PlanUpgradePage /> },
   { path: "/plan/orderSheet", element: <OrderSheetPage /> },
