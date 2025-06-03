@@ -4,7 +4,7 @@ import { RecentChats } from "./RecentChats";
 import { RecentArticles } from "./RecentArticles";
 import { useTheme } from "../../contexts/ThemeContext";
 
-export const Dashboard = () => {
+export const DashBoard = () => {
   const { toggled } = useTheme();
   return (
     <div id="dashboard-container" className={toggled ? "dark" : ""}>
