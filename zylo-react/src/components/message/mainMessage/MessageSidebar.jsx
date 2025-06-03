@@ -6,7 +6,7 @@ export const MessageSidebar = () => {
          <section className="Message">
           <header className="Message-header">
             <h1>메세지</h1>
-            <p>125 메세지 ● 5 안읽음</p>
+            <p>125 메세지 - 5 안읽음</p>
             <input type="text" placeholder="검색" />
           </header>
 
@@ -19,7 +19,7 @@ export const MessageSidebar = () => {
             <div className="avatars" id="avatarList">
               {[...Array(4)].map((_, i) => (
                 <div className="avatar-wrapper" key={i}>
-                  <img src="/images/messenger/avatars.png" alt="user" className="avatar" />
+                  <img src="/images/message/avatars.png" alt="user" className="avatar" />
                   <span className="online-indicator"></span>
                 </div>
               ))}
@@ -39,7 +39,7 @@ export const MessageSidebar = () => {
                   <div className="avatar-wrapper">
                     <img
                       className="avatar"
-                      src="/images/messenger/avatars.png"
+                      src="/images/message/avatars.png"
                       alt="Robert Fox"
                     />
                     <span className="online-indicator"></span>
@@ -58,7 +58,7 @@ export const MessageSidebar = () => {
                   <div className="avatar-wrapper">
                     <img
                       className="avatar"
-                      src="/images/messenger/avatars.png"
+                      src="/images/message/avatars.png"
                       alt="Devon Lane"
                     />
                   </div>
@@ -85,7 +85,7 @@ export const MessageSidebar = () => {
                   <div className="avatar-wrapper">
                     <img
                       className="avatar"
-                      src="/images/messenger/avatars.png"
+                      src="/images/message/avatars.png"
                       alt="Kristin Watson"
                     />
                     <span className="online-indicator"></span>
@@ -104,7 +104,7 @@ export const MessageSidebar = () => {
                   <div className="avatar-wrapper">
                     <img
                       className="avatar"
-                      src="/images/messenger/avatars.png"
+                      src="/images/message/avatars.png"
                       alt="Courtney Henry"
                     />
                   </div>
