@@ -18,7 +18,7 @@
 
 #content {
   width: inherit;
-  height: auto;
+  height: 100%;
   background-color: inherit;
   transition: background-color 0.3s ease;
   overflow-y: auto;
