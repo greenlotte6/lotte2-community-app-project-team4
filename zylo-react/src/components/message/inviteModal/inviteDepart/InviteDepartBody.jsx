@@ -1,15 +1,15 @@
-import React from 'react'
-import { InviteDepartList } from './inviteDepartList'
-import { InviteDepartMembers } from './inviteDepartMembers'
+import React from "react";
+import { InviteDepartList } from "./InviteDepartList";
+import { InviteDepartMembers } from "./InviteDepartMembers";
 
 export const InviteDepartBody = () => {
   return (
     <>
-    {/* 부서 목록 */}
-    <InviteDepartList />
-    
-    {/* 사용자 목록 */}
-    <InviteDepartMembers />
+      {/* 부서 목록 */}
+      <InviteDepartList />
+
+      {/* 사용자 목록 */}
+      <InviteDepartMembers />
     </>
-  )
-}
+  );
+};

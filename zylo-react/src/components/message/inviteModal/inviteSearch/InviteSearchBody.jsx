@@ -1,6 +1,6 @@
-import React from 'react'
-import { InviteSearchInput } from './InviteSearchInput'
-import { InviteSearchList } from './inviteSearchList'
+import React from "react";
+import { InviteSearchInput } from "./InviteSearchInput";
+import { InviteSearchList } from "./InviteSearchList";
 
 export const InviteSearchBody = () => {
   return (
@@ -11,5 +11,5 @@ export const InviteSearchBody = () => {
       {/* 사용자 검색 목록 */}
       <InviteSearchList />
     </>
-  )
-}
+  );
+};
