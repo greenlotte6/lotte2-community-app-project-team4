@@ -1,17 +1,6 @@
-name: Deploy React App to S3 + CloudFront
-
-on:
-  push:
-    branches:
-      - main  # main 브랜치에 푸시될 때만 배포
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./zylo-react
-    
 
     steps:
       - name: Checkout source
@@ -24,19 +13,21 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: zylo-react
 
       - name: Build React App
         run: npm run build
+        working-directory: zylo-react
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
-        #with:
-          #args: --acl public-read --delete
+        with:
+          args: --acl public-read --delete
         env:
           AWS_S3_BUCKET: ${{ secrets.S3_BUCKET_NAME }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          SOURCE_DIR: zylo-react/dist
+          SOURCE_DIR: zylo-react/dist  # 중요!
 
       - name: Invalidate CloudFront Cache
         uses: chetan/invalidate-cloudfront-action@v2
@@ -44,6 +35,6 @@ jobs:
           distribution-id: ${{ secrets.DISTRIBUTION_ID }}
           paths: "/*"
         env:
-          AWS_REGION: ap-northeast-2  # 필요 시 리전에 맞게 수정
+          AWS_REGION: ap-northeast-2
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
