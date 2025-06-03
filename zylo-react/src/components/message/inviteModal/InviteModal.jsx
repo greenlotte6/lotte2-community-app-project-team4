@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../../styles/message/message.css";
 import { InviteModalTabs } from "./InviteModalTabs";
-import { InviteModalSelected } from "./inviteModalSelected";
+import { InviteModalSelected } from "./InviteModalSelected";
 import { InviteModalSelect } from "./InviteModalSelect";
 
 export const InviteModal = ({ onClose }) => {
@@ -33,11 +33,11 @@ export const InviteModal = ({ onClose }) => {
             <InviteModalSelected />
           </div>
         </div>
-        
+
         {/* 푸터 */}
         <div className="modal-footer">
           <button onClick={onClose}>취소</button>
-          <button>만들기</button> 
+          <button>만들기</button>
         </div>
       </div>
     </div>
