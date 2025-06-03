@@ -1,5 +1,5 @@
 import { useTheme } from "../../contexts/ThemeContext";
-import { MessengerHeader } from "../message/MessengerHeader";
+import { MessengerHeader } from "../message/messengerHeader/MessengerHeader";
 
 export const MessengerContent = ({ chatroomElements, content }) => {
   const { toggled } = useTheme();

@@ -10,7 +10,7 @@ export const ChatRoomMessage = () => {
             <div className="chat-room-message">
               <img
                 className="avatar"
-                src="/images/messenger/avatars.png"
+                src="/images/message/avatars.png"
                 alt="Diana"
               />
               <div className="message-wrapper">
@@ -29,7 +29,7 @@ export const ChatRoomMessage = () => {
             <div className="chat-room-message">
               <img
                 className="avatar"
-                src="/images/messenger/avatars.png"
+                src="/images/message/avatars.png"
                 alt="Robert"
               />
               <div className="message-wrapper">
@@ -39,7 +39,7 @@ export const ChatRoomMessage = () => {
                 </div>
                 <div className="chat-room-content">
                   <div className="attachment">
-                    <img src="/images/messenger/cat.jpg" alt="dashboard" />
+                    <img src="/images/message/cat.jpg" alt="dashboard" />
                     <p>This new dashboard page. What do you think?</p>
                   </div>
                 </div>
