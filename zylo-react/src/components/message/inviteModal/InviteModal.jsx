@@ -1,6 +1,6 @@
 import React from "react";
 import "../../styles/message/message.css";
-import { InviteModalTabs } from "./inviteModalTabs";
+import { InviteModalTabs } from "./InviteModalTabs";
 import { InviteModalSelected } from "./inviteModalSelected";
 import { InviteModalSelect } from "./InviteModalSelect";
 
