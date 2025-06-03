@@ -20,14 +20,9 @@ import {
 
 export default function MarkDownEditor() {
   return (
-    <div className="markdown" style={{ padding: 20 }}>
+    <div className="markdown">
       <MDXEditor
-        markdown={`# 테스트
-
-[OpenAI](https://openai.com)
-
-이건 그냥 텍스트입니다.`}
-        onChange={(markdown) => console.log("변경된 마크다운:", markdown)}
+        markdown={`# 제목 1`}
         plugins={[
           headingsPlugin(),
           listsPlugin(), // 순서/비순서 목록
