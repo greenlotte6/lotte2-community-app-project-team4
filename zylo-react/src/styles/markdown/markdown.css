@@ -1,7 +1,13 @@
 .markdown {
   flex: 1;
   padding: 20px;
-  height: 100%;
+  width: 100%;
+  height: auto;
+}
+
+.mdxeditor {
+  height: 830px;
+  overflow-y: auto;
 }
 
 .markdown h1 {
@@ -81,8 +87,4 @@
   padding-left: 1rem;
   color: #555;
   font-style: italic;
-}
-
-.mdxeditor-toolbar {
-  transition: all 0.3s ease;
 }
