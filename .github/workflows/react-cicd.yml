@@ -8,10 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./zylo-react
-    
 
     steps:
       - name: Checkout source
@@ -24,9 +20,11 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        working-directory: zylo-react
 
       - name: Build React App
         run: npm run build
+        working-directory: zylo-react
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
