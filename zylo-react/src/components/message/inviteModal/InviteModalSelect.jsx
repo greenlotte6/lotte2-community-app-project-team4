@@ -1,7 +1,7 @@
-import React from 'react';
-import { InviteSearchBody } from './inviteSearch/InviteSearchBody';
-import { InviteMarksBody } from './inviteMarks/InviteMarksBody';
-import { InviteDepartBody } from './inviteDepart/inviteDepartBody';
+import React from "react";
+import { InviteSearchBody } from "./inviteSearch/InviteSearchBody";
+import { InviteMarksBody } from "./inviteMarks/InviteMarksBody";
+import { InviteDepartBody } from "./inviteDepart/InviteDepartBody";
 
 export const InviteModalSelect = ({ activeTab }) => {
   return (
