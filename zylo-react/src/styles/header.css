@@ -1,5 +1,6 @@
 #content-header {
   flex: 1;
+  width: inherit;
   height: 90px;
   background-color: #f8f8f8;
   display: flex;

@@ -4,11 +4,7 @@ export const DashboardChatRoom = () => {
   return (
     <>
       <div className="chat-room-message">
-        <img
-          className="avatar"
-          src="/images/messenger/avatars.png"
-          alt="Diana"
-        />
+        <img className="avatar" src="/images/message/avatars.png" alt="Diana" />
         <div className="message-wrapper">
           <div className="chat-room-meta">
             <strong>Diana</strong>
@@ -23,7 +19,7 @@ export const DashboardChatRoom = () => {
       <div className="chat-room-message">
         <img
           className="avatar"
-          src="/images/messenger/avatars.png"
+          src="/images/message/avatars.png"
           alt="Robert"
         />
         <div className="message-wrapper">
