@@ -1,0 +1,85 @@
+.project-item {
+  width: 1000px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.project-title {
+  font-size: 25px;
+}
+
+.project-subtitle {
+  font-size: 15px;
+  color: #d0d0d0;
+}
+
+.project-info {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-info > div {
+  font-size: 13px;
+}
+
+.project-info > div div:nth-child(1) {
+  font-size: 16px;
+}
+
+.project-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.project-row .project-item {
+  width: 32%;
+}
+
+.project-progress-container {
+  width: 200px;
+  background-color: #e0e0e0; /* 배경색 */
+  border-radius: 10px; /* 둥근 모서리 */
+  overflow: hidden; /* 넘치는 부분 숨김 */
+  height: 10px;
+}
+
+.project-progress-bar {
+  height: 100%;
+  background-color: #5da9fc;
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+.project-subtitle {
+  margin-bottom: 20px;
+}
+
+.project-progress > div:nth-child(1) {
+  margin-bottom: 5px;
+}
+
+.project-item .project-row-title {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.project-item .project-row-value {
+  font-weight: 700;
+  font-size: 25px;
+}
+
+.project-item .project-row-total {
+  font-size: 14px;
+  color: #9c9c9c;
+}
+
+.project-wrapper {
+  width: 1000px;
+  margin: 0 auto;
+}
+
+#project-content-container {
+  width: 100%;
+}
