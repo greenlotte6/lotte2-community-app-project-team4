@@ -14,10 +14,11 @@ import { OrderSheetPage } from "../pages/plan/OrderSheetPage";
 import { MarkDownPage } from "../pages/markdown/MarkDownPage";
 import ArticlePage from "../pages/setting/ArticlePage";
 import PagePage from "../pages/setting/PagePage";
-import ProjectPage from "../pages/setting/ProjectPage";
 import DriveSettingPage from "../pages/setting/DrivePage";
 import { DashboardPage } from "../pages/dashboard/DashboardPage";
-
+import { ListPage } from "../pages/article/ListPage";
+import ProjectSettingPage from "../pages/setting/ProjectSettingPage";
+import { ProjectPage } from "../pages/project/ProjectPage";
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -32,10 +33,12 @@ export const router = createBrowserRouter([
   { path: "/setting/article", element: <ArticlePage /> },
   { path: "/setting/drive", element: <DriveSettingPage /> },
   { path: "/setting/page", element: <PagePage /> },
-  { path: "/setting/project", element: <ProjectPage /> },
+  { path: "/setting/project", element: <ProjectSettingPage /> },
   { path: "/messenger", element: <MessengerPage /> },
   { path: "/plan/upgrade", element: <PlanUpgradePage /> },
   { path: "/plan/orderSheet", element: <OrderSheetPage /> },
   { path: "/markdown", element: <MarkDownPage /> },
   { path: "/dashboard", element: <DashboardPage /> },
+  { path: "/article/list", element: <ListPage /> },
+  { path: "/project", element: <ProjectPage /> },
 ]);
