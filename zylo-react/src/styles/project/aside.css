@@ -28,12 +28,17 @@
   background: #e9ecef;
 }
 
+.project-menu.dark li:hover {
+  background: #1b115a;
+}
+
 .progress-container {
   width: 100%;
   background-color: #e0e0e0;
   border-radius: 8px;
   overflow: hidden;
   margin-bottom: 10px;
+  margin-top: 6px;
 }
 .progress-bar {
   height: 5px;
@@ -44,4 +49,8 @@
 .progress-text {
   margin-top: 10px;
   color: #555;
+}
+
+.project-side-bar.dark {
+  background: #222221;
 }

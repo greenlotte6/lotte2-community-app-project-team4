@@ -72,13 +72,13 @@ export const SideBar = () => {
             </Link>
           </li>
           <li className="menu-item">
-            <Link to="">
+            <Link to="/article">
               <FontAwesomeIcon icon={faClipboard} className="menu-icon" />
               <span>게시판</span>
             </Link>
           </li>
           <li className="menu-item">
-            <Link to="">
+            <Link to="/project">
               <FontAwesomeIcon icon={faPenToSquare} className="menu-icon" />
               <span>프로젝트</span>
             </Link>
