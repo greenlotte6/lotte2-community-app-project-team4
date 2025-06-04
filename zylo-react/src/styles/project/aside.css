@@ -1,0 +1,47 @@
+.project-side-bar {
+  width: 220px;
+  background: #f8f8f8;
+  padding: 20px;
+  height: calc(100vh - 90px);
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+}
+.project-side-header {
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 16px;
+}
+.project-side-title {
+  color: #848484;
+}
+
+.project-menu {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0 16px 0;
+}
+.project-menu li {
+  padding: 5px;
+  cursor: pointer;
+  padding-left: 10px;
+}
+.project-menu li:hover {
+  background: #e9ecef;
+}
+
+.progress-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+.progress-bar {
+  height: 5px;
+  background-color: #4285f4;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+.progress-text {
+  margin-top: 10px;
+  color: #555;
+}
