@@ -1,6 +1,8 @@
 import React from "react";
+import { useTheme } from "../../../contexts/ThemeContext";
 
 export const ChatRoomMessage = () => {
+  const { toggled } = useTheme();
   return (
     <>
       <div className="chat-room-messages">
@@ -14,11 +16,15 @@ export const ChatRoomMessage = () => {
             alt="Diana"
           />
           <div className="message-wrapper">
-            <div className="chat-room-meta">
+            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
               <strong>Diana</strong>
               <span className="time">5:36 AM</span>
             </div>
-            <div className="chat-room-content">
+            <div
+              className={
+                toggled ? "chat-room-content dark" : "chat-room-content"
+              }
+            >
               <p>Professional!</p>
             </div>
             <div className="unread-count">3</div>
@@ -33,11 +39,15 @@ export const ChatRoomMessage = () => {
             alt="Robert"
           />
           <div className="message-wrapper">
-            <div className="chat-room-meta">
+            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
               <strong>Robert</strong>
               <span className="time">8:53 AM</span>
             </div>
-            <div className="chat-room-content">
+            <div
+              className={
+                toggled ? "chat-room-content dark" : "chat-room-content"
+              }
+            >
               <div className="attachment">
                 <img src="/images/message/cat.jpg" alt="dashboard" />
                 <p>This new dashboard page. What do you think?</p>
@@ -50,11 +60,15 @@ export const ChatRoomMessage = () => {
         {/* 내 메시지 */}
         <div className="chat-room-message self">
           <div className="message-wrapper">
-            <div className="chat-room-meta">
+            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
               <strong>You</strong>
               <span className="time">1:36 PM</span>
             </div>
-            <div className="chat-room-content">
+            <div
+              className={
+                toggled ? "chat-room-content dark" : "chat-room-content"
+              }
+            >
               <p>Wow it looks amazing.</p>
             </div>
             <div className="unread-count">3</div>
@@ -70,11 +84,15 @@ export const ChatRoomMessage = () => {
             alt="Diana"
           />
           <div className="message-wrapper">
-            <div className="chat-room-meta">
+            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
               <strong>Diana</strong>
               <span className="time">5:36 AM</span>
             </div>
-            <div className="chat-room-content">
+            <div
+              className={
+                toggled ? "chat-room-content dark" : "chat-room-content"
+              }
+            >
               <p>Professional!</p>
             </div>
             <div className="unread-count">3</div>
@@ -89,11 +107,15 @@ export const ChatRoomMessage = () => {
             alt="Robert"
           />
           <div className="message-wrapper">
-            <div className="chat-room-meta">
+            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
               <strong>Robert</strong>
               <span className="time">8:53 AM</span>
             </div>
-            <div className="chat-room-content">
+            <div
+              className={
+                toggled ? "chat-room-content dark" : "chat-room-content"
+              }
+            >
               <div className="attachment">
                 <img src="/images/message/cat.jpg" alt="dashboard" />
                 <p>This new dashboard page. What do you think?</p>
@@ -106,11 +128,15 @@ export const ChatRoomMessage = () => {
         {/* 내 메시지 */}
         <div className="chat-room-message self">
           <div className="message-wrapper">
-            <div className="chat-room-meta">
+            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
               <strong>You</strong>
               <span className="time">1:36 PM</span>
             </div>
-            <div className="chat-room-content">
+            <div
+              className={
+                toggled ? "chat-room-content dark" : "chat-room-content"
+              }
+            >
               <p>Wow it looks amazing.</p>
             </div>
             <div className="unread-count">3</div>
