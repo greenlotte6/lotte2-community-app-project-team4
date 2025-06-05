@@ -39,6 +39,7 @@ export const FileContainer = () => {
         onCreateFolder={(name, parentFolder) => {
           alert(`${parentFolder}에 ${name} 폴더를 생성하였습니다.`);
         }}
+        primaryColor="#5DA9FC"
       />
       {/*
       <div id="grid-container">

@@ -201,3 +201,11 @@
 .fm-modal-header svg {
   font-size: 16px;
 }
+
+.files .file-item .rename-file-container {
+  top: 85px;
+}
+
+.rename-file {
+  color: #252525;
+}
