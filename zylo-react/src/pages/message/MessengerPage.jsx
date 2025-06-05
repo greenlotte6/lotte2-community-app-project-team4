@@ -1,11 +1,11 @@
 import React from "react";
 import Messenger from "../../components/message/mainMessage/Messenger";
 import { MessengerLayout } from "../../layouts/MessengerLayout";
-import { ChatRoomTItle } from "../../components/message/mainMessage/ChatRoomTItle";
+import { ChatRoomProfile } from "../../components/message/mainMessage/ChatRoomProfile";
 
 export const MessengerPage = () => {
   return (
-    <MessengerLayout chatroomElements={<ChatRoomTItle />}>
+    <MessengerLayout chatroomElements={<ChatRoomProfile />}>
       <Messenger />
     </MessengerLayout>
   );
