@@ -1,0 +1,29 @@
+#chat-profile-container {
+  max-width: 230px;
+  width: 230px;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#chat-profile-container img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.chat-room-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.members-status {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.online-members {
+  color: #5da9fc;
+}
