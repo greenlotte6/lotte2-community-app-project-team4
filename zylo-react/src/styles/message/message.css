@@ -336,14 +336,8 @@
 
 /* 메뉴 버튼 */
 .more {
-  width: 30px;
-  height: 30px;
-  margin-left: 80px;
-}
-
-.more-menu-wrapper {
-  position: relative;
-  display: inline-block;
+  font-size: 24px;
+  font-weight: 600;
 }
 
 .more-menu-modal {
@@ -845,6 +839,7 @@
   margin-right: 45px;
 }
 
+
 .search-close-btn {
   margin-left: 12px;
   background: transparent;
@@ -852,5 +847,10 @@
   color: #5a5959;
   font-size: 15px;
   cursor: pointer;
+}
+
+.toolbar button {
+  width: auto;
+  height: auto;
 }
 

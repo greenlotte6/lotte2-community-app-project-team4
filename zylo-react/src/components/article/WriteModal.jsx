@@ -38,7 +38,7 @@ function WriteModal({ onAddPost, onClose }) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-          <div className="toolbar">
+          <div className="write-options">
             <button>
               <b>B</b>
             </button>

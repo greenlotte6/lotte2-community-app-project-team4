@@ -1,10 +1,10 @@
-import React from 'react'
+import React from "react";
 
 export const ChatRoomMessage = () => {
   return (
-  <>
+    <>
       <div className="chat-room-messages">
-        <div className="date-separator">Today</div>
+        <div className="date-separator">Yesterday</div>
 
         {/* 예시 메시지 */}
         <div className="chat-room-message">
@@ -115,9 +115,9 @@ export const ChatRoomMessage = () => {
             <div className="unread-count">3</div>
           </div>
         </div>
-
       </div>
-  </>
-  )
-}
+    </>
+  );
+};
+
 export default ChatRoomMessage;
