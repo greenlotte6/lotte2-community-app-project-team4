@@ -11,3 +11,5 @@ export const BasicLayout = ({ title, children }) => {
     </>
   );
 };
+export default BasicLayout;
+
