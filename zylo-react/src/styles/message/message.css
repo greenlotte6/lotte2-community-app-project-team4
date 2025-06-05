@@ -348,14 +348,14 @@
 
 .more-menu-modal {
   position: absolute;
-  top: 100%;    
-  right: 0;    
+  top: 100%;
+  right: 0;
   width: 130px;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-top: 4px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
 }
 
@@ -398,7 +398,7 @@
 }
 
 .form-group input[type="text"] {
-  width: 460px;
+  width: 100%;
   padding: 10px 12px;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
@@ -417,7 +417,7 @@
 }
 
 .form-group select {
-  width: 460px;
+  width: 100%;
   padding: 10px 12px;
   border: 1px solid #e5e5e5;
   border-radius: 8px;
@@ -540,14 +540,15 @@
   gap: 10px;
 }
 
-.invite-select, .invite-selected {
+.invite-select,
+.invite-selected {
   overflow-y: auto;
   width: 380px;
 }
 
 /* 대화상대 초대 - 사용자 검색 */
 .invite-search {
-  position: relative; 
+  position: relative;
   width: 100%;
   height: 45px;
 }
@@ -564,13 +565,13 @@
 }
 
 .search-icon {
-  position: absolute; 
+  position: absolute;
   right: 10px;
   top: 50%;
   transform: translateY(-50%);
   width: 18px;
   height: 18px;
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 .invite-Searchlist {
@@ -620,7 +621,7 @@
 
 .invite-selected {
   background-color: #e3efff;
-   border-radius: 8px;
+  border-radius: 8px;
 }
 
 .remove-btn {
@@ -730,16 +731,16 @@
 
 /* 통합검색 */
 .search-bar {
-  position: fixed; 
+  position: fixed;
   top: 25px;
   left: 880px;
   transform: translateX(-50%);
-  display: flex; 
+  display: flex;
   align-items: center;
   background: white;
   border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  overflow: hidden; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .search-bar > input {
@@ -757,8 +758,3 @@
   cursor: pointer;
   padding: 0 10px;
 }
-
-
-
-
-

@@ -514,7 +514,6 @@ body {
 
 /* 모달 스타일 */
 .modal-overlay {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
