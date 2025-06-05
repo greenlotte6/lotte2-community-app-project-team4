@@ -390,6 +390,15 @@
 }
 
 /* 메뉴 버튼 */
+.more-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.more-toggle {
+  cursor: pointer;
+}
+
 .more {
   font-size: 24px;
   font-weight: 600;
@@ -409,15 +418,17 @@
 }
 
 .more-menu-modal p {
-  padding: 8px 12px;
+  padding: 8px 8px;
   margin: 0;
   cursor: pointer;
+  font-size: 18px;
   font-weight: 500;
 }
 
 .more-menu-modal p:hover {
   background: #f0f0f0;
 }
+
 
 /* 모달창 */
 .createchat-overlay,
@@ -858,9 +869,8 @@
 /* 통합검색 */
 .search-bar-wrapper {
   position: fixed;
-  top: 19px;
-  left: 880px;
-  transform: translateX(-50%);
+  top: 16px;
+  left: 700px;
   display: flex;
   align-items: center;
   z-index: 1000;
