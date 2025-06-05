@@ -130,7 +130,7 @@
   border: 1px solid #e4e9f2;
   box-shadow: 1.5px 2px 2px 0px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
-  transition: all 0.3s ease, background-color 0.2s ease;
+  transition: transform 0.16s ease, background-color 0.3s ease, border 0.3s ease;
   cursor: pointer;
   border-radius: 20px;
   margin-bottom: 10px;
@@ -420,17 +420,19 @@
 }
 
 /* 모달창 */
-.createchat-overlay, .leavechat-overlay {
+.createchat-overlay,
+.leavechat-overlay {
   position: fixed;
-  inset: 0; 
+  inset: 0;
   background: rgba(0, 0, 0, 0.3);
   display: flex;
-  justify-content: center;  
-  align-items: center;     
+  justify-content: center;
+  align-items: center;
   z-index: 9999;
 }
 
-.createchat-container, .leavechat-container {
+.createchat-container,
+.leavechat-container {
   background-color: #fff;
   border-radius: 12px;
   width: 500px;
@@ -487,13 +489,15 @@
   background: #fff;
 }
 
-.createchat-footer, .leavechat-footer, .invite-footer {
+.createchat-footer,
+.leavechat-footer,
+.invite-footer {
   display: flex;
   justify-content: center;
   gap: 10px;
 }
 
-.createchat-footer button, 
+.createchat-footer button,
 .leavechat-footer button,
 .invite-footer button {
   padding: 0 8px;
@@ -522,41 +526,41 @@
   border-radius: 10px;
   width: 640px;
   max-width: 95%;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   overflow: hidden;
-  }
+}
 
-  .invite-modal-header {
+.invite-modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  }
+}
 
-  .invite-modal-header h2 {
+.invite-modal-header h2 {
   font-size: 16px;
   color: var(--text-main);
   font-weight: 600;
-  }
+}
 
-  .close-btn {
+.close-btn {
   background: none;
   border: none;
   font-size: 20px;
   color: #bbb;
   cursor: pointer;
-  }
+}
 
-  .invite-modal-tabs {
+.invite-modal-tabs {
   display: flex;
   border-bottom: 1px solid var(--border);
   margin: 0 20px;
-  }
+}
 
-  .tab {
+.tab {
   flex: 1;
   text-align: center;
   padding: 10px 0;
@@ -566,14 +570,13 @@
   border: none;
   border-bottom: 2px solid transparent;
   background: #fff;
-  }
+}
 
-  .tab.active {
+.tab.active {
   color: var(--text-main);
   font-weight: 600;
   border-bottom: 2px solid var(--primary);
-  }
-
+}
 
 /* 공통 */
 :root {
@@ -668,7 +671,6 @@
   overflow-y: auto;
   width: 380px;
 }
-
 
 /* 대화상대 초대 - 사용자 검색 */
 .invite-search {
@@ -853,7 +855,6 @@
   color: #333;
 }
 
-
 /* 통합검색 */
 .search-bar-wrapper {
   position: fixed;
@@ -870,7 +871,7 @@
   align-items: center;
   background: white;
   border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
@@ -894,7 +895,6 @@
   margin-right: 45px;
 }
 
-
 .search-close-btn {
   margin-left: 12px;
   background: transparent;
@@ -908,4 +908,3 @@
   width: auto;
   height: auto;
 }
-

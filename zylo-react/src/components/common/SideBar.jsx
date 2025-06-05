@@ -11,7 +11,6 @@ import {
   faPenToSquare,
   faRightFromBracket,
   faTrashCan,
-  faUser,
   faWandMagicSparkles,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -47,12 +46,14 @@ export const SideBar = () => {
               <span>홈</span>
             </Link>
           </li>
+          {/*}
           <li className="menu-item">
             <Link to="">
               <FontAwesomeIcon icon={faUser} className="menu-icon" />
               <span>멤버</span>
             </Link>
           </li>
+          {*/}
           <li className="menu-item">
             <Link to="/markdown">
               <FontAwesomeIcon icon={faFileLines} className="menu-icon" />
