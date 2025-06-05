@@ -136,4 +136,5 @@ body {
   font-family: "Gowun Dodum", sans-serif;
   font-weight: 400;
   font-style: normal;
+  scrollbar-color: inherit;
 }
