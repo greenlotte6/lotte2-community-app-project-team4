@@ -26,7 +26,9 @@ export const Upgrade = () => {
         <div className={toggled ? "plan plus dark" : "plan plus"}>
           <h3>Plus</h3>
           <span className="price">월 99,000원</span>
-          <Link className="purchase-btn">구독하기</Link>
+          <Link to="/plan/orderSheet" className="purchase-btn">
+            구독하기
+          </Link>
           <ul>
             <li>드라이브 용량 2GB, 무제한 파일 업로드</li>
             <li>프로젝트 무제한</li>

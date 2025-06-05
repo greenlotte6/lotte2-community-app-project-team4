@@ -23,7 +23,7 @@ export const OrderSheet = () => {
           <td>2025.06.30</td>
         </tr>
       </table>
-      <Link to="/" className={toggled ? "home-btn dark" : "home-btn"}>
+      <Link to="/dashboard" className={toggled ? "home-btn dark" : "home-btn"}>
         돌아가기
       </Link>
     </div>
