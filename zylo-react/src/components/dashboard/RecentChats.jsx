@@ -18,7 +18,7 @@ export const RecentChats = () => {
     <section className="dashboard">
       <div className="dashboard-title">
         <FontAwesomeIcon icon={faComment} />
-        <span>최근 다이렉트 메시지</span>
+        <span>최근 메시지</span>
       </div>
       <div id="chatrooms">
         <Link
