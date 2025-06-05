@@ -60,9 +60,8 @@ export const ChatRoomMessage = () => {
             <div className="unread-count">3</div>
           </div>
         </div>
-        <div className="date-separator">Today</div>
 
-        {/* 예시 메시지 */}
+            {/* 예시 메시지 */}
         <div className="chat-room-message">
           <img
             className="avatar"
@@ -120,4 +119,5 @@ export const ChatRoomMessage = () => {
     </>
   );
 };
+
 export default ChatRoomMessage;
