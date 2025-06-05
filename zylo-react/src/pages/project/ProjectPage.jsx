@@ -1,5 +1,6 @@
 import ProjectAside from "../../components/project/ProjectAside";
-import ProjectOutline from "../../components/project/ProjectContent";
+import ProjectContentMenu from "../../components/project/ProjectContentMenu";
+import ProjectContent from "../../components/project/ProjectContent";
 import { BasicLayout } from "../../layouts/BasicLayout";
 
 export const ProjectPage = () => {
@@ -8,7 +9,8 @@ export const ProjectPage = () => {
       <div id="setting-content-container">
         <ProjectAside />
         <div id="project-content-container">
-          <ProjectOutline />
+          <ProjectContentMenu />
+          <ProjectContent />
         </div>
       </div>
     </BasicLayout>
