@@ -591,7 +591,6 @@ body {
   display: flex;
   gap: 8px;
   padding: 10px;
-  background: #f8f9fa;
   border-radius: 6px;
   flex-wrap: wrap;
 }
