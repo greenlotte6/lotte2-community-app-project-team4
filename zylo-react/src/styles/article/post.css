@@ -586,7 +586,7 @@ body {
   border-color: #4285f4;
 }
 
-.toolbar {
+.write-options {
   display: flex;
   gap: 8px;
   padding: 10px;
@@ -594,9 +594,9 @@ body {
   flex-wrap: wrap;
 }
 
-.toolbar button,
-.toolbar select,
-.toolbar input {
+.write-options button,
+.write-options select,
+.write-options input {
   padding: 5px 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
@@ -605,7 +605,7 @@ body {
   font-size: 12px;
 }
 
-.toolbar button:hover {
+.write-options button:hover {
   background: #e9ecef;
 }
 

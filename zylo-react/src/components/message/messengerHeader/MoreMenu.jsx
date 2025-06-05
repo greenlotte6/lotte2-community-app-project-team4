@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CreateChat } from "../chatAction/CreateChat";
 import InviteModal from "../inviteModal/InviteModal";
-import { LeaveChat } from "../chatAction/LeaveChat"; 
+import { LeaveChat } from "../chatAction/LeaveChat";
+import { Link } from "react-router-dom";
 
 export const MoreMenu = ({ onOpenSearch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,10 +34,15 @@ export const MoreMenu = ({ onOpenSearch }) => {
   };
 
   return (
-    <div className="more-menu-wrapper" ref={modalRef}>
-      <button onClick={() => setIsModalOpen(!isModalOpen)}>
+    <>
+      <Link
+        onClick={(e) => {
+          e.preventDefault();
+          setIsModalOpen(!isModalOpen);
+        }}
+      >
         <FontAwesomeIcon className="more" icon={faEllipsis} />
-      </button>
+      </Link>
 
       {isModalOpen && (
         <div className="more-menu-modal">
@@ -58,7 +64,7 @@ export const MoreMenu = ({ onOpenSearch }) => {
           </p>
           <p
             onClick={() => {
-              onOpenSearch(); 
+              onOpenSearch();
               setIsModalOpen(false);
             }}
           >
@@ -97,6 +103,6 @@ export const MoreMenu = ({ onOpenSearch }) => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
