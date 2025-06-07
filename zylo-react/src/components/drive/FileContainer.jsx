@@ -1,42 +1,18 @@
-import { faPlus, faUpload } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
-import { useTheme } from "../../contexts/ThemeContext";
-import { SearchBox } from "./SearchBox";
+import { FullFileBrowser } from "chonky";
 
 export const FileContainer = () => {
-  const { toggled } = useTheme();
+  const files = [
+    { id: "lht", name: "Projects", isDir: true },
+    {
+      id: "mcd",
+      name: "chonky-sphere-v2.png",
+      thumbnailUrl: "https://chonky.io/chonky-sphere-v2.png",
+    },
+  ];
+  const folderChain = [{ id: "xcv", name: "Demo", isDir: true }];
   return (
-    <div id="drive">
-      <SearchBox />
-      <div id="grid-container">
-        <section id="file-grid">
-          <div className="file-container">
-            <Link to="" className={toggled ? "file dark" : "file"}></Link>
-          </div>
-          <div className="file-container">
-            <Link to="" className={toggled ? "file dark" : "file"}></Link>
-          </div>
-          <div className="file-container">
-            <Link to="" className={toggled ? "file dark" : "file"}></Link>
-          </div>
-          <div className="file-container">
-            <Link to="" className={toggled ? "file dark" : "file"}></Link>
-          </div>
-          <div className="file-container">
-            <Link to="" className={toggled ? "file dark" : "file"}></Link>
-          </div>
-          <div className="file-container">
-            <Link to="" className={toggled ? "file dark" : "file"}></Link>
-          </div>
-        </section>
-      </div>
-      <button id="more" className={toggled ? "dark" : "light"}>
-        더보기 <FontAwesomeIcon icon={faPlus} />
-      </button>
-      <button id="upload-btn" className={toggled ? "dark" : "light"}>
-        업로드 <FontAwesomeIcon icon={faUpload} />
-      </button>
+    <div style={{ height: 300 }}>
+      <FullFileBrowser files={files} folderChain={folderChain} />
     </div>
   );
 };

@@ -138,4 +138,6 @@ body {
   font-style: normal;
   scrollbar-color: inherit;
   background-color: #fdfdfd;
+  margin: 0;
+  padding: 0;
 }

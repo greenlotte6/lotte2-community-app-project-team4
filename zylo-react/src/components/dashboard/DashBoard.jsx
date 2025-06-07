@@ -10,7 +10,6 @@ export const DashBoard = () => {
     <div id="dashboard-container" className={toggled ? "dark" : ""}>
       <h1 id="greeting">홍길동 님, 안녕하세요</h1>
       <RecentChats />
-      <hr />
       <RecentArticles />
     </div>
   );

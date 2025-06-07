@@ -26,8 +26,11 @@ export const SideBar = () => {
   };
 
   return (
-    <div id="side-container" className={toggled ? "dark" : ""}>
-      <aside id="side-bar" className={collapsed ? "collapsed" : ""}>
+    <div
+      id="side-container"
+      className={`${toggled ? "dark" : ""} ${collapsed ? "collapsed" : ""}`}
+    >
+      <aside id="side-bar">
         <nav id="collapse">
           <FontAwesomeIcon
             icon={faAnglesLeft}
