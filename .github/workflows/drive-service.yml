@@ -25,10 +25,12 @@ jobs:
           distribution: "temurin"
 
       - name: Change Permission for gradlew
-        run: chmod +x ./zylo-backend/drive-service/gradlew
+        run: chmod +x ./gradlew
+        working-directory: ./zylo-backend/drive-service
 
       - name: Gradle Build
-        run: ./zylo-backend/drive-service/gradlew clean build
+        run: ./gradlew clean build
+        working-directory: ./zylo-backend/drive-service
 
       - name: Docker build & push to Docker Hub
         run: |

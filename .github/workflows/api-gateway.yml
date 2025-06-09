@@ -28,7 +28,8 @@ jobs:
         run: chmod +x ./zylo-backend/api-gateway/gradlew
 
       - name: Gradle Build
-        run: ./zylo-backend/api-gateway/gradlew clean build
+        run: ./gradlew clean build
+        working-directory: ./zylo-backend/api-gateway
 
       - name: Docker build & push to Docker Hub
         run: |
