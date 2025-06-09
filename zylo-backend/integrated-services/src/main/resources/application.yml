@@ -1,6 +1,6 @@
 spring:
   profiles:
-    default: prod # Th
+    default: prod
 ---
 # 배포용 설정
 spring:
