@@ -37,7 +37,7 @@
   min-width: 280px;
   display: flex;
   flex-direction: column;
-  max-height: 90vh;
+  max-height: calc(100vh - 200px);
   overflow-y: auto;
 }
 
@@ -77,6 +77,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
 }
 
 .board-card {
@@ -114,10 +115,102 @@
 }
 
 .clickable-project {
-  cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .clickable-project:hover {
   background-color: #f5f5f5;
+}
+
+.board-wrapper {
+  overflow-x: scroll;
+}
+
+/* ✅ ProjectBoard 전용 모달 스타일 */
+
+.prodjectBoard-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.prodjectBoard-modal-container {
+  background: #1e1e1e;
+  border-radius: 8px;
+  width: 600px;
+  max-width: 90%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.prodjectBoard-modal-header h3,
+.prodjectBoard-modal-body h4 {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.prodjectBoard-modal-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #2e2e2e;
+  color: #eee;
+  font-size: 14px;
+}
+
+.prodjectBoard-modal-textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background-color: #2e2e2e;
+  color: #eee;
+  resize: vertical;
+  font-size: 14px;
+}
+
+.prodjectBoard-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.prodjectBoard-modal-cancel,
+.prodjectBoard-modal-create {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.prodjectBoard-modal-cancel {
+  background-color: #444;
+  color: #ccc;
+}
+
+.prodjectBoard-modal-create {
+  background-color: #2ea44f;
+  color: white;
+}
+
+.prodjectBoard-modal-create:hover {
+  background-color: #218838;
+}
+
+.prodjectBoard-modal-cancel:hover {
+  background-color: #666;
 }

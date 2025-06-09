@@ -6,7 +6,6 @@ import "../../styles/drive/drive.css";
 export const DrivePage = () => {
   return (
     <BasicLayout title={"드라이브"}>
-      <FileBrowser />
       <FileContainer />
     </BasicLayout>
   );

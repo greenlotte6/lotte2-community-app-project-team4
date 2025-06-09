@@ -1,0 +1,37 @@
+#배포용 설정
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: api-gateway
+
+logging:
+  file:
+    path: /var/www/api-gateway
+  level:
+    root: info
+
+server:
+  port: 8083
+  servlet:
+    context-path: /
+---
+#개발용 설정
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: api-gateway
+
+logging:
+  level:
+    root: info
+
+server:
+  port: 8080
+  servlet:
+    context-path: /

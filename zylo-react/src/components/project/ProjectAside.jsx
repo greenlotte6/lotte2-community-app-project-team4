@@ -4,13 +4,17 @@ import "../../styles/project/aside.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolderOpen } from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "../../contexts/ThemeContext";
+import useProjectStore from "../../store/useProjectStore";
 
 const ProjectAside = () => {
   const { toggled } = useTheme();
   const navigate = useNavigate();
 
-  const handleProjectClick = (projectName) => {
-    navigate(`/project/board?name=${encodeURIComponent(projectName)}`);
+  // zustand 배열 가져오기
+  const projects = useProjectStore((state) => state.projects);
+
+  const handleProjectClick = (projectId) => {
+    navigate(`/project?id=${encodeURIComponent(projectId)}`);
   };
 
   return (
@@ -21,36 +25,24 @@ const ProjectAside = () => {
         프로젝트 리스트
       </div>
       <ul className="project-menu">
-        <li onClick={() => handleProjectClick("프로젝트1")}>
-          프로젝트1
-          <div className="progress-container">
-            <div className="progress-bar" style={{ width: "30%" }}></div>
-          </div>
-        </li>
-      </ul>
-      <ul className="project-menu">
-        <li onClick={() => handleProjectClick("프로젝트2")}>
-          프로젝트2
-          <div className="progress-container">
-            <div className="progress-bar" style={{ width: "30%" }}></div>
-          </div>
-        </li>
-      </ul>
-      <ul className="project-menu">
-        <li onClick={() => handleProjectClick("프로젝트3")}>
-          프로젝트3
-          <div className="progress-container">
-            <div className="progress-bar" style={{ width: "30%" }}></div>
-          </div>
-        </li>
-      </ul>
-      <ul className="project-menu">
-        <li onClick={() => handleProjectClick("프로젝트4")}>
-          프로젝트4
-          <div className="progress-container">
-            <div className="progress-bar" style={{ width: "30%" }}></div>
-          </div>
-        </li>
+        {projects.map((project) => (
+          <li key={project.id} onClick={() => handleProjectClick(project.id)}>
+            {project.title}
+            <div className="progress-container">
+              <div
+                className="progress-bar"
+                style={{
+                  width:
+                    project.totalWork && project.progressWork
+                      ? `${Math.round(
+                          (project.progressWork / project.totalWork) * 100
+                        )}%`
+                      : "0%",
+                }}
+              ></div>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );

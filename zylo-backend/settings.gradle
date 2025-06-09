@@ -1,0 +1,2 @@
+rootProject.name = 'zylo-backend'
+include("api-gateway", "integrated-services", "chat-service", "drive-service")
