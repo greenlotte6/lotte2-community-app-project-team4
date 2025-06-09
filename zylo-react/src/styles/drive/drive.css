@@ -161,3 +161,51 @@
 .tree-node:hover {
   background-color: #cacaca;
 }
+
+.file-explorer {
+  background-color: inherit;
+}
+
+.toolbar {
+  width: 100%;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.fm-toolbar {
+  width: 100%;
+  height: 100%;
+}
+
+.toolbar .fm-toolbar > div {
+  height: 100%;
+}
+
+.navigation-pane {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.folders-preview {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.fm-modal.dialog {
+  width: 600px;
+  margin: auto;
+}
+
+.fm-modal-header svg {
+  font-size: 16px;
+}
+
+.files .file-item .rename-file-container {
+  top: 85px;
+}
+
+.rename-file {
+  color: #252525;
+}

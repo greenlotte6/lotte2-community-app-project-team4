@@ -2,8 +2,10 @@ name: Deploy React App to S3 + CloudFront
 
 on:
   push:
+    paths:
+      - "zylo-react/**" # zylo-react 디렉터리에 푸시될 때만 배포
     branches:
-      - main  # main 브랜치에 푸시될 때만 배포
+      - main # main 브랜치에 푸시될 때만 배포
 
 jobs:
   deploy:

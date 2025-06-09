@@ -18,7 +18,7 @@ export const Header = ({ title }) => {
           <span className="theme-name">Dark</span>
         </div>
         <div className="nav">
-          <div className="toolbar">
+          <div className="header-toolbar">
             <Link to="">
               <FontAwesomeIcon icon={faShareFromSquare} />
             </Link>
