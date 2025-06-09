@@ -5,7 +5,7 @@ name: Zylo Server CI/CD with Gradle & docker
 on:
   push:
     paths:
-      - "zylo-backend/integrated-services/**"
+      - "zylo-backend/api-gateway/**"
     branches: ["main"]
 
 jobs:
@@ -25,16 +25,15 @@ jobs:
           distribution: "temurin"
 
       - name: Change Permission for gradlew
-        run: chmod +x ./zylo-backend/integrated-services/gradlew
+        run: chmod +x ./zylo-backend/api-gateway/gradlew
 
       - name: Gradle Build
-        run: ./zylo-backend/integrated-services/gradlew clean build
+        run: ./zylo-backend/api-gateway/gradlew clean build
 
       - name: Docker build & push to Docker Hub
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/zylo-integrated-services .
-          docker push ${{ secrets.DOCKER_USERNAME }}/zylo-integrated-services
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/zylo-api-gateway .  docker push ${{ secrets.DOCKER_USERNAME }}/zylo-api-gateway
 
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -63,9 +62,9 @@ jobs:
           script: |
             sudo docker ps
             sudo docker volume ls | grep zylo || sudo docker volume create zylo
-            sudo docker stop zylo-integrated-services || true && sudo docker rm zylo-integrated-services || true
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/zylo-integrated-services
-            sudo docker run -d --name zylo-integrated-services --memory=256m -e TZ=Asia/Seoul  -v zylo:/var/www/integrated-services  -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-integrated-services
+            sudo docker stop zylo-api-gateway || true && sudo docker rm zylo-api-gateway || true
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/zylo-api-gateway-service
+            sudo docker run -d --name zylo-api-gateway --memory=128m -e TZ=Asia/Seoul  -v zylo:/var/www/api-gateway -p 8083:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-api-gateway
             sudo docker image prune -f
 
       - name: revoke runner ip address

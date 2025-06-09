@@ -5,7 +5,7 @@ name: Zylo Server CI/CD with Gradle & docker
 on:
   push:
     paths:
-      - "zylo-backend/integrated-services/**"
+      - "zylo-backend/chat-service/**"
     branches: ["main"]
 
 jobs:
