@@ -10,7 +10,7 @@ spring:
 
 logging:
   file:
-    path: /var/www/upload/data
+    path: /var/www/drive-service
   level:
     root: info
 
