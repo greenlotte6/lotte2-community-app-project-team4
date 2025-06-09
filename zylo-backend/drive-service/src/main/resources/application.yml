@@ -1,0 +1,39 @@
+#배포용 설정
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: drive-service
+    version: 0.0.1
+
+logging:
+  file:
+    path: /var/www/upload/data
+  level:
+    root: info
+
+server:
+  port: 8081
+  servlet:
+    context-path: /
+---
+#개발용 설정
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: drive-service
+    version: 0.0.1
+
+logging:
+  level:
+    root: info
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
