@@ -21,6 +21,13 @@ import ProjectSettingPage from "../pages/setting/ProjectSettingPage";
 import { ProjectPage } from "../pages/project/ProjectPage";
 import { ProjectBoardPage } from "../pages/project/ProjectBoardPage";
 import { ProjectTeamPage } from "../pages/project/ProjectTeamPage";
+import { CommentForm } from "../components/article/CommentForm";
+import { CommentItem } from "../components/article/CommentItem";
+import { CommentList } from "../components/article/CommentList";
+import { Modal } from "../components/article/Modal";
+import { Post } from "../components/article/Post";
+
+
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -45,4 +52,14 @@ export const router = createBrowserRouter([
   { path: "/project", element: <ProjectPage /> },
   { path: "/project/task", element: <ProjectBoardPage /> },
   { path: "/project/team", element: <ProjectTeamPage /> },
+  { path: "/project/board", element: <ProjectBoardPage /> },
+  { path: "/article/Post", element: <Post /> },
+  { path: "/article/Modal", element: <Modal /> },
+  { path: "/article/CommentList", element: <CommentList /> },
+  { path: "/article/CommentItem", element: <CommentItem /> },
+  { path: "/article/CommentForm", element: <CommentForm /> },
+
+
+
+
 ]);

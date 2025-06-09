@@ -1,19 +1,22 @@
 import PostList from "../../components/article/PostList";
 import { BasicLayout } from "../../layouts/BasicLayout";
-import Pagination from "../../components/article/Pagination";
-import "../../styles/article/post.css";
+import { Pagination }from "../../components/article/Pagination";
+import "../../styles/article/postList.css";
 import { Link } from "react-router-dom";
 import { SideMenu } from "../../components/article/SideMenu";
+
+import { Post } from "../../components/article/Post";
+import { Modal } from "../../components/article/Modal";
+import { CommentList } from "../../components/article/CommentList";
+import { CommentItem } from "../../components/article/CommentItem";
+import { CommentForm } from "../../components/article/CommentForm";
+
 
 export const ListPage = () => {
   return (
     <BasicLayout title={"게시판"}>
       <SideMenu />
-      <section id="post-list-container">
-        <h1 className="list-title">공지사항</h1>
         <PostList />
-        <Link className="write-btn">글쓰기 +</Link>
-      </section>
     </BasicLayout>
   );
 };
