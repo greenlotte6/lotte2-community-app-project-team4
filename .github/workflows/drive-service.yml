@@ -35,7 +35,8 @@ jobs:
       - name: Docker build & push to Docker Hub
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service .  docker push ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
+          docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service .  
+          docker push ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
 
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
