@@ -37,7 +37,7 @@
   min-width: 280px;
   display: flex;
   flex-direction: column;
-  max-height: 80vh;
+  max-height: calc(100vh - 200px);
   overflow-y: auto;
 }
 
@@ -115,7 +115,6 @@
 }
 
 .clickable-project {
-  cursor: pointer;
   transition: background-color 0.2s ease;
 }
 

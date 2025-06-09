@@ -1,5 +1,5 @@
 .project-side-bar {
-  width: 220px;
+  width: 250px;
   background: #f8f8f8;
   padding: 20px;
   height: calc(100vh - 90px);
@@ -23,6 +23,7 @@
   padding: 5px;
   cursor: pointer;
   padding-left: 10px;
+  font-size: 13px;
 }
 .project-menu li:hover {
   background: #e9ecef;
