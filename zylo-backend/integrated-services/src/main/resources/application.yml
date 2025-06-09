@@ -22,15 +22,20 @@ spring:
       connection-timeout: 10000
       maximum-pool-size: 20
 
-    jpa:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
       hibernate:
-        ddl-auto: none
-      show-sql: true
-      properties:
-        hibernate:
-          show_sql: true
-          format_sql: true
-          globally_quoted_identifiers: true
+        jdbc:
+          batch_size: 20
+        cache:
+          use_second_level_cache: false
+          use_query_cache: false
+        show_sql: false
+        format_sql: true
+        globally_quoted_identifiers: true
+    show-sql: false
 
 logging:
   file:
@@ -39,6 +44,16 @@ logging:
     root: info
 
 server:
+  tomcat:
+    threads:
+      max: 50
+      min-spare: 5
+    max-connections: 100
+    connection-timeout: 5s
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
   port: 8080
   servlet:
     context-path: /
@@ -63,15 +78,15 @@ spring:
       connection-timeout: 10000
       maximum-pool-size: 20
 
-    jpa:
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
       hibernate:
-        ddl-auto: none
-      show-sql: true
-      properties:
-        hibernate:
-          show_sql: true
-          format_sql: true
-          globally_quoted_identifiers: true
+        show_sql: false
+        format_sql: true
+        globally_quoted_identifiers: true
+    show-sql: false
 
 logging:
   level:
