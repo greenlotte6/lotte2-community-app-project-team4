@@ -29,7 +29,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `integrated_services`.`plan_benefits` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `benefit_name` VARCHAR(20) NOT NULL,
+  `benefits` TEXT NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `integrated_services`.`user` (
     FOREIGN KEY (`plan_id`)
     REFERENCES `integrated_services`.`plan` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE CASCADE)
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -348,6 +348,30 @@ CREATE TABLE IF NOT EXISTS `integrated_services`.`project_collaborators` (
     REFERENCES `integrated_services`.`project` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `integrated_services`.`purchase_history`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `integrated_services`.`purchase_history` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `plan_id` INT NOT NULL,
+  `user_id` VARCHAR(16) NOT NULL,
+  `latest_purchase` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_purchase_history_plan1_idx` (`plan_id` ASC) VISIBLE,
+  INDEX `fk_purchase_history_user1_idx` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `fk_purchase_history_plan1`
+    FOREIGN KEY (`plan_id`)
+    REFERENCES `integrated_services`.`plan` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_purchase_history_user1`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `integrated_services`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
