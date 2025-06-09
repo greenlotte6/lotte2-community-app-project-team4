@@ -1,4 +1,4 @@
-FROM amazoncorretto:17
+FROM openjdk:17-jdk-slim
 LABEL authors="jas06113"
 
 COPY ["./build/libs/drive-service-*-SNAPSHOT.jar", "/home/root/app.jar"]
