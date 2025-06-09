@@ -9,7 +9,7 @@ spring:
 
 logging:
   file:
-    path: /var/www/upload/data
+    path: /var/www/api-gateway
   level:
     root: info
 

@@ -34,7 +34,7 @@ spring:
 
 logging:
   file:
-    path: /var/www/upload/data
+    path: /var/www/integrated-services
   level:
     root: info
 
