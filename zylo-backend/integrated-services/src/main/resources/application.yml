@@ -1,0 +1,82 @@
+# 배포용 설정
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: integrated-services
+    version: 0.0.1
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://zylo-mysql.cb48u8208g0z.ap-northeast-2.rds.amazonaws.com:3306/integrated-services
+    username: root
+    password: a8imbsha6eMK8IcQkXC7zbul8QQK9xIZQWB6Z9z15
+
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 20
+
+    jpa:
+      hibernate:
+        ddl-auto: none
+      show-sql: true
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+          globally_quoted_identifiers: true
+
+logging:
+  file:
+    path: /var/www/upload/data
+  level:
+    root: info
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+---
+# 개발용 설정
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: integrated-services
+    version: 0.0.1
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306
+    username: root
+    password: 1234
+
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 20
+
+    jpa:
+      hibernate:
+        ddl-auto: none
+      show-sql: true
+      properties:
+        hibernate:
+          show_sql: true
+          format_sql: true
+          globally_quoted_identifiers: true
+
+logging:
+  level:
+    root: info
+    sql: debug
+    org:
+      springframework: info
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
