@@ -1,6 +1,6 @@
 # 작성자: 이현민(id3ntity99)
 # 내용  : github actions & docker를 이용한 CI/CD
-name: Zylo Server CI/CD with Gradle & docker
+name: Zylo Drive Server CI/CD with Gradle & docker
 
 on:
   push:
