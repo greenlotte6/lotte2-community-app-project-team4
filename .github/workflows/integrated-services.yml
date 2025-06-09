@@ -65,7 +65,7 @@ jobs:
             sudo docker volume ls | grep zylo || sudo docker volume create zylo
             sudo docker stop zylo-integrated-services || true && sudo docker rm zylo-integrated-services || true
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/zylo-integrated-services
-            sudo docker run -d --name zylo-integrated-services --memory=128m -e TZ=Asia/Seoul  -v zylo:/var/www/integrated-services  -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-integrated-services
+            sudo docker run -d --name zylo-integrated-services --memory=256m -e TZ=Asia/Seoul  -v zylo:/var/www/integrated-services  -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-integrated-services
             sudo docker image prune -f
 
       - name: revoke runner ip address
