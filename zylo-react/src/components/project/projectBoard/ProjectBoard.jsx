@@ -13,19 +13,16 @@ const initialBoardData = {
     "RQ-300 메인 대시보드 구현",
     "RQ-009 캘린더 화면 구현",
     "RQ-301 페이지 생성",
-    "RQ-302 페이지 작성"
+    "RQ-302 페이지 작성",
   ],
   todo: [],
   inProgress: [
     "RQ-011 게시판 화면 구현",
     "RQ-004 데이터베이스 설계",
     "RQ-012 프로젝트 화면 구현",
-    "RQ-201 로그인/로그아웃"
+    "RQ-201 로그인/로그아웃",
   ],
-  inReview: [
-    "RQ-010 메시지 화면 구현",
-    "RQ-014 설정 화면 구현"
-  ],
+  inReview: ["RQ-010 메시지 화면 구현", "RQ-014 설정 화면 구현"],
   done: [
     "RQ-008 페이지 화면 구현",
     "RQ-007 메인 대시보드 구현",
@@ -33,18 +30,21 @@ const initialBoardData = {
     "RQ-003 프로젝트 아키텍처 설계",
     "RQ-005 메인 화면 구현",
     "RQ-006 회원 화면 구현",
-    "RQ-013 드라이브 화면 구현"
-  ]
+    "RQ-013 드라이브 화면 구현",
+  ],
 };
 
 const DraggableCard = ({ item, index, column }) => {
-  const [{ isDragging }, dragRef] = useDrag(() => ({
-    type: "CARD",
-    item: { item, index, column },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+  const [{ isDragging }, dragRef] = useDrag(
+    () => ({
+      type: "CARD",
+      item: { item, index, column },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     }),
-  }), [item, index, column]);
+    [item, index, column]
+  );
 
   return (
     <div
@@ -58,20 +58,28 @@ const DraggableCard = ({ item, index, column }) => {
 };
 
 const DroppableColumn = ({ title, items, color, columnKey, onDropCard }) => {
-  const [, dropRef] = useDrop(() => ({
-    accept: "CARD",
-    drop: (draggedItem) => {
-      if (draggedItem.column !== columnKey) {
-        onDropCard(draggedItem, columnKey);
-        draggedItem.column = columnKey; // 중요: drop된 이후 column을 업데이트함
-      }
-    },
-  }), [onDropCard, columnKey]);
+  const [, dropRef] = useDrop(
+    () => ({
+      accept: "CARD",
+      drop: (draggedItem) => {
+        if (draggedItem.column !== columnKey) {
+          onDropCard(draggedItem, columnKey);
+          draggedItem.column = columnKey; // 중요: drop된 이후 column을 업데이트함
+        }
+      },
+    }),
+    [onDropCard, columnKey]
+  );
 
   return (
     <div className="board-column">
-      <div className="board-header" style={{ borderBottom: `2px solid ${color}` }}>
-        <span className="board-title" style={{ color }}>{title}</span>
+      <div
+        className="board-header"
+        style={{ borderBottom: `2px solid ${color}` }}
+      >
+        <span className="board-title" style={{ color }}>
+          {title}
+        </span>
         <span className="board-count">{items.length}</span>
       </div>
       <div className="board-items" ref={dropRef}>

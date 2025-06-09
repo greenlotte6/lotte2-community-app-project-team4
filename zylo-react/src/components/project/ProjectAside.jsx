@@ -10,7 +10,7 @@ const ProjectAside = () => {
   const navigate = useNavigate();
 
   const handleProjectClick = (projectName) => {
-    navigate(`/project/board?name=${encodeURIComponent(projectName)}`);
+    navigate(`/project?name=${encodeURIComponent(projectName)}`);
   };
 
   return (
@@ -24,7 +24,7 @@ const ProjectAside = () => {
         <li onClick={() => handleProjectClick("프로젝트1")}>
           프로젝트1
           <div className="progress-container">
-            <div className="progress-bar" style={{ width: "30%" }}></div>
+            <div className="progress-bar" style={{ width: "80%" }}></div>
           </div>
         </li>
       </ul>
@@ -32,7 +32,7 @@ const ProjectAside = () => {
         <li onClick={() => handleProjectClick("프로젝트2")}>
           프로젝트2
           <div className="progress-container">
-            <div className="progress-bar" style={{ width: "30%" }}></div>
+            <div className="progress-bar" style={{ width: "60%" }}></div>
           </div>
         </li>
       </ul>
@@ -40,7 +40,7 @@ const ProjectAside = () => {
         <li onClick={() => handleProjectClick("프로젝트3")}>
           프로젝트3
           <div className="progress-container">
-            <div className="progress-bar" style={{ width: "30%" }}></div>
+            <div className="progress-bar" style={{ width: "50%" }}></div>
           </div>
         </li>
       </ul>
