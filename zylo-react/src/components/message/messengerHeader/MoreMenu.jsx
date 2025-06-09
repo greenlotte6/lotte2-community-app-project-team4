@@ -4,7 +4,6 @@ import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { CreateChat } from "../chatAction/CreateChat";
 import InviteModal from "../inviteModal/InviteModal";
 import { LeaveChat } from "../chatAction/LeaveChat";
-import { Link } from "react-router-dom";
 
 export const MoreMenu = ({ onOpenSearch }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,19 +12,21 @@ export const MoreMenu = ({ onOpenSearch }) => {
   const [isLeaveChatModalOpen, setIsLeaveChatModalOpen] = useState(false);
 
   const modalRef = useRef(null);
+  const wrapperRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
+      if (
+        wrapperRef.current &&
+        !wrapperRef.current.contains(e.target)
+      ) {
         setIsModalOpen(false);
         setIsCreateModalOpen(false);
         setIsInviteModalOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   const handleMakeChat = () => {
@@ -34,46 +35,28 @@ export const MoreMenu = ({ onOpenSearch }) => {
   };
 
   return (
-    <>
-      <Link
-        onClick={(e) => {
-          e.preventDefault();
-          setIsModalOpen(!isModalOpen);
-        }}
+    <div className="more-wrapper" ref={wrapperRef}>
+      <div
+        onClick={() => setIsModalOpen(!isModalOpen)}
+        className="more-toggle"
       >
         <FontAwesomeIcon className="more" icon={faEllipsis} />
-      </Link>
+      </div>
 
       {isModalOpen && (
-        <div className="more-menu-modal">
-          <p
-            onClick={() => {
-              setIsCreateModalOpen(true);
-              setIsModalOpen(false);
-            }}
-          >
+        <div className="more-menu-modal" ref={modalRef}>
+          <p onClick={() => { setIsCreateModalOpen(true); setIsModalOpen(false); }}>
             채팅방 만들기
           </p>
-          <p
-            onClick={() => {
-              setIsLeaveChatModalOpen(true);
-              setIsModalOpen(false);
-            }}
-          >
+          <p onClick={() => { setIsLeaveChatModalOpen(true); setIsModalOpen(false); }}>
             채팅방 나가기
           </p>
-          <p
-            onClick={() => {
-              onOpenSearch();
-              setIsModalOpen(false);
-            }}
-          >
+          <p onClick={() => { onOpenSearch(); setIsModalOpen(false); }}>
             통합 검색
           </p>
         </div>
       )}
 
-      {/* 채팅방 만들기 모달 */}
       {isCreateModalOpen && (
         <CreateChat
           onClose={() => setIsCreateModalOpen(false)}
@@ -81,21 +64,13 @@ export const MoreMenu = ({ onOpenSearch }) => {
         />
       )}
 
-      {/* InviteModal */}
       {isInviteModalOpen && (
         <InviteModal onClose={() => setIsInviteModalOpen(false)} />
       )}
 
-      {/* LeaveChat 모달 */}
       {isLeaveChatModalOpen && (
-        <div
-          className="modal-overlay"
-          onClick={() => setIsLeaveChatModalOpen(false)}
-        >
-          <div
-            className="modal-content"
-            onClick={(e) => e.stopPropagation()} // 내부 클릭 방지
-          >
+        <div className="modal-overlay" onClick={() => setIsLeaveChatModalOpen(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <LeaveChat
               onClose={() => setIsLeaveChatModalOpen(false)}
               onLeave={() => setIsLeaveChatModalOpen(false)}
@@ -103,6 +78,6 @@ export const MoreMenu = ({ onOpenSearch }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };

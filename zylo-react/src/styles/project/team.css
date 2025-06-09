@@ -1,0 +1,63 @@
+.title-area {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.team-management-content {
+  width: 1000px;
+}
+
+.title-area > div:nth-child(1) {
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.team-management-content-area {
+  display: flex;
+  flex-wrap: wrap; /* 줄바꿈 허용 */
+  gap: 30px;
+}
+
+.team-member {
+  display: flex;
+  width: 313px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.team-profile {
+  border: 1px solid #d0d0d0;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+
+.team-member-info {
+  margin-left: 30px;
+}
+
+.team-member-name {
+  font-weight: 500;
+}
+
+.team-member-position {
+  font-size: 15px;
+  color: #727272;
+  margin-top: 5px;
+}
+
+.team-member-currentStatus {
+  font-size: 13px;
+  color: #727272;
+}
+
+.team-member-invite-btn {
+  padding: 10px;
+  color: #ffffff;
+  border: none;
+  background-color: #000000;
+  border-radius: 5px;
+  font-size: 15px;
+}

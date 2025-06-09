@@ -19,6 +19,8 @@ import { DashboardPage } from "../pages/dashboard/DashboardPage";
 import { ListPage } from "../pages/article/ListPage";
 import ProjectSettingPage from "../pages/setting/ProjectSettingPage";
 import { ProjectPage } from "../pages/project/ProjectPage";
+import { ProjectBoardPage } from "../pages/project/ProjectBoardPage";
+import { ProjectTeamPage } from "../pages/project/ProjectTeamPage";
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -41,4 +43,6 @@ export const router = createBrowserRouter([
   { path: "/dashboard", element: <DashboardPage /> },
   { path: "/article", element: <ListPage /> },
   { path: "/project", element: <ProjectPage /> },
+  { path: "/project/task", element: <ProjectBoardPage /> },
+  { path: "/project/team", element: <ProjectTeamPage /> },
 ]);

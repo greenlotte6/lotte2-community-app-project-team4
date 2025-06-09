@@ -1,0 +1,128 @@
+.board-wrapper {
+  display: flex;
+  gap: 16px;
+  padding: 24px;
+  overflow-x: auto;
+  background-color: #fff; /* 밝은 배경 */
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.project-board-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 24px;
+  font-size: 20px;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  background-color: #fff;
+  color: #333;
+}
+
+.project-board-icon {
+  font-size: 20px;
+  color: #555;
+}
+
+.project-board-title {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.board-column {
+  background-color: #ffffff; /* 흰 배경 */
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  min-width: 280px;
+  display: flex;
+  flex-direction: column;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.board-header {
+  padding: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.board-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.board-title {
+  color: #333;
+}
+
+.board-count {
+  background-color: #eee;
+  color: #333;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 12px;
+}
+
+.board-sub {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.board-items {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+}
+
+.board-card {
+  background-color: #f7f7f7;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px;
+  color: #333;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.board-tag {
+  font-size: 12px;
+  color: #777;
+}
+
+.add-item {
+  margin-top: 8px;
+  padding: 6px 10px;
+  border: 1px dashed #aaa;
+  border-radius: 6px;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  font-size: 13px;
+  transition: all 0.2s ease;
+}
+
+.add-item:hover {
+  background-color: #eee;
+  color: #333;
+}
+
+.clickable-project {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clickable-project:hover {
+  background-color: #f5f5f5;
+}
+
+.board-wrapper {
+  overflow-x: scroll;
+}
