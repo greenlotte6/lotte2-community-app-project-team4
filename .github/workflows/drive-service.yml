@@ -65,10 +65,10 @@ jobs:
           port: 22
           script: |
             sudo docker ps
-            sudo docker volume ls | grep zylo || sudo docker volume create zylo
+            sudo docker volume ls | grep zylo-drive-service || sudo docker volume create zylo-drive-service
             sudo docker stop zylo-drive-service || true && sudo docker rm zylo-drive-service || true
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
-            sudo docker run -d --name zylo-drive-service --memory=320m -e TZ=Asia/Seoul  -v zylo:/var/www/drive-service  -p 8081:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
+            sudo docker run -d --name zylo-drive-service --memory=320m -e TZ=Asia/Seoul  -v zylo-drive-service:/var/www/drive-service  -p 8081:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
             sudo docker image prune -f
 
       - name: revoke runner ip address
