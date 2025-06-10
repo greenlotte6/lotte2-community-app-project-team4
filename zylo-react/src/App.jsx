@@ -9,8 +9,8 @@ import "./styles/setting/aside.css";
 import { RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { router } from "./routers/routers";
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
   return (

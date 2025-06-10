@@ -2,8 +2,8 @@
   display: flex;
   gap: 16px;
   padding: 24px;
-  overflow-x: auto;
-  background-color: #fff; /* 밝은 배경 */
+  overflow-x: hidden; /* 또는 제거 */
+  flex-wrap: nowrap; /* 칼럼 줄바꿈 방지 */
   height: 100vh;
   box-sizing: border-box;
 }
@@ -16,7 +16,6 @@
   font-size: 20px;
   font-weight: 600;
   border-bottom: 1px solid #ddd;
-  background-color: #fff;
   color: #333;
 }
 
@@ -31,13 +30,14 @@
 }
 
 .board-column {
-  background-color: #ffffff; /* 흰 배경 */
   border: 1px solid #ddd;
   border-radius: 6px;
-  min-width: 280px;
+  flex: 1;
+  min-width: 220px; /* 필요 시 줄이기 */
+  max-width: 1fr;
   display: flex;
   flex-direction: column;
-  max-height: calc(100vh - 200px);
+  max-height: calc(100vh - 320px);
   overflow-y: auto;
 }
 
@@ -62,8 +62,9 @@
   background-color: #eee;
   color: #333;
   border-radius: 999px;
-  padding: 2px 8px;
+  padding: 2px 6px;
   font-size: 12px;
+  margin-left: 5px;
 }
 
 .board-sub {
@@ -121,9 +122,8 @@
 .clickable-project:hover {
   background-color: #f5f5f5;
 }
-
-.board-wrapper {
-  overflow-x: scroll;
+.clickable-project:hover.dark {
+  background-color: #050020;
 }
 
 /* ✅ ProjectBoard 전용 모달 스타일 */

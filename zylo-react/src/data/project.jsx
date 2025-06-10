@@ -69,12 +69,12 @@ export const dummyMembers = [
   },
   {
     id: 4,
-    name: "홍길동",
+    name: "가나다",
     role: "기획자",
   },
   {
     id: 5,
-    name: "김민수",
+    name: "홍길동",
     role: "기획자",
   },
   {

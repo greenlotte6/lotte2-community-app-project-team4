@@ -1,5 +1,5 @@
 .project-side-bar {
-  width: 250px;
+  width: 300px;
   background: #f8f8f8;
   padding: 20px;
   height: calc(100vh - 90px);
@@ -12,6 +12,11 @@
 }
 .project-side-title {
   color: #848484;
+}
+
+.project-side-title > span {
+  float: right;
+  cursor: pointer;
 }
 
 .project-menu {
@@ -54,4 +59,12 @@
 
 .project-side-bar.dark {
   background: #222221;
+}
+
+.project-menu .selected {
+  background-color: #e6f0ff;
+  color: #007bff;
+  font-weight: 600;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
 }

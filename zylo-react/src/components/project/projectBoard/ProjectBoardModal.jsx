@@ -1,62 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
+import "../../../styles/project/modal.css";
 
-export const ProjectBoardModal = ({
-  newItemText,
-  setNewItemText,
-  setIsModalOpen,
-  setBoardState,
-  targetColumnForNewItem,
-}) => {
-  const handleCreate = () => {
-    if (!newItemText.trim()) return;
+export const ProjectBoardModal = ({ modal, onClose, onCreate }) => {
+  const [title, setTitle] = useState("");
+  const [desc, setDesc] = useState("");
 
-    setBoardState((prev) => {
-      const updated = {
-        ...prev,
-        [targetColumnForNewItem]: [
-          ...prev[targetColumnForNewItem],
-          newItemText,
-        ],
-      };
-      localStorage.setItem("boardState", JSON.stringify(updated));
-      return updated;
-    });
+  const createHandler = () => {
+    if (!title.trim()) {
+      alert("작업 제목을 입력하세요.");
+      return;
+    }
 
-    setNewItemText("");
-    setIsModalOpen(false);
+    onCreate({ title, desc });
+    setTitle("");
+    setDesc("");
+    onClose();
   };
 
+  if (!modal) return null;
   return (
     <div className="modal-overlay">
       <div className="modal-container">
         <div className="modal-header">
           <h3>
-            Add a title <span style={{ color: "red" }}>*</span>
+            작업 제목 <span style={{ color: "red" }}>*</span>
           </h3>
           <input
             type="text"
             className="modal-input"
-            placeholder="Title"
-            value={newItemText}
-            onChange={(e) => setNewItemText(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-        <div className="modal-body">
-          <h4>Add a description</h4>
+        <div className="project-modal-body">
+          <h4>작업 설명</h4>
           <textarea
             className="modal-textarea"
-            placeholder="Type your description here..."
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
           ></textarea>
         </div>
-        <div className="modal-footer">
+        <div className="project-modal-footer">
           <button
             className="modal-cancel"
-            onClick={() => setIsModalOpen(false)}
+            onClick={() => {
+              onClose();
+            }}
           >
-            Cancel
+            취소
           </button>
-          <button className="modal-create" onClick={handleCreate}>
-            Create
+          <button className="modal-create" onClick={createHandler}>
+            생성
           </button>
         </div>
       </div>
