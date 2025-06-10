@@ -44,7 +44,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_PRIVATE_KEY }}
-          aws-region: ap-northeast-2
+          aws-region: ${{ secrets.AWS_REGION }}
       - name: get runner ip address
         id: ip
         uses: haythem/public-ip@v1.2
@@ -68,7 +68,11 @@ jobs:
             sudo docker volume ls | grep zylo-drive-service || sudo docker volume create zylo-drive-service
             sudo docker stop zylo-drive-service || true && sudo docker rm zylo-drive-service || true
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
-            sudo docker run -d --name zylo-drive-service --memory=320m -e TZ=Asia/Seoul  -v zylo-drive-service:/var/www/drive-service  -p 8081:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
+            sudo docker run -d --name zylo-drive-service \
+            --memory=320m \
+            -e TZ=Asia/Seoul -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY }} -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_PRIVATE_KEY }} -e AWS_REGION=${{ secrets.AWS_REGION }} \
+            -v zylo-drive-service:/var/www/drive-service \
+            -p 8081:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
             sudo docker image prune -f
 
       - name: revoke runner ip address

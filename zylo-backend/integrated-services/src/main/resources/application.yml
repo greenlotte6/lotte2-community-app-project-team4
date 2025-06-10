@@ -20,7 +20,10 @@ spring:
 
     hikari:
       connection-timeout: 10000
-      maximum-pool-size: 20
+      maximum-pool-size: 5
+      minimum-idle: 1
+      idle-timeout: 30000
+      max-lifetime: 1800000
 
   jpa:
     hibernate:
@@ -87,7 +90,6 @@ spring:
         format_sql: true
         globally_quoted_identifiers: true
     show-sql: false
-
 logging:
   level:
     root: info
