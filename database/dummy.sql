@@ -7,4 +7,17 @@ INSERT INTO `plan_benefits` VALUES (2, "드라이브 용량 2GB, 무제한 파�
 INSERT INTO `plan` VALUES (1, 1, 0, 1);
 INSERT INTO `plan` VALUES (2, 2,  99000, 2);
 
+#비밀번호: abc@1234567
 INSERT INTO `user` VALUES ("abc123", "abc123@example.com", "$2a$12$G5OwzcXNHz51v30Givzg6eH61o4ROJLqpTCEYlUj5hDrjSUoqUjMm", NULL, 1, "normal");
+
+SELECT
+u.id,
+pn.`id`,
+pn.`name`
+FROM `user` u
+LEFT JOIN profile_images `pi`
+ON u.profile_image_id = `pi`.id
+JOIN plan 
+ON u.plan_id = plan.id
+JOIN plan_name `pn`
+ON plan.name_id = pn.id;

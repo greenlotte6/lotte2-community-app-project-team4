@@ -1,6 +1,6 @@
 package com.example.integratedservices.controller;
 
-import com.example.integratedservices.service.UserService;
+import com.example.integratedservices.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
