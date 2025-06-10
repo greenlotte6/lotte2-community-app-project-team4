@@ -31,6 +31,10 @@ jobs:
       - name: Gradle Build
         run: ./gradlew clean build
         working-directory: ./zylo-backend/drive-service
+        env:
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_PRIVATE_KEY }}
+          AWS_REGISON: ${{ secrets.AWS_REGION }}
 
       - name: Docker build & push to Docker Hub
         run: |
