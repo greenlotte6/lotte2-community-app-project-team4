@@ -24,7 +24,7 @@
         .list-title {
             font-size: 32px;
             font-weight: 700;
-            color: #4285f4;
+            color: inherit;
             margin-top:-50px;
             margin-bottom: 30px;
             margin-left: 10px;
@@ -38,17 +38,24 @@
             width: 83.5%;
             height: 80%;
             margin-left: 10px;
+            overflow: visible !important;
             
         }
 
         .content-item {
-            background: white;
-            
+            background: inherit;
+            z-index: 1;
+            position: relative;
             border-radius: 12px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: z-index 0.3s ease transform 0.2s ease, box-shadow 0.2s ease;
             /*수정*/
-            overflow: visible;
+            overflow: visible !important;
+        }
+
+
+        .content-item.menu-open{
+            z-index: 1100;
         }
 
         .content-item:hover {
@@ -56,8 +63,12 @@
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
         }
 
+        .content-item.expanded {
+         z-index: 20;
+}
+
         .content-item.expanded .item-header{
-            background-color: #e6f0ff;
+            background-color: var(--card-bg);
         }
 
         .item-header {
@@ -67,23 +78,32 @@
             justify-content: space-between;
             font-size: 40px;
             cursor: pointer;
-            background-color: white;
+            z-index: 2;
+            background-color: var(--card-bg);
             transition: background-color 0.2s ease;
         }
 
-        
+        .item-header.expanded-header.dark{
+            background: linear-gradient(135deg, #96c9ff 0%, #5da9ff 100%);
+        }
+
+        .item-header.expanded-header.light{
+            background: linear-gradient(135deg, #96c9ff 0%, #5da9ff 100%);
+        }
+
+       
 
         .item-header:hover {
-            background-color: #f8f9fa;
+            background: linear-gradient(135deg, #96c9ff 0%, #5da9ff 100%);
         }
 
         .featured-item .item-header {
-            background: linear-gradient(135deg, #a8d5ff 0%, #7bb3ff 100%);
-            color: white;
+            
+            color: inherit;
         }
 
         .featured-item .item-header:hover {
-            background: linear-gradient(135deg, #96c9ff 0%, #6ba3ff 100%);
+            background: linear-gradient(135deg, #96c9ff 0%, #5da9ff 100%);
         }
 
         .item-left {
@@ -140,6 +160,9 @@
         .views {
             font-size: 14px;
             font-weight: 500;
+            display: flex;
+            position: relative;
+            right: 550px;
         }
 
         .menu-btn {
@@ -151,7 +174,8 @@
             padding: 8px;
             border-radius: 4px;
             transition: background-color 0.2s ease;
-            z-index: -5;
+            z-index: 2;
+            margin-top: 15px;
         }
 
         .menu-btn:hover {
@@ -242,18 +266,18 @@
 
         .action-btn:hover {
             background: #f8f9fa;
-            border-color: #4285f4;
-            color: #4285f4;
+            border-color: #5da9ff;
+            color: #5da9ff;
         }
 
         .action-btn.primary {
-            background: #4285f4;
+            background: #5da9ff;
             color: white;
-            border-color: #4285f4;
+            border-color: #5da9ff;
         }
 
         .action-btn.primary:hover {
-            background: #3367d6;
+            background: #5da9ff;
         }
 
         .pagination {
@@ -282,7 +306,7 @@
         }
 
         .page-btn.active {
-            background-color: #4285f4;
+            background-color: #5da9ff;
             color: white;
         }
 
@@ -307,7 +331,7 @@
         }
 
         .write-btn:hover {
-            background: #3367d6;
+            background: #5da9ff;
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(66, 133, 244, 0.4);
         }
@@ -316,7 +340,7 @@
 
         .menu-container{
             position: relative;
-            z-index: 1100;
+            z-index: 10;
         }
 
         .dropdown-menu{
@@ -328,7 +352,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
             min-width: 120px;
-            z-index: 1100;
+            z-index: 9999;
             opacity: 0;
             visibility: hidden;
             transform: translateY(-10px);
@@ -449,7 +473,7 @@
 /* 댓글 작성 폼 */
 .comment-form {
     background: white;
-    border: 2px solid #4285f4;
+    border: 2px solid #5da9ff;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(66, 133, 244, 0.1);
@@ -476,7 +500,7 @@
 
 .comment-input:focus {
     outline: none;
-    border-color: #4285f4;
+    border-color: #5da9ff;
     box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.1);
 }
 
@@ -487,7 +511,7 @@
 }
 
 .comment-submit-btn {
-    background: #4285f4;
+    background: #5da9ff;
     color: white;
     border: none;
     padding: 8px 16px;
@@ -498,7 +522,7 @@
 }
 
 .comment-submit-btn:hover {
-    background: #3367d6;
+    background: #5da9ff;
 }
 
 .comment-cancel-btn {
@@ -519,7 +543,8 @@
 
 .comment-menubtn{
     position: relative;
-    left: 880px;
+    cursor: pointer;
+    left: 1030px;
     bottom: 20px;
     font-weight: bolder;
     font-size: 18px;
@@ -547,12 +572,13 @@
 
 .modal-box {
     width: 50vw;
-    height: 50vh;
+    height: 70vh;
     background: white;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .modal-header {
@@ -561,7 +587,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, #a8d5ff 0%, #7bb3ff 100%);
+    background: linear-gradient(135deg, #a8d5ff 0%, #5da9ff 100%);
     color: white;
     border-radius: 12px 12px 0 0;
 }
@@ -586,7 +612,8 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
+    overflow-y: auto;
 }
 
 .title-input {
@@ -598,34 +625,66 @@
     outline: none;
 }
 
+.sub-title-input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+}
+
 .title-input:focus {
-    border-color: #4285f4;
+    border-color: #5da9ff;
 }
 
 .toolbar {
     display: flex;
-    gap: 8px;
-    padding: 10px;
+    gap: 12px;
+    padding: 10px 12px; /* ⬅️ 위아래 패딩을 더 키움 */
     background: #f8f9fa;
     border-radius: 6px;
     flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 60px; /* ⬅️ 최소 높이 지정 */
 }
 
-.toolbar button, .toolbar select, .toolbar input {
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.toolbar button,
+.toolbar select,
+.toolbar input[type="color"] {
+    padding: 10px 14px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
     background: white;
     cursor: pointer;
-    font-size: 12px;
+    min-width: 40px;
+    min-height: 40px;
+    transition: background 0.2s ease;
 }
 
-.toolbar button:hover {
-    background: #e9ecef;
+.toolbar button:hover,
+.toolbar select:hover {
+    background: #e0e7ff;
+}
+
+.toolbar select {
+    appearance: none;
+    background: white;
+}
+
+.toolbar input[type="color"] {
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: none;
 }
 
 .content-editor {
-    flex: 1;
+    height: 100%;
+    min-height: 200px;
     border: 1px solid #ddd;
     border-radius: 6px;
     padding: 15px;
@@ -633,10 +692,16 @@
     font-size: 14px;
     line-height: 1.5;
     overflow-y: auto;
+    max-height: 250px;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    direction: ltr;
+    text-align: left;
 }
 
 .content-editor:focus {
-    border-color: #4285f4;
+    border-color: #5da9ff;
 }
 
 .content-editor:empty:before {
@@ -673,12 +738,12 @@
 }
 
 .btn-submit {
-    background: #4285f4;
+    background: #5da9ff;
     color: white;
 }
 
 .btn-submit:hover {
-    background: #3367d6;
+    background: #5da9ff;
 }
 
 
