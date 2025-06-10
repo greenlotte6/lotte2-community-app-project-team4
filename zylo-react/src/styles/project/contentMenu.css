@@ -33,5 +33,13 @@
 .tab-buttons label.active {
   background: #007bff;
   color: white;
-  border-color: #007bff;
+}
+
+.tab-buttons label.dark {
+  background-color: #1b115a;
+}
+
+.tab-buttons label.active.dark {
+  background: #050020;
+  color: white;
 }

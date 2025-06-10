@@ -582,6 +582,15 @@
   outline: none;
 }
 
+.sub-title-input{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    outline: none;
+}
+
 .title-input:focus {
   border-color: #4285f4;
 }

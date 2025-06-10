@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../../../styles/project/board.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import { useDrag, useDrop } from "react-dnd";
 import { ProjectBoardModal } from "./ProjectBoardModal";
+import useProjectStore from "../../../store/useProjectStore";
 
 const initialBoardData = {
   ready: [
@@ -68,7 +69,7 @@ const DroppableColumn = ({
   onDropCard,
   onClickAddItem,
 }) => {
-  const [dropRef] = useDrop(
+  const [, dropRef] = useDrop(
     () => ({
       accept: "CARD",
       drop: (draggedItem) => {
@@ -115,6 +116,16 @@ const DroppableColumn = ({
 
 const ProjectBoard = ({ projectName }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // 쿼리 파라미터에서 프로젝트 ID 추출
+  const params = new URLSearchParams(location.search);
+  const projectId = params.get("id");
+
+  const projects = useProjectStore((state) => state.projects);
+  const project = projects.find((p) => String(p.id) === String(projectId));
+
+  console.log(project);
 
   const [boardState, setBoardState] = useState(() => {
     const saved = localStorage.getItem("boardState");
@@ -123,10 +134,6 @@ const ProjectBoard = ({ projectName }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [targetColumnForNewItem, setTargetColumnForNewItem] = useState(null);
-
-  const handleClickProjectTitle = () => {
-    navigate("/project");
-  };
 
   const handleDropCard = (draggedItem, targetColumn) => {
     const { item, column } = draggedItem;
@@ -162,13 +169,10 @@ const ProjectBoard = ({ projectName }) => {
           targetColumnForNewItem={targetColumnForNewItem}
         />
       )}
-      <div
-        className="project-board-header clickable-header"
-        onClick={handleClickProjectTitle}
-      >
+      <div className="project-board-header clickable-header">
         <FontAwesomeIcon icon={faClipboard} className="project-board-icon" />
         <div className="project-board-title">
-          {projectName || "프로젝트 이름 없음"}
+          {project.title || "프로젝트 이름 없음"}
         </div>
       </div>
       <div className="board-wrapper">
