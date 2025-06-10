@@ -1,49 +1,21 @@
 import React from "react";
+import "../../styles/article/Pagination.css"; // 스타일 따로 관리하면 좋음
 
-export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-  const handleClick = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      onPageChange(page);
-    }
-  };
-
+export const Pagination = () => {
   return (
     <div className="pagination">
-      <a
-        href="#"
-        className="prev"
-        onClick={(e) => {
-          e.preventDefault();
-          handleClick(currentPage - 1);
-        }}
-      >
-        «
-      </a>
+      
 
-      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-        <a
-          href="#"
+      {[1, 2, 3].map((page) => (
+        <button
           key={page}
-          className={`page ${page === currentPage ? "active" : ""}`}
-          onClick={(e) => {
-            e.preventDefault();
-            handleClick(page);
-          }}
+          className={`page ${page === 1 ? "active" : ""}`} // 1페이지만 활성화 예시
         >
           {page}
-        </a>
+        </button>
       ))}
 
-      <a
-        href="#"
-        className="next"
-        onClick={(e) => {
-          e.preventDefault();
-          handleClick(currentPage + 1);
-        }}
-      >
-        »
-      </a>
+      
     </div>
   );
 };

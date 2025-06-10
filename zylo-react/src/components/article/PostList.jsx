@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../../styles/article/PostList.css";
+import { useTheme } from "../../contexts/ThemeContext";
+import DropdownPortal from "./DropdownPortal";
+import { Pagination } from "./Pagination";
+import { CommentForm } from "./CommentForm";
+import { Modal } from "./Modal";
 
-/* ────────── 예시 데이터 ────────── */
 const posts = [
   {
     id: 1,
-    icon: "/images/article/favicon.png",     // public/images 기준
+    icon: "/images/article/favicon.png",
     title: "zyla",
     subtitle: "4조",
     views: 24,
@@ -62,18 +66,38 @@ const posts = [
   },
 ];
 
-/* ────────── PostList ────────── */
 export default function PostList() {
-  const [expandedId, setExpandedId] = useState(null);   // 글 펼침
-  const [menuOpen, setMenuOpen]   = useState({});       // 드롭다운 열림
-  const menuRefs                  = useRef({});         // 메뉴 DOM
+  const [expandedId, setExpandedId] = useState(null);
+  const { toggled } = useTheme();
+  const [menuOpen, setMenuOpen] = useState({});
+  const [commentMenuOpen, setCommentMenuOpen] = useState({});
+  const [commentingId, setCommentingId] = useState(null);
+  const btnRefs = useRef({});
+  const commentBtnRefs = useRef({});
 
-  /* 외부 클릭 시 드롭다운 닫기 */
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalSubtitle, setModalSubtitle] = useState("");
+  const [modalContent, setModalContent] = useState("");
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const openModal = () => setIsModalVisible(true);
+  const closeModal = ()=> setIsModalVisible(false);
+
+  const handleModalSubmit = (data)=>{
+    console.log("모달 제출 데이터: ", data);
+    closeModal();
+  };
+
   useEffect(() => {
     const handleOutside = (e) => {
-      Object.entries(menuRefs.current).forEach(([id, ref]) => {
+      Object.entries(btnRefs.current).forEach(([id, ref]) => {
         if (ref && !ref.contains(e.target)) {
           setMenuOpen((prev) => ({ ...prev, [id]: false }));
+        }
+      });
+      Object.entries(commentBtnRefs.current).forEach(([key, ref]) => {
+        if (ref && !ref.contains(e.target)) {
+          setCommentMenuOpen((prev) => ({ ...prev, [key]: false }));
         }
       });
     };
@@ -81,21 +105,36 @@ export default function PostList() {
     return () => document.removeEventListener("mousedown", handleOutside);
   }, []);
 
-  /* 토글 함수 */
-  const toggleExpand = (id) =>
-    setExpandedId((prev) => (prev === id ? null : id));
+  const toggleExpand = (id) => {
+    if (expandedId === id) {
+      setExpandedId(null);
+      setCommentingId(null);
+    } else {
+      setExpandedId(id);
+    }
+  };
 
   const toggleMenu = (id, e) => {
     e.stopPropagation();
     setMenuOpen((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  const toggleCommentMenu = (key, e) => {
+    e.stopPropagation();
+    setCommentMenuOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const handleCommentClick = (id) => {
+    setCommentingId((prev) => (prev === id ? null : id));
+  };
+
   return (
     <div className="list">
       <h1 className="list-title">목록</h1>
+      <button className="write-btn" onClick={openModal}>글쓰기+</button>
 
       {posts.map((post) => {
-        const isExpanded  = post.id === expandedId;
+        const isExpanded = post.id === expandedId;
         const isMenuShown = menuOpen[post.id];
 
         return (
@@ -105,8 +144,12 @@ export default function PostList() {
               isExpanded ? "expanded" : ""
             }`}
           >
-            {/* ────── 헤더 ────── */}
-            <div className="item-header" onClick={() => toggleExpand(post.id)}>
+            <div
+              className={`item-header ${isExpanded ? "expanded-header" : ""} ${
+                toggled ? "dark" : "light"
+              }`}
+              onClick={() => toggleExpand(post.id)}
+            >
               <div className="item-left">
                 <div className="item-icon">
                   <img src={post.icon} alt={post.title} style={{ width: "40px" }} />
@@ -120,26 +163,27 @@ export default function PostList() {
               <div className="item-right">
                 <span className="views">{post.views} views</span>
 
-                {/* ⋯ 드롭다운 */}
-                <div
-                  className="menu-container"
-                  ref={(el) => (menuRefs.current[post.id] = el)}
+                <button
+                  className="menu-btn"
+                  onClick={(e) => toggleMenu(post.id, e)}
+                  ref={(el) => (btnRefs.current[post.id] = el)}
                 >
-                  <button className="menu-btn" onClick={(e) => toggleMenu(post.id, e)}>
-                    ⋯
-                  </button>
+                  ⋯
+                </button>
 
-                  <div className={`dropdown-menu ${isMenuShown ? "show" : ""}`}>
-                    <button className="dropdown-item edit-btn">✏️ 수정</button>
-                    <button className="dropdown-item delete-btn">🗑️ 삭제</button>
-                  </div>
-                </div>
+                {isMenuShown && btnRefs.current[post.id] && (
+                  <DropdownPortal targetRef={{ current: btnRefs.current[post.id] }}>
+                    <div className="dropdown-menu show">
+                      <button className="dropdown-item edit-btn">✏️ 수정</button>
+                      <button className="dropdown-item delete-btn">🗑️ 삭제</button>
+                    </div>
+                  </DropdownPortal>
+                )}
 
                 <span className="expand-icon">▼</span>
               </div>
             </div>
 
-            {/* ────── 상세 영역 ────── */}
             <div
               className="post-detail"
               style={{
@@ -157,36 +201,74 @@ export default function PostList() {
                 <p>{post.content}</p>
               </div>
 
-              {/* 댓글 영역 유지 */}
               <div className="comments-section">
                 <h5 className="comments-title">댓글 {post.comments.length}개</h5>
                 <div className="comments-list">
-                  {post.comments.map((c, idx) => (
-                    <div key={idx} className="comment-item">
-                      <div className="comment-header">
-                        <img src={c.avatar} alt={c.author} className="comment-avatar" />
-                        <div className="comment-info">
-                          <span className="comment-author">{c.author}</span>
-                          <span className="comment-date">{c.date}</span>
+                  {post.comments.map((c, idx) => {
+                    const commentKey = `${post.id}-${idx}`;
+                    const isCommentMenuShown = commentMenuOpen[commentKey];
+
+                    return (
+                      <div key={idx} className="comment-item">
+                        <div className="comment-header">
+                          <img src={c.avatar} alt={c.author} className="comment-avatar" />
+                          <div className="comment-info">
+                            <span className="comment-author">{c.author}</span>
+                            <span className="comment-date">{c.date}</span>
+                          </div>
+
+                          <button
+                            className="comment-menubtn"
+                            onClick={(e) => toggleCommentMenu(commentKey, e)}
+                            ref={(el) => (commentBtnRefs.current[commentKey] = el)}
+                          >
+                            ⋯
+                          </button>
+
+                          {isCommentMenuShown && commentBtnRefs.current[commentKey] && (
+                            <DropdownPortal targetRef={{ current: commentBtnRefs.current[commentKey] }}>
+                              <div className="dropdown-menu show">
+                                <button className="dropdown-item edit-btn">✏️ 수정</button>
+                                <button className="dropdown-item delete-btn">🗑️ 삭제</button>
+                              </div>
+                            </DropdownPortal>
+                          )}
                         </div>
-                        <div className="comment-menubtn">⋯</div>
+                        <div className="comment-content">{c.content}</div>
                       </div>
-                      <div className="comment-content">{c.content}</div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 
-              {/* 액션 버튼도 유지 */}
               <div className="post-actions">
-                <button className="action-btn primary">좋아요 👍</button>
-                <button className="action-btn">댓글 달기</button>
+                <button className="action-btn" onClick={() => handleCommentClick(post.id)}>
+                  {commentingId === post.id ? "닫기" : "댓글 달기"}
+                </button>
                 <button className="action-btn">공유하기</button>
               </div>
+
+              {commentingId === post.id && (
+                <CommentForm avatar={post.icon} author={post.author} />
+              )}
             </div>
           </div>
         );
       })}
+
+      <Pagination />
+
+      <Modal visible={isModalVisible}
+              onClose={closeModal}
+              onSubmit={()=> handleModalSubmit({ title: modalTitle, subtitle: modalSubtitle, content: modalContent })}
+              title={modalTitle}
+              setTitle={setModalTitle}
+              subtitle={modalSubtitle}
+              setSubtitle={setModalSubtitle}
+              content={modalContent}
+              setContent={setModalContent} 
+              
+              />
     </div>
   );
 }
