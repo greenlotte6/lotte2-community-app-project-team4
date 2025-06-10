@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/project/board.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from "@fortawesome/free-solid-svg-icons";
 import { useDrag, useDrop } from "react-dnd";
-import ProjectBoardModal from "./ProjectBoardModal";
-
+import { ProjectBoardModal } from "./ProjectBoardModal";
 
 const initialBoardData = {
   ready: [
@@ -88,8 +87,13 @@ const DroppableColumn = ({
 
   return (
     <div className="board-column" ref={dropRef}>
-      <div className="board-header" style={{ borderBottom: `2px solid ${color}` }}>
-        <span className="board-title" style={{ color }}>{title}</span>
+      <div
+        className="board-header"
+        style={{ borderBottom: `2px solid ${color}` }}
+      >
+        <span className="board-title" style={{ color }}>
+          {title}
+        </span>
         <span className="board-count">{items.length}</span>
       </div>
       <div className="board-items">
@@ -158,7 +162,10 @@ const ProjectBoard = ({ projectName }) => {
           targetColumnForNewItem={targetColumnForNewItem}
         />
       )}
-      <div className="project-board-header clickable-header" onClick={handleClickProjectTitle}>
+      <div
+        className="project-board-header clickable-header"
+        onClick={handleClickProjectTitle}
+      >
         <FontAwesomeIcon icon={faClipboard} className="project-board-icon" />
         <div className="project-board-title">
           {projectName || "프로젝트 이름 없음"}

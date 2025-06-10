@@ -1,11 +1,11 @@
-import React from 'react';
+import React from "react";
 
 export const ProjectBoardModal = ({
   newItemText,
   setNewItemText,
   setIsModalOpen,
   setBoardState,
-  targetColumnForNewItem
+  targetColumnForNewItem,
 }) => {
   const handleCreate = () => {
     if (!newItemText.trim()) return;
@@ -13,7 +13,10 @@ export const ProjectBoardModal = ({
     setBoardState((prev) => {
       const updated = {
         ...prev,
-        [targetColumnForNewItem]: [...prev[targetColumnForNewItem], newItemText],
+        [targetColumnForNewItem]: [
+          ...prev[targetColumnForNewItem],
+          newItemText,
+        ],
       };
       localStorage.setItem("boardState", JSON.stringify(updated));
       return updated;
@@ -27,7 +30,9 @@ export const ProjectBoardModal = ({
     <div className="modal-overlay">
       <div className="modal-container">
         <div className="modal-header">
-          <h3>Add a title <span style={{ color: 'red' }}>*</span></h3>
+          <h3>
+            Add a title <span style={{ color: "red" }}>*</span>
+          </h3>
           <input
             type="text"
             className="modal-input"
@@ -44,7 +49,10 @@ export const ProjectBoardModal = ({
           ></textarea>
         </div>
         <div className="modal-footer">
-          <button className="modal-cancel" onClick={() => setIsModalOpen(false)}>
+          <button
+            className="modal-cancel"
+            onClick={() => setIsModalOpen(false)}
+          >
             Cancel
           </button>
           <button className="modal-create" onClick={handleCreate}>
