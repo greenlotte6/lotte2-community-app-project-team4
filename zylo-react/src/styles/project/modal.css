@@ -1,0 +1,173 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(30, 30, 30, 0.5);
+  z-index: 100000 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 모달 본체 */
+.modal-container {
+  width: 500px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 24px 24px 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* 헤더 */
+
+.modal-header {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.modal-header h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* 입력창 */
+.modal-input {
+  width: 70%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  outline: none;
+  transition: border 0.2s;
+  background-color: #fff;
+  color: #000;
+}
+.modal-input:focus {
+  border: 1.5px solid #5da9fc;
+}
+
+/* 텍스트에어리어 */
+.modal-textarea {
+  width: 100%;
+  min-height: 80px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  resize: none;
+  outline: none;
+  transition: border 0.2s;
+  background-color: #fff;
+  margin-bottom: 30px;
+}
+.modal-textarea:focus {
+  border: 1.5px solid #5da9fc;
+}
+
+/* 푸터 버튼 영역 */
+.project-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.project-modal-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+/* 버튼 스타일 */
+.modal-cancel,
+.modal-create {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.modal-cancel {
+  background: #f3f3f3;
+  color: #333;
+}
+.modal-cancel:hover {
+  background: #e0e0e0;
+}
+.modal-create {
+  background: #5da9fc;
+  color: #fff;
+}
+.modal-create:hover {
+  background: #0056b3;
+}
+
+/* 모달 등장 애니메이션 */
+@keyframes modalShow {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* 날짜 */
+.modal-date-fields {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.modal-date-input {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #e0e0e0;
+  font-size: 1rem;
+  background-color: #fff;
+}
+
+.invite-name-input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.invite-preview {
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.invite-member {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.modal-invite-btn {
+  margin-left: auto;
+}
+
+.modal-invite-img {
+  margin-left: 10px;
+}
+
+.not-found {
+  padding: 20px;
+}
+
+.invite-member-list {
+  max-height: 300px; /* 원하는 최대 높이 */
+  overflow-y: auto; /* 세로 스크롤 자동 */
+}

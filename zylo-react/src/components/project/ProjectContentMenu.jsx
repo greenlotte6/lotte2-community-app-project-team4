@@ -1,10 +1,21 @@
 import React from "react";
 import "../../styles/project/contentMenu.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import useProjectStore from "../../store/useProjectStore";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const ProjectContentMenu = () => {
+  const { toggled, toggle } = useTheme();
+
   const navigate = useNavigate();
   const location = useLocation();
+
+  // 쿼리 파라미터에서 프로젝트 ID 추출
+  const params = new URLSearchParams(location.search);
+  const projectId = params.get("id");
+
+  const projects = useProjectStore((state) => state.projects);
+  const project = projects.find((p) => String(p.id) === String(projectId));
 
   const tabs = [
     { id: "tab1", label: "개요", path: "/project" },
@@ -21,8 +32,7 @@ const ProjectContentMenu = () => {
   const selectedTab = getSelectedTab();
 
   const handleTabChange = (tab) => {
-    navigate(tab.path);
-    // 상태 업데이트는 필요 없음: URL로부터 자동 동기화
+    navigate(`${tab.path}?id=${projectId}`);
   };
 
   return (
@@ -31,7 +41,9 @@ const ProjectContentMenu = () => {
         {tabs.map((tab) => (
           <label
             key={tab.id}
-            className={selectedTab === tab.id ? "active" : ""}
+            className={`${selectedTab === tab.id ? "active" : ""} ${
+              toggled ? "dark" : "light"
+            }`}
           >
             <input
               type="radio"
