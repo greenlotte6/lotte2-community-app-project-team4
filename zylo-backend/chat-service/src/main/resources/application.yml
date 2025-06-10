@@ -8,6 +8,10 @@ spring:
     name: chat-service
     version: 0.0.1
 
+  data:
+    mongodb:
+      uri: mongodb+srv://zylo:7waYNx958XZidfzwlzb6R9Urnmqkm1djGIktd77iK@zylo.fplsain.mongodb.net/chat
+
 logging:
   file:
     path: /var/www/chat-service
@@ -28,6 +32,10 @@ spring:
   application:
     name: chat-service
     version: 0.0.1
+
+  data:
+    mongodb:
+      uri: mongodb+srv://zylo:7waYNx958XZidfzwlzb6R9Urnmqkm1djGIktd77iK@zylo.fplsain.mongodb.net/chat
 
 logging:
   level:
