@@ -59,11 +59,10 @@ public class ChannelController {
     }
 
     /**
-     * 내 채널 목록 조회
+     * 내가 참여 중인 채널 목록 조회
      */
     @GetMapping("/my")
-    public ResponseEntity<List<Channel>> myChannels(@RequestParam String userId) {
-        List<Channel> channels = channelService.findUserChannels(userId);
-        return ResponseEntity.ok(channels);
+    public List<Channel> getMyChannels(@RequestParam String userId) {
+        return channelService.findUserChannels(userId);
     }
 }
