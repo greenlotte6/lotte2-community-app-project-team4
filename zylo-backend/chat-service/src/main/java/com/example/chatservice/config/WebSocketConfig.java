@@ -11,7 +11,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     // 클라이언트가 WebSocket 연결을 시도할 endpoint
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/ws-stomp")       // WebSocket 연결 URL
+        registry.addEndpoint("/ws")       // WebSocket 연결 URL
                 .setAllowedOriginPatterns("*")   // 모든 도메인 허용 (CORS)
                 .withSockJS();                   // SockJS fallback 활성화
     }

@@ -1,30 +1,14 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useTheme } from "../../../contexts/ThemeContext";
 
 export const MessageSidebar = () => {
   const { toggled } = useTheme();
-  const [dmChannels, setDmChannels] = useState([]);
-  const [groupChannels, setGroupChannels] = useState([]);
 
-  useEffect(() => {
-    axios
-      .get("/api/channel/my", {
-        params: { userId: "user123" }, // 로그인 사용자 ID
-      })
-      .then((res) => {
-        const channels = res.data;
-        const dm = channels.filter((ch) => ch.type === "DM");
-        const group = channels.filter((ch) => ch.type === "GROUP");
-
-        setDmChannels(dm);
-        setGroupChannels(group);
-      })
-      .catch((err) => console.error("채널 목록 불러오기 실패:", err));
-  }, []);
-
-  const renderChannelItem = (channel, index) => (
-    <li className={toggled ? "chat-item dark" : "chat-item"} key={channel.id || index}>
+  {
+    /*const renderChannelItem = (channel, index) => (
+    <li
+      className={toggled ? "chat-item dark" : "chat-item"}
+      key={channel.id || index}
+    >
       <div className="avatar-wrapper">
         <img
           className="avatar"
@@ -42,14 +26,15 @@ export const MessageSidebar = () => {
         <span className="chat-status unread">{channel.unreadCount || ""}</span>
       </div>
     </li>
-  );
+  );*/
+  }
 
   return (
     <>
       <section className={toggled ? "Message dark" : "Message"}>
         <header className="Message-header">
           <h1>메세지</h1>
-          <p>{dmChannels.length + groupChannels.length} 메세지</p>
+          {/*<p>{dmChannels.length + groupChannels.length} 메세지</p>*/}
           <input type="text" placeholder="검색" />
         </header>
 
@@ -82,7 +67,7 @@ export const MessageSidebar = () => {
               <span className="toggle-icon">▼</span>
             </div>
             <ul className="chat-list collapsible" id="group1">
-              {dmChannels.map(renderChannelItem)}
+              {/*{dmChannels.map(renderChannelItem)}*/}
             </ul>
           </div>
 
@@ -93,7 +78,7 @@ export const MessageSidebar = () => {
               <span className="toggle-icon">▼</span>
             </div>
             <ul className="chat-list collapsible" id="group2">
-              {groupChannels.map(renderChannelItem)}
+              {/*{groupChannels.map(renderChannelItem)}}*/}
             </ul>
           </div>
         </section>
