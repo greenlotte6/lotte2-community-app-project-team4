@@ -23,7 +23,7 @@ logging:
     root: info
 
 server:
-  port: 8082
+  port: 8080
   servlet:
     context-path: /
 ---
