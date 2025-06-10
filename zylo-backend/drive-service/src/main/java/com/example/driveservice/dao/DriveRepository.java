@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class DriveRepository {
 
+  //TODO: 기본적인 CRUD 메서드 구현하기
   private final MongoTemplate template;
 }
