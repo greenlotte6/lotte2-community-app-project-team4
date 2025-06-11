@@ -32,7 +32,8 @@ public class ProdRedisConfig {
   @Bean
   public LettuceConnectionFactory redisConnectionFactory(ClientResources clientResources) {
     RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
-    redisConfig.setHostName("zylo-redis-xxxx.cache.amazonaws.com");  // 실제 호스트로 교체
+    redisConfig.setHostName(
+        "zylo-redis-4jfnkp.serverless.apn2.cache.amazonaws.com");
     redisConfig.setPort(6379);
 
     LettuceClientConfiguration clientConfig = LettuceClientConfiguration.builder()
