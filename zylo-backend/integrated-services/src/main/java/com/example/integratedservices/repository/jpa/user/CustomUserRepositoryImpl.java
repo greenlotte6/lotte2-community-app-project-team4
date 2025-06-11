@@ -1,4 +1,4 @@
-package com.example.integratedservices.repository;
+package com.example.integratedservices.repository.jpa.user;
 
 import com.example.integratedservices.dto.user.UserDTO;
 import com.example.integratedservices.entity.plan.QPlan;
@@ -58,5 +58,17 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
   public long countByUserId(String userId) {
     Long result = query.select(user.id.count()).from(user).where(user.id.eq(userId)).fetchFirst();
     return result == null ? 0 : result;
+  }
+
+  @Override
+  public UserDTO findPlanNameByUserId(String userId) {
+    return query
+        .select(Projections.constructor(UserDTO.class, planName.name))
+        .from(user)
+        .join(user.plan, plan)
+        .join(plan.name, planName)
+        .where(user.id.eq(userId))
+        .orderBy(user.id.asc())
+        .fetchOne();
   }
 }
