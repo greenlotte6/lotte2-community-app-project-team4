@@ -24,6 +24,10 @@ public class UserDTO {
   private String planName;
   private String status;
 
+  public UserDTO(String planName) {
+    this.planName = planName;
+  }
+
   public User toEntity() {
     PlanName planNameEntity = PlanName.builder()
         .id(planNameId)
