@@ -50,6 +50,10 @@ logging:
     path: /var/www/integrated-services
   level:
     root: info
+    org:
+      springframework:
+        data:
+          redis: debug
 
 server:
   tomcat:
