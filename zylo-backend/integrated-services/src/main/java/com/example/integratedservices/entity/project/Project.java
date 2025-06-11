@@ -24,6 +24,9 @@ public class Project {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "desc")
+    private String desc;
+
     @Column(name = "column_id")
     private int column;
 
