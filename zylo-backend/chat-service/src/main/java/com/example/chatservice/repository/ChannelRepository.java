@@ -2,6 +2,7 @@ package com.example.chatservice.repository;
 
 import com.example.chatservice.model.Channel;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,18 +17,12 @@ public interface ChannelRepository extends MongoRepository<Channel, String> {
     List<Channel> findByMembersContaining(String userId);
 
     /**
-     * 특정 유저 조합의 DM 채널이 존재하는지 확인
-     * (두 사람 모두 포함된 DM 채널을 찾음)
+     * 두 사용자가 모두 멤버이며 type = DM 인 채널 조회
+     *  - members 배열에 ownerId 와 opponentId 가 모두 들어 있다
+     *  - type 이 'DM' 인 문서
      */
-    Optional<Channel> findByMembersInAndType(List<String> members, Channel.ChannelType type);
+    @Query("{ type: 'DM', members: { $all: [?0, ?1] } }")
+    Optional<Channel> findDmChannel(String ownerId, String opponentId);
 
-    /**
-     * 특정 개설자의 채널 목록 조회 (옵션)
-     */
-    List<Channel> findByOwnerId(String ownerId);
 
-    /**
-     * 채널 이름으로 검색 (예: 메뉴에 표시할 채널 검색)
-     */
-    List<Channel> findByNameContaining(String keyword);
 }

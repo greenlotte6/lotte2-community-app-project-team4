@@ -1,30 +1,38 @@
-import React, { useState } from 'react';
+// InviteSearchList.jsx
+import React from "react";
 
-export const InviteSearchList = () => {
-  const [selectedIndex, setSelectedIndex] = useState(null);
+export const InviteSearchList = ({
+  users = [], // 빈배열 기본
+  selected = [],
+  onToggleUser = () => {},
+}) => {
+  if (!users.length) {
+    return <p className="empty">검색 결과가 없습니다.</p>;
+  }
 
   return (
-    <>
-      {/* 사용자 검색 목록 */}
-      <div className="invite-Searchlist">
-        {[...Array(10)].map((_, i) => (
+    <div className="invite-Searchlist">
+      {users.map((u) => {
+        const isSel = selected.some((s) => s.id === u.id);
+        return (
           <div
-            className={`invite-item ${selectedIndex === i ? 'selected' : ''}`}
-            key={i}
-            onClick={() => setSelectedIndex(i)}
+            key={u.id}
+            className={`invite-item ${isSel ? "selected" : ""}`}
+            onClick={() => onToggleUser(u)}
           >
+            {/* 👉 실제 컨텐츠 */}
             <img
               src="/images/message/avatars.png"
               className="avatar"
               alt="User"
             />
             <div className="user-info">
-              <div className="user-name">두부씨 팀장</div>
-              <div className="user-detail">홍길동</div>
+              <div className="user-name">{u.position}</div>
+              <div className="user-detail">{u.name}</div>
             </div>
           </div>
-        ))}
-      </div>
-    </>
+        );
+      })}
+    </div>
   );
 };
