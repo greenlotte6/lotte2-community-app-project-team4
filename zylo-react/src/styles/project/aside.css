@@ -1,5 +1,6 @@
 .project-side-bar {
-  width: 300px;
+  max-width: 230px;
+  min-width: 230px;
   background: #f8f8f8;
   padding: 20px;
   height: calc(100vh - 90px);

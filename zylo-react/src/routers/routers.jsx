@@ -23,8 +23,7 @@ import { ProjectBoardPage } from "../pages/project/ProjectBoardPage";
 import { ProjectTeamPage } from "../pages/project/ProjectTeamPage";
 import { CommentForm } from "../components/article/CommentForm";
 import { Modal } from "../components/article/Modal";
-
-
+import { ProjectOutlinePage } from "../pages/project/ProjectOutlinePage";
 
 export const router = createBrowserRouter([
   { path: "/", element: <MainPage /> },
@@ -47,13 +46,10 @@ export const router = createBrowserRouter([
   { path: "/dashboard", element: <DashboardPage /> },
   { path: "/article", element: <ListPage /> },
   { path: "/project", element: <ProjectPage /> },
+  { path: "/project/outline", element: <ProjectOutlinePage /> },
   { path: "/project/task", element: <ProjectBoardPage /> },
   { path: "/project/team", element: <ProjectTeamPage /> },
   { path: "/project/board", element: <ProjectBoardPage /> },
   { path: "/article/Modal", element: <Modal /> },
   { path: "/article/CommentForm", element: <CommentForm /> },
-
-
-
-
 ]);
