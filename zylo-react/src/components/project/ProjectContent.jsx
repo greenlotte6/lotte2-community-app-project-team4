@@ -20,10 +20,6 @@ const ProjectContent = () => {
   const project =
     projects.find((p) => String(p.id) === projectId) || "프로젝트 없음";
 
-  const handleProjectClick = () => {
-    navigate(`/project/board?id=${encodeURIComponent(project.id)}`);
-  };
-
   return (
     <div className="project-wrapper">
       <div

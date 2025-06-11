@@ -92,3 +92,35 @@ export const dummyProjectMember = [
   { id: 5, projectId: 5, memberId: 5 },
   { id: 5, projectId: 5, memberId: 6 },
 ];
+
+export const initialBoardData = {
+  ready: [
+    { title: "RQ-101 랜딩 페이지 구현", desc: "" },
+    { title: "RQ-202 약관", desc: "" },
+    { title: "RQ-203 회원가입", desc: "" },
+    { title: "RQ-300 메인 대시보드 구현", desc: "" },
+    { title: "RQ-009 캘린더 화면 구현", desc: "" },
+    { title: "RQ-301 페이지 생성", desc: "" },
+    { title: "RQ-302 페이지 작성", desc: "" },
+  ],
+  todo: [],
+  inProgress: [
+    { title: "RQ-011 게시판 화면 구현", desc: "" },
+    { title: "RQ-004 데이터베이스 설계", desc: "" },
+    { title: "RQ-012 프로젝트 화면 구현", desc: "" },
+    { title: "RQ-201 로그인/로그아웃", desc: "" },
+  ],
+  inReview: [
+    { title: "RQ-010 메시지 화면 구현", desc: "" },
+    { title: "RQ-014 설정 화면 구현", desc: "" },
+  ],
+  done: [
+    { title: "RQ-008 페이지 화면 구현", desc: "" },
+    { title: "RQ-007 메인 대시보드 구현", desc: "" },
+    { title: "RQ-002 화면 설계", desc: "" },
+    { title: "RQ-003 프로젝트 아키텍처 설계", desc: "" },
+    { title: "RQ-005 메인 화면 구현", desc: "" },
+    { title: "RQ-006 회원 화면 구현", desc: "" },
+    { title: "RQ-013 드라이브 화면 구현", desc: "" },
+  ],
+};
