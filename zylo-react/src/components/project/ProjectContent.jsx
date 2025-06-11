@@ -10,9 +10,9 @@ function useQuery() {
 
 const ProjectContent = () => {
   const { toggled, toggle } = useTheme();
-  const projects = useProjectStore((state) => state.projects);
 
-  const navigate = useNavigate();
+  // zustand 배열 가져오기
+  const projects = useProjectStore((state) => state.projects);
 
   const query = useQuery();
   const projectId = query.get("id");
@@ -34,11 +34,11 @@ const ProjectContent = () => {
         <div className="project-info">
           <div className="project-startDate">
             <div>시작일</div>
-            <div>{project.startDate}</div>
+            <div>{project.startDate.substring(0, 10)}</div>
           </div>
           <div className="project-endDate">
             <div>종료일</div>
-            <div>{project.endDate}</div>
+            <div>{project.endDate.substring(0, 10)}</div>
           </div>
           <div className="project-progress">
             <div>진행률</div>

@@ -11,20 +11,26 @@ import java.util.Date;
 @Data
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class ProjectDTO {
 
     private int id;
     private String name;
+    private String desc;
     private int column;
     private int row;
+
 
     private Date startDate;
     private Date endDate;
 
-    public ProjectDTO(int id, String name) {
+    public ProjectDTO(int id, String name, String  desc, int column, int row, Date startDate, Date endDate) {
         this.id = id;
         this.name = name;
+        this.desc = desc;
+        this.column = column;
+        this.row = row;
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
 
@@ -32,6 +38,7 @@ public class ProjectDTO {
         return Project.builder()
                 .id(id)
                 .name(name)
+                .desc(desc)
                 .column(column)
                 .row(row)
                 .startDate(startDate)

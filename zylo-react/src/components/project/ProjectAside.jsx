@@ -19,27 +19,26 @@ const ProjectAside = () => {
 
   // zustand 배열 가져오기
   const projects = useProjectStore((state) => state.projects);
+  const setProjects = useProjectStore((state) => state.setProjects);
+
+  const project = projects.find((p) => String(p.id) === selectedProjectId);
 
   const handleProjectClick = (projectId) => {
     navigate(`/project/outline?id=${encodeURIComponent(projectId)}`);
   };
 
   useEffect(() => {
-    // 약관 데이터 fetch 비동기 함수
     const fetchData = async () => {
       try {
-        // 약관 데이터 요청하기
         const data = await getName();
-
-        console.log("data : " + data);
+        // API 응답이 data.data 형태라면 아래처럼
+        setProjects(data); // 또는 setProjects(data) 구조에 따라 맞춤
       } catch (err) {
         console.error(err);
       }
     };
-
-    // 호출
     fetchData();
-  }, []);
+  }, [setProjects]);
 
   const [modal, setModal] = useState(false);
 
