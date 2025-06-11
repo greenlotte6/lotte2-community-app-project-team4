@@ -39,6 +39,7 @@ spring:
         format_sql: true
         globally_quoted_identifiers: true
     show-sql: false
+
   data:
     redis:
       host: zylo-redis-4jfnkp.serverless.apn2.cache.amazonaws.com
