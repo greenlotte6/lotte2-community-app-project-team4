@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../styles/project/aside.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -6,6 +6,7 @@ import { faFolderOpen, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "../../contexts/ThemeContext";
 import useProjectStore from "../../store/useProjectStore";
 import { ProjectRegisterModal } from "./ProjectRegisterModal.jsx";
+import { getName } from "../../api/projectAPI.js";
 
 const ProjectAside = () => {
   const { toggled } = useTheme();
@@ -20,8 +21,25 @@ const ProjectAside = () => {
   const projects = useProjectStore((state) => state.projects);
 
   const handleProjectClick = (projectId) => {
-    navigate(`/project?id=${encodeURIComponent(projectId)}`);
+    navigate(`/project/outline?id=${encodeURIComponent(projectId)}`);
   };
+
+  useEffect(() => {
+    // 약관 데이터 fetch 비동기 함수
+    const fetchData = async () => {
+      try {
+        // 약관 데이터 요청하기
+        const data = await getName();
+
+        console.log("data : " + data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // 호출
+    fetchData();
+  }, []);
 
   const [modal, setModal] = useState(false);
 

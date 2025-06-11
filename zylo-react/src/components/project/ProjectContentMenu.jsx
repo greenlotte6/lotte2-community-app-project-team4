@@ -18,7 +18,7 @@ const ProjectContentMenu = () => {
   const project = projects.find((p) => String(p.id) === String(projectId));
 
   const tabs = [
-    { id: "tab1", label: "개요", path: "/project" },
+    { id: "tab1", label: "개요", path: "/project/outline" },
     { id: "tab2", label: "팀원", path: "/project/team" },
     { id: "tab3", label: "업무", path: "/project/task" },
   ];
