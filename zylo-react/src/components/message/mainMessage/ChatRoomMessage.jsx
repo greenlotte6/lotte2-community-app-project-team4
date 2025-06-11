@@ -1,148 +1,64 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useTheme } from "../../../contexts/ThemeContext";
 
-export const ChatRoomMessage = () => {
+export const ChatRoomMessage = ({ messages, selectedChannel }) => {
   const { toggled } = useTheme();
+  const currentUserId = "user123";
+  const bottomRef = useRef(null);
+
+  // 새 메시지 도착 시 자동 스크롤
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  if (!selectedChannel) {
+    return <div className="chat-room-messages empty">채널을 선택해주세요.</div>;
+  }
+
   return (
-    <>
-      <div className="chat-room-messages">
-        <div className="date-separator">Yesterday</div>
+    <div className="chat-room-messages">
+      {messages.map((msg, idx) => {
+        const isSelf = msg.senderId === currentUserId;
 
-        {/* 예시 메시지 */}
-        <div className="chat-room-message">
-          <img
-            className="avatar"
-            src="/images/message/avatars.png"
-            alt="Diana"
-          />
-          <div className="message-wrapper">
-            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
-              <strong>Diana</strong>
-              <span className="time">5:36 AM</span>
-            </div>
-            <div
-              className={
-                toggled ? "chat-room-content dark" : "chat-room-content"
-              }
-            >
-              <p>Professional!</p>
-            </div>
-            <div className="unread-count">3</div>
-          </div>
-        </div>
+        return (
+          <div
+            key={msg.id || idx}
+            className={isSelf ? "chat-room-message self" : "chat-room-message"}
+          >
+            {!isSelf && (
+              <img
+                className="avatar"
+                src="/images/message/avatars.png"
+                alt={msg.senderId}
+              />
+            )}
 
-        {/* 추가 메시지들 */}
-        <div className="chat-room-message">
-          <img
-            className="avatar"
-            src="/images/message/avatars.png"
-            alt="Robert"
-          />
-          <div className="message-wrapper">
-            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
-              <strong>Robert</strong>
-              <span className="time">8:53 AM</span>
-            </div>
-            <div
-              className={
-                toggled ? "chat-room-content dark" : "chat-room-content"
-              }
-            >
-              <div className="attachment">
-                <img src="/images/message/cat.jpg" alt="dashboard" />
-                <p>This new dashboard page. What do you think?</p>
+            <div className="message-wrapper">
+              <div
+                className={toggled ? "chat-room-meta dark" : "chat-room-meta"}
+              >
+                <strong>{isSelf ? "You" : msg.senderId}</strong>
+                <span className="time">
+                  {new Date(msg.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })}
+                </span>
+              </div>
+
+              <div
+                className={
+                  toggled ? "chat-room-content dark" : "chat-room-content"
+                }
+              >
+                <p>{msg.content}</p>
               </div>
             </div>
-            <div className="unread-count">3</div>
           </div>
-        </div>
-
-        {/* 내 메시지 */}
-        <div className="chat-room-message self">
-          <div className="message-wrapper">
-            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
-              <strong>You</strong>
-              <span className="time">1:36 PM</span>
-            </div>
-            <div
-              className={
-                toggled ? "chat-room-content dark" : "chat-room-content"
-              }
-            >
-              <p>Wow it looks amazing.</p>
-            </div>
-            <div className="unread-count">3</div>
-          </div>
-        </div>
-
-            {/* 예시 메시지 */}
-        <div className="chat-room-message">
-          <img
-            className="avatar"
-            src="/images/message/avatars.png"
-            alt="Diana"
-          />
-          <div className="message-wrapper">
-            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
-              <strong>Diana</strong>
-              <span className="time">5:36 AM</span>
-            </div>
-            <div
-              className={
-                toggled ? "chat-room-content dark" : "chat-room-content"
-              }
-            >
-              <p>Professional!</p>
-            </div>
-            <div className="unread-count">3</div>
-          </div>
-        </div>
-
-        {/* 추가 메시지들 */}
-        <div className="chat-room-message">
-          <img
-            className="avatar"
-            src="/images/message/avatars.png"
-            alt="Robert"
-          />
-          <div className="message-wrapper">
-            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
-              <strong>Robert</strong>
-              <span className="time">8:53 AM</span>
-            </div>
-            <div
-              className={
-                toggled ? "chat-room-content dark" : "chat-room-content"
-              }
-            >
-              <div className="attachment">
-                <img src="/images/message/cat.jpg" alt="dashboard" />
-                <p>This new dashboard page. What do you think?</p>
-              </div>
-            </div>
-            <div className="unread-count">3</div>
-          </div>
-        </div>
-
-        {/* 내 메시지 */}
-        <div className="chat-room-message self">
-          <div className="message-wrapper">
-            <div className={toggled ? "chat-room-meta dark" : "chat-room-meta"}>
-              <strong>You</strong>
-              <span className="time">1:36 PM</span>
-            </div>
-            <div
-              className={
-                toggled ? "chat-room-content dark" : "chat-room-content"
-              }
-            >
-              <p>Wow it looks amazing.</p>
-            </div>
-            <div className="unread-count">3</div>
-          </div>
-        </div>
-      </div>
-    </>
+        );
+      })}
+      <div ref={bottomRef} />
+    </div>
   );
 };
 

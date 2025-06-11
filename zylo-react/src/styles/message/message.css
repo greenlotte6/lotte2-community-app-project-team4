@@ -429,7 +429,6 @@
   background: #f0f0f0;
 }
 
-
 /* 모달창 */
 .createchat-overlay,
 .leavechat-overlay {
@@ -492,8 +491,8 @@
   width: 100%;
   padding: 10px 12px;
   border: 1px solid #e5e5e5;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 8px !important;
+  font-size: 14px !important;
   color: #666;
   outline: none;
   appearance: none;
@@ -679,7 +678,6 @@
 
 .invite-select,
 .invite-selected {
-  overflow-y: auto;
   width: 380px;
 }
 
@@ -693,19 +691,28 @@
 .invite-search input[type="text"] {
   width: 100%;
   height: 100%;
-  padding: 9px 35px 9px 12px;
+  padding: 9px 40px 9px 12px; /* 오른쪽 패딩 넉넉히 */
   border: 1px solid var(--border);
   border-radius: 8px;
   font-size: 13px;
-  background: #fff;
   outline: none;
 }
 
-.search-icon {
+/* 돋보기 버튼을 input 위에 겹치기 */
+.search-button {
   position: absolute;
-  right: 10px;
   top: 50%;
+  right: 1px;
   transform: translateY(-50%);
+  border: none !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 아이콘 크기 */
+.search-icon {
   width: 18px;
   height: 18px;
   pointer-events: none;
@@ -912,9 +919,4 @@
   color: #5a5959;
   font-size: 15px;
   cursor: pointer;
-}
-
-.toolbar button {
-  width: auto;
-  height: auto;
 }

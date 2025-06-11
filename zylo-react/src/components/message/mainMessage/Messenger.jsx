@@ -1,74 +1,116 @@
-// src/components/message/mainMessage/Messenger.js
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../../../styles/message/message.css";
 import { MessageSidebar } from "./MessageSidebar";
 import { ChatRoomMessage } from "./ChatRoomMessage";
 import { ChatRoomInput } from "./ChatRoomInput";
 import { useTheme } from "../../../contexts/ThemeContext";
 
-// STOMP 및 SockJS 라이브러리 임포트
 import SockJS from "sockjs-client";
-import Stomp from "stompjs";
+import { Client } from "@stomp/stompjs";
+import axios from "axios";
 
 export const Messenger = () => {
   const { toggled } = useTheme();
 
-  // STOMP 클라이언트 인스턴스를 저장하기 위한 ref
+  // -------- 상태 --------
+  const [channels, setChannels] = useState([]);
+  const [selectedChannel, setSelectedChannel] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isConnected, setIsConnected] = useState(false); // 🔹 STOMP 연결 여부
+
+  // -------- STOMP --------
   const stompClient = useRef(null);
+  const subscriptionRef = useRef(null); // 현재 구독 저장
 
+  /* ------------------ 1. WebSocket 연결 ------------------ */
   useEffect(() => {
-    console.log("WebSocket 연결을 시도합니다.");
+    const client = new Client({
+      webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
+      reconnectDelay: 5000,
+      debug: (str) => console.log("[STOMP]", str),
+    });
 
-    // 1. SockJS 연결 설정
-    // 이 주소는 Spring Boot 서버의 WebSocket 설정과 정확히 일치해야 합니다.
-    // 예를 들어, Spring Boot에서 registry.addEndpoint("/ws").withSockJS(); 로 설정했다면 동일하게 사용합니다.
-    const socket = new SockJS("http://localhost:8080/ws"); // **여기를 실제 Spring Boot 서버 주소로 변경하세요!**
-    stompClient.current = Stomp.over(socket);
-
-    // STOMP 디버그 메시지를 보고 싶지 않다면 아래 주석을 해제하세요.
-    // stompClient.current.debug = null;
-
-    // 2. STOMP 연결 시도
-    stompClient.current.connect(
-      {},
-      (frame) => {
-        // 연결 성공 시 실행되는 콜백 함수
-        console.log("WebSocket에 성공적으로 연결되었습니다:", frame);
-
-        // 여기에 메시지 구독 로직을 추가할 수 있습니다.
-        // 예: stompClient.current.subscribe('/topic/public', (message) => { /* 메시지 처리 */ });
-      },
-      (error) => {
-        // 연결 실패 시 실행되는 콜백 함수
-        console.error("WebSocket 연결 에러:", error);
-        // 에러 처리 로직을 여기에 추가할 수 있습니다.
-      }
-    );
-
-    // 3. 컴포넌트 언마운트 시 연결 해제 (cleanup)
-    return () => {
-      console.log("WebSocket 연결을 해제합니다.");
-      if (stompClient.current && stompClient.current.connected) {
-        stompClient.current.disconnect(() => {
-          console.log("WebSocket 연결이 해제되었습니다.");
-        });
-      }
+    client.onConnect = () => {
+      console.log("✅ STOMP CONNECTED");
+      setIsConnected(true);
     };
-  }, []); // 빈 배열: 컴포넌트가 마운트될 때 한 번만 실행하고, 언마운트 시 클린업합니다.
 
+    client.onStompError = (f) =>
+      console.error("STOMP 오류:", f.headers.message, f.body);
+
+    client.activate();
+    stompClient.current = client;
+
+    return () => client.deactivate();
+  }, []);
+
+  /* ------------------ 2. 채널 목록 ------------------ */
+  useEffect(() => {
+    axios
+      .get("/api/channel/list", { params: { userId: "user123" } })
+      .then(({ data }) => {
+        setChannels(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("채널 목록 실패:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  /* ------------------ 3. 선택 채널 변경 시 ------------------ */
+  useEffect(() => {
+    if (!selectedChannel || !isConnected) return;
+
+    // ① 과거 메시지
+    axios
+      .get("/api/chat/messages", {
+        params: { channelId: selectedChannel.id },
+      })
+      .then(({ data }) => setMessages(data))
+      .catch((err) => console.error("메시지 불러오기 실패:", err));
+
+    // ② 기존 구독 해제
+    subscriptionRef.current?.unsubscribe();
+
+    // ③ 새 구독
+    const topic = `/topic/channel.${selectedChannel.id}`;
+    subscriptionRef.current = stompClient.current.subscribe(topic, (frame) => {
+      const newMsg = JSON.parse(frame.body);
+      setMessages((prev) => [...prev, newMsg]); // 실시간 추가
+    });
+
+    // ④ cleanup
+    return () => subscriptionRef.current?.unsubscribe();
+  }, [selectedChannel, isConnected]);
+
+  /* ------------------ 로딩 스피너 ------------------ */
+  if (loading) {
+    return <div className="loading">채널 목록을 불러오는 중...</div>;
+  }
+
+  /* ------------------ UI ------------------ */
   return (
     <>
-      {/* 메인 */}
       <main className={toggled ? "main-content dark" : "main-content"}>
-        {/*채팅 목록 */}
-        <MessageSidebar />
+        {/* 채널 목록 */}
+        <MessageSidebar
+          channels={channels}
+          selectedChannel={selectedChannel}
+          onSelectChannel={setSelectedChannel}
+        />
 
         {/* 채팅 영역 */}
         <section className="chat-room">
-          <ChatRoomMessage />
-
-          {/* 채팅 영역 입력창 */}
-          <ChatRoomInput />
+          <ChatRoomMessage
+            messages={messages}
+            selectedChannel={selectedChannel}
+          />
+          <ChatRoomInput
+            selectedChannel={selectedChannel}
+            stompClient={stompClient.current}
+          />
         </section>
       </main>
     </>
