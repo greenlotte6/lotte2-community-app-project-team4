@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export const Introduction = () => {
+  useEffect(() => {
+    alert("버전: 0.0.4");
+  });
   return (
     <div id="intro" className="intro content-page">
       <section className="intro-content">

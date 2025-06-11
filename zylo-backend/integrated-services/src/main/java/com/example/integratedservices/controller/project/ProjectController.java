@@ -1,4 +1,4 @@
-package com.example.integratedservices.controller;
+package com.example.integratedservices.controller.project;
 
 import com.example.integratedservices.service.project.ProjectService;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class ProjectController {
 
-    private final ProjectService projectService;
+  private final ProjectService projectService;
 
-    @GetMapping("")
-    public ResponseEntity<String> projectGetAll(){
-        
-        // 로그인한 유저 정보
-        //String uid = userDetails.getUsername();
+  @GetMapping("")
+  public ResponseEntity<String> projectGetAll() {
 
-        String result = projectService.getNameAll();
+    // 로그인한 유저 정보
+    //String uid = userDetails.getUsername();
 
-        return ResponseEntity.ok(result);
-    }
+    String result = projectService.getNameAll();
+
+    return ResponseEntity.ok(result);
+  }
 
 
 }
