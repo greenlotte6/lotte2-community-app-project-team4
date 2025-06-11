@@ -44,8 +44,6 @@ spring:
     redis:
       host: zylo-redis-4jfnkp.serverless.apn2.cache.amazonaws.com
       port: 6379
-      ssl:
-        enabled: true
 
 
 logging:
