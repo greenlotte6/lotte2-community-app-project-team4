@@ -1,4 +1,4 @@
-package com.example.integratedservices.controller;
+package com.example.integratedservices.controller.auth;
 
 import com.example.integratedservices.dto.auth.SignUpDTO;
 import com.example.integratedservices.dto.response.SuccessResponseDTO;

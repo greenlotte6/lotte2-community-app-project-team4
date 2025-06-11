@@ -11,6 +11,18 @@ spring:
   application:
     name: api-gateway
 
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: integrated-services
+              uri: http://zylo-integrated-services:8080
+              predicates:
+                - Path=/test
+              filters:
+                - RewritePath=/test, /ping
+
 logging:
   file:
     path: /var/www/api-gateway
@@ -30,13 +42,18 @@ spring:
 
   application:
     name: api-gateway
+
   cloud:
     gateway:
-      default-filters:
-        - PreserveHostHeader
-      routes:
-        - id: drive-service
-          uri: http://localhost:8080
+      server:
+        webflux:
+          routes:
+            - id: integrated-services
+              uri: http://localhost:8080
+              predicates:
+                - Path=/test
+              filters:
+                - RewritePath=/test, /ping
 
 logging:
   level:
