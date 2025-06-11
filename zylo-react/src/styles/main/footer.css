@@ -1,0 +1,16 @@
+footer {
+  width: 100%;
+  min-height: 60px;
+  height: auto;
+  padding: 10px;
+}
+
+footer > h3 {
+  height: 100%;
+  float: right;
+  line-height: 40px;
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: gray;
+}
