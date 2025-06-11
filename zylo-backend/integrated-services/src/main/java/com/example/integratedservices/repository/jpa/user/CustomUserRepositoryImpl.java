@@ -1,4 +1,4 @@
-package com.example.integratedservices.repository;
+package com.example.integratedservices.repository.jpa.user;
 
 import com.example.integratedservices.dto.user.UserDTO;
 import com.example.integratedservices.entity.plan.QPlan;
@@ -28,7 +28,8 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
     // UserDTO에 id, email, profileImageId, profileImageUploadPath를 인자로 사용하는 생성자를 직접 생성해야함.
     return query
         .select(Projections.constructor(UserDTO.class, user.id, user.email, user.password,
-            profileImages.id, profileImages.uploadPath, plan.id, planName.name, user.status))
+            profileImages.id, profileImages.uploadPath, plan.id, planName.id, planName.name,
+            user.status))
         .from(user)
         .leftJoin(user.profileImage, profileImages)
         .join(user.plan, plan)
@@ -41,8 +42,9 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
   @Override
   public UserDTO findByUserId(String userId) {
     return query
-        .select(Projections.constructor(UserDTO.class, user.id, user.profileImage.id,
-            user.profileImage.uploadPath, plan.id, planName.name, user.status))
+        .select(Projections.constructor(UserDTO.class, user.id, user.email, user.password,
+            profileImages.id, profileImages.uploadPath, plan.id, planName.id, planName.name,
+            user.status))
         .from(user)
         .leftJoin(user.profileImage, profileImages)
         .join(user.plan, plan)
@@ -56,5 +58,17 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
   public long countByUserId(String userId) {
     Long result = query.select(user.id.count()).from(user).where(user.id.eq(userId)).fetchFirst();
     return result == null ? 0 : result;
+  }
+
+  @Override
+  public UserDTO findPlanNameByUserId(String userId) {
+    return query
+        .select(Projections.constructor(UserDTO.class, planName.name))
+        .from(user)
+        .join(user.plan, plan)
+        .join(plan.name, planName)
+        .where(user.id.eq(userId))
+        .orderBy(user.id.asc())
+        .fetchOne();
   }
 }

@@ -4,13 +4,20 @@ import com.example.integratedservices.dto.auth.SignUpDTO;
 import com.example.integratedservices.dto.user.UserDTO;
 import com.example.integratedservices.entity.user.User;
 import com.example.integratedservices.exception.DuplicateUsernameException;
+import com.example.integratedservices.exception.IllegalRefreshTokenException;
 import com.example.integratedservices.exception.IllegalUsernameException;
 import com.example.integratedservices.exception.PasswordNotEqualsException;
-import com.example.integratedservices.repository.UserRepository;
+import com.example.integratedservices.repository.jpa.user.UserRepository;
+import com.example.integratedservices.repository.redis.RefreshTokenRepository;
+import com.example.integratedservices.security.jwt.JwtTokenProvider;
 import com.google.gson.Gson;
+import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -18,7 +25,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserService {
 
+  private final PasswordEncoder encoder;
+  private final JwtTokenProvider tokenProvider;
   private final UserRepository repo;
+  private final RefreshTokenRepository refreshTokenRepo;
   private final Gson gson;
 
   private void checkPassword(String password, String passwordConfirm) {
@@ -54,10 +64,12 @@ public class UserService {
     checkPassword(signUpDTO.getPassword(), signUpDTO.getPasswordConfirm());
     checkUsername(signUpDTO.getUserId());
 
+    String encryptedPassword = encoder.encode(signUpDTO.getPassword());
+
     UserDTO userDTO = UserDTO.builder()
         .id(signUpDTO.getUserId())
         .email(signUpDTO.getEmail())
-        .password(signUpDTO.getPassword())
+        .password(encryptedPassword)
         .planId(1)
         .planNameId(1)
         .status("normal")
@@ -66,17 +78,44 @@ public class UserService {
     repo.save(userEntity);
   }
 
-  public void login(UserDTO userDTO) throws IllegalUsernameException {
-    String userId = userDTO.getId();
-    log.info("아이디 {}(으)로 로그인을 시도합니다.", userId);
-    boolean idExists = checkUsernameExists(userId);
-    if (idExists) {
-      log.info("아이디 {}(이)가 존재합니다. JWT 발급 중...", userId);
-      //TODO: JWT 발급
+  private ResponseCookie createCookieFrom(String name, String token, Duration maxAge) {
+    return ResponseCookie.from(name, token)
+        .httpOnly(true)
+        .secure(true)
+        .path("/")
+        .maxAge(maxAge)
+        .sameSite("Strict")
+        .build();
+  }
+
+  //AuthenticationManager.authenticate()에서 인증 완료된 user만 전달 됨.
+  public ResponseCookie getAccessToken(String userId) {
+    String planName = repo.findPlanNameByUserId(userId).getPlanName();
+    log.info("Access JWT 발급 중...");
+    String token = tokenProvider.createAccessToken(userId, planName);
+    log.info("Access JWT 발급 완료: {}", token);
+    return createCookieFrom("access_token", token, Duration.ofMinutes(60));
+  }
+
+  public ResponseCookie getRefreshToken(String userId) {
+    Duration expiry = Duration.ofDays(7);
+    log.info("Refresh JWT 발급 중...");
+    String token = tokenProvider.createRefreshToken();
+    log.info("Refresh JWT 발급 완료: {}", token);
+    refreshTokenRepo.save(userId, token, expiry);
+    return createCookieFrom("refresh_token", token, expiry);
+  }
+
+  public ResponseCookie getRefreshedAccessToken(String refreshToken)
+      throws IllegalRefreshTokenException {
+    Optional<String> result = refreshTokenRepo.findUserIdByToken(refreshToken);
+    if (result.isPresent()) {
+      String userId = result.get();
+      String planName = repo.findPlanNameByUserId(userId).getPlanName();
+      String accessToken = tokenProvider.createAccessToken(userId, planName);
+      return createCookieFrom("access_token", accessToken, Duration.ofMinutes(60));
     } else {
-      String message = String.format("로그인 실패. 아이디 %s가 존재하지 않습니다.", userId);
-      log.info(message);
-      throw new IllegalUsernameException(message);
+      throw new IllegalRefreshTokenException("유효하지 않거나 존재하지 않는 토큰: " + refreshToken);
     }
   }
 }

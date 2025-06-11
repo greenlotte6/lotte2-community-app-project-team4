@@ -39,6 +39,10 @@ spring:
         format_sql: true
         globally_quoted_identifiers: true
     show-sql: false
+  data:
+    redis:
+      host: zylo-redis-4jfnkp.serverless.apn2.cache.amazonaws.com
+      port: 6379
 
 logging:
   file:
@@ -60,6 +64,9 @@ server:
   port: 8080
   servlet:
     context-path: /
+
+jwt:
+  secret: 0pn0YXIRtYoz29FzXRzL08k9J284Caw2
 ---
 # 개발용 설정
 spring:
@@ -90,6 +97,12 @@ spring:
         format_sql: true
         globally_quoted_identifiers: true
     show-sql: false
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
 logging:
   level:
     root: info
@@ -101,3 +114,9 @@ server:
   port: 8080
   servlet:
     context-path: /
+
+jwt:
+  secret: 0pn0YXIRtYoz29FzXRzL08k9J284Caw2
+
+cors:
+  origin: http://localhost:5173

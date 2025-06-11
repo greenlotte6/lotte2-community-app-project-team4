@@ -1,4 +1,4 @@
-package com.example.integratedservices.repository;
+package com.example.integratedservices.repository.jpa.user;
 
 import com.example.integratedservices.dto.user.UserDTO;
 import java.util.List;
@@ -18,4 +18,6 @@ public interface CustomUserRepository {
   UserDTO findByUserId(String userId);
 
   long countByUserId(String userId);
+
+  UserDTO findPlanNameByUserId(String userId);
 }
