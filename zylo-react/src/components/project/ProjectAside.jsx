@@ -21,7 +21,9 @@ const ProjectAside = () => {
   const projects = useProjectStore((state) => state.projects);
   const setProjects = useProjectStore((state) => state.setProjects);
 
-  const project = projects.find((p) => String(p.id) === selectedProjectId);
+  console.log(projects);
+
+  //const project = projects.find((p) => String(p.id) === selectedProjectId);
 
   const handleProjectClick = (projectId) => {
     navigate(`/project/outline?id=${encodeURIComponent(projectId)}`);
@@ -66,7 +68,7 @@ const ProjectAside = () => {
               String(project.id) === String(selectedProjectId) ? "selected" : ""
             }
           >
-            {project.title}
+            {project.name}
             <div className="progress-container">
               <div
                 className="progress-bar"
