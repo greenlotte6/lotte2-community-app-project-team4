@@ -117,3 +117,6 @@ server:
 
 jwt:
   secret: 0pn0YXIRtYoz29FzXRzL08k9J284Caw2
+
+cors:
+  origin: http://localhost:5173
