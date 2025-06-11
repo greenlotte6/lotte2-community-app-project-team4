@@ -1,4 +1,4 @@
-package com.example.integratedservices.controller;
+package com.example.integratedservices.controller.api;
 
 import com.example.integratedservices.service.user.UserService;
 import lombok.RequiredArgsConstructor;

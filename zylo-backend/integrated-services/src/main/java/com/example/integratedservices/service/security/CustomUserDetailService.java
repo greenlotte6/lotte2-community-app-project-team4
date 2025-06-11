@@ -1,7 +1,7 @@
 package com.example.integratedservices.service.security;
 
 import com.example.integratedservices.dto.user.UserDTO;
-import com.example.integratedservices.repository.UserRepository;
+import com.example.integratedservices.repository.jpa.user.UserRepository;
 import com.example.integratedservices.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
