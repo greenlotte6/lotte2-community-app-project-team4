@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,15 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+
+  @Value("${jwt.cookie.domain}")
+  private String domain;
+
+  @Value("${jwt.cookie.same-site}")
+  private String sameSite;
+
+  @Value("${jwt.cookie.secure}")
+  private boolean secure;
 
   private final PasswordEncoder encoder;
   private final JwtTokenProvider tokenProvider;
@@ -81,10 +91,11 @@ public class UserService {
   private ResponseCookie createCookieFrom(String name, String token, Duration maxAge) {
     return ResponseCookie.from(name, token)
         .httpOnly(true)
-        .secure(true)
+        .secure(secure)
         .path("/")
+        .domain(domain)
         .maxAge(maxAge)
-        .sameSite("Strict")
+        .sameSite(sameSite)
         .build();
   }
 

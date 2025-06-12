@@ -8,6 +8,9 @@ spring:
     activate:
       on-profile: prod
 
+  jackson:
+    default-property-inclusion: always
+
   application:
     name: integrated-services
     version: 0.0.1
@@ -69,15 +72,21 @@ server:
 
 jwt:
   secret: 0pn0YXIRtYoz29FzXRzL08k9J284Caw2
+  cookie:
+    secure: true
+    same-site: None
+    domain: .greenlotteon.com
 
-cors:
-  origin: https://greenlotteon.com
+
 ---
 # 개발용 설정
 spring:
   config:
     activate:
       on-profile: dev
+
+  jackson:
+    default-property-inclusion: always
 
   application:
     name: integrated-services
@@ -122,6 +131,8 @@ server:
 
 jwt:
   secret: 0pn0YXIRtYoz29FzXRzL08k9J284Caw2
+  cookie:
+    secure: false
+    same-site: Lax
+    domain: localhost
 
-cors:
-  origin: http://localhost:5173
