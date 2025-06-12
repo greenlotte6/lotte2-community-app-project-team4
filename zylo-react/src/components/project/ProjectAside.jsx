@@ -59,32 +59,23 @@ const ProjectAside = () => {
         </span>
         {modal && <ProjectRegisterModal modal={modal} setModal={setModal} />}
       </div>
-      <ul className="project-menu">
-        {projects.map((project) => (
-          <li
-            key={project.id}
-            onClick={() => handleProjectClick(project.id)}
-            className={
-              String(project.id) === String(selectedProjectId) ? "selected" : ""
-            }
-          >
-            {project.name}
-            <div className="progress-container">
-              <div
-                className="progress-bar"
-                style={{
-                  width:
-                    project.totalWork && project.progressWork
-                      ? `${Math.round(
-                          (project.progressWork / project.totalWork) * 100
-                        )}%`
-                      : "0%",
-                }}
-              ></div>
-            </div>
-          </li>
-        ))}
-      </ul>
+      {Array.isArray(projects) && projects.length > 0 && (
+        <ul>
+          {projects.map((project) => (
+            <li key={project.id} onClick={() => handleProjectClick(project.id)} className={String(project.id) === String(selectedProjectId) ? "selected" : ""}>
+              {project.name}
+              <div className="progress-container">
+                <div
+                  className="progress-bar"
+                  style={{
+                    width: project.totalWork && project.progressWork ? `${Math.round((project.progressWork / project.totalWork) * 100)}%` : "0%",
+                  }}
+                ></div>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
