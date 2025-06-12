@@ -19,10 +19,11 @@ export const InviteModal = ({ onClose, roomName, inviteRule }) => {
       setUsersLoading(true);
       setUsersError(null);
       try {
-        const response = await axios.get("/api/users", {
+        const response = await axios.get("http://localhost:8082/v1/user/all", {
           headers: { "X-User-Id": "user123" },
         });
         if (response.data && Array.isArray(response.data)) {
+          console.log(response.data);
           setAllUsers(response.data);
         }
       } catch (err) {

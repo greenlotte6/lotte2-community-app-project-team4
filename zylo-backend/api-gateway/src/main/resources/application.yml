@@ -70,7 +70,7 @@ zylo:
     excluded-paths:
       - /v1/login
       - /v1/signup
-      - /v1/user/all # TODO: /v1/user/all을 excluded-paths에서 제외시키기
+      - /v1/user/all
     integrated-services:
       uri: http://localhost:8081
       path:
