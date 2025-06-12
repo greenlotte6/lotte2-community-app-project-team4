@@ -9,30 +9,65 @@ export const Modal = ({ visible, onClose, title, setTitle, subtitle, setSubtitle
   };
 
   const insertTable = () => {
-    const tableHTML = `<table border="1" style="width:100%; border-collapse:collapse;">
-      <tr><th>헤더1</th><th>헤더2</th></tr>
-      <tr><td>내용1</td><td>내용2</td></tr>
-    </table><br/>`;
-    document.execCommand("insertHTML", false, tableHTML);
-  };
+  const editor = editorRef.current;
+  editor.focus(); 
 
-  // 제출 기능 제거
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   onSubmit(editorRef.current.innerHTML);
-  // };
+  const tableHTML = `
+    <table style="width:100%; border-collapse:collapse; border:1px solid #ccc;">
+      <thead>
+        <tr>
+          <th style="border:1px solid #ccc; padding:5px;"></th>
+          <th style="border:1px solid #ccc; padding:5px;"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border:1px solid #ccc; padding:5px;"></td>
+          <td style="border:1px solid #ccc; padding:5px;"></td>
+        </tr>
+      </tbody>
+    </table><br/>
+  `;
 
-  if (!visible) return null; // 모달이 안 보이게 처리
+  const selection = window.getSelection();
+  if (!selection || selection.rangeCount === 0) return;
+
+  const range = selection.getRangeAt(0);
+  const tempElement = document.createElement("div");
+  tempElement.innerHTML = tableHTML;
+
+  const frag = document.createDocumentFragment();
+  let node, lastNode;
+
+  while ((node = tempElement.firstChild)) {
+    lastNode = frag.appendChild(node);
+  }
+
+  range.deleteContents();
+  range.insertNode(frag);
+
+
+  if (lastNode) {
+    range.setStartAfter(lastNode);
+    range.collapse(true);
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+};
+
+
+
+  if (!visible) return null; 
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay">
       <div className="modal-box" onClick={(e) => e.stopPropagation()}>
         <div className="modal-header">
           <h3>새 글 작성</h3>
           <span className="modal-close" onClick={onClose}>&times;</span>
         </div>
 
-        {/* form 태그 제거, onSubmit도 제거 */}
+
         <div className="modal-body">
           <input
             type="text"
@@ -48,6 +83,7 @@ export const Modal = ({ visible, onClose, title, setTitle, subtitle, setSubtitle
             value={subtitle}
             onChange={(e) => setSubtitle(e.target.value)}
           />
+
           <div className="toolbar">
             <button type="button" onClick={() => formatText("bold")}><b>B</b></button>
             <button type="button" onClick={() => formatText("italic")}><i>I</i></button>
@@ -65,14 +101,22 @@ export const Modal = ({ visible, onClose, title, setTitle, subtitle, setSubtitle
             className="content-editor"
             contentEditable
             ref={editorRef}
-            // onInput 삭제
             dangerouslySetInnerHTML={{ __html: content }}
           />
         </div>
 
         <div className="modal-footer">
+
+          <div className="file-upload">
+            <label htmlFor="fileInput" className="file-button">
+              📎 파일 업로드
+            </label>
+            <input id="fileInput" type="file" style={{ display: 'none' }} />
+          </div>
+
+
           <button type="button" className="btn-cancel" onClick={onClose}>취소</button>
-          {/* 등록 버튼은 그냥 닫기 기능만 */}
+
           <button type="button" className="btn-submit" onClick={onClose}>등록</button>
         </div>
       </div>

@@ -13,6 +13,18 @@ export const SideMenu = () => {
         <h3>Product 팀</h3>
         <FontAwesomeIcon icon={faTrashCan} />
       </span>
+
+      <div className="search-box">
+      <img className="search-icon"
+        src="/images/article/icons8-돋보기-50.png"
+        alt="검색"
+      />
+      <input className="search-input"
+        type="text"
+        placeholder=" 검색"
+      />
+      </div>
+
       <ul className="category">
         <li className={toggled ? "category-item dark" : "category-item"}>
           <span>
