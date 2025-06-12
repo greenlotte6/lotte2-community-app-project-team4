@@ -5,6 +5,8 @@ import DropdownPortal from "./DropdownPortal";
 import { Pagination } from "./Pagination";
 import { CommentForm } from "./CommentForm";
 import { Modal } from "./Modal";
+import "../../styles/header.css";
+import { SideMenu } from "./SideMenu";
 
 const posts = [
   {
@@ -140,6 +142,10 @@ export default function PostList() {
   return (
     <div className="list">
       <h1 className="list-title">목록</h1>
+      <div style={{ position: "relative", display: "inline-block" }}>
+      
+    
+</div>
       <button className="write-btn" onClick={openModal}>글쓰기+</button>
 
       {posts.map((post) => {
@@ -255,6 +261,7 @@ export default function PostList() {
                   {commentingId === post.id ? "닫기" : "댓글 달기"}
                 </button>
                 <button className="action-btn">공유하기</button>
+                <button className="action-btn">업로드</button>
               </div>
 
               {commentingId === post.id && (

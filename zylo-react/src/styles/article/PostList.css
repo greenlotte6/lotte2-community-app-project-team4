@@ -15,8 +15,12 @@
     font-weight: 700;
     color: #5da9ff;
     margin-top: -50px;
-    margin-bottom: 30px;
+    margin-bottom: 8px;
     margin-left: 10px;
+  }
+
+  .dark .list-title{
+    color: white;
   }
 
   .list {
@@ -30,14 +34,24 @@
   }
 
   .content-item {
-    background: white;
     color: #000;
-    border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     /*수정*/
     overflow: visible;
+    border-radius: 50px;
   }
+
+  .dark .content-item{
+    border: none;
+    box-shadow: none;
+  }
+
+  .dark .item-header{
+    border: none;
+    box-shadow: none;
+  }
+
 
   .content-item:hover {
     transform: translateY(-2px);
@@ -55,12 +69,14 @@
     justify-content: space-between;
     font-size: 40px;
     cursor: pointer;
-    background-color: white;
+    background-color: #fdfdfd;
+    border-radius: 50px;
     
+
   }
   .content-item.expanded .item-header.dark{
     background: #1b115a;
-    color: white;
+    
   }
 
   .item-header:hover {
@@ -68,6 +84,12 @@
     transition: backgroud-color 0.2s ease;
     
   }
+
+
+.dark .featured-item .item-header{
+  background-color: rgb(46, 45, 45);
+}
+
 
   .item-header:hover.dark{
     background: #1b115a;
@@ -78,11 +100,14 @@
 
   .featured-item .item-header:hover.dark{
     background: #1b115a;
+
   }
   .featured-item .item-header {
     background-color: white;
     transition: backgroud-color 0.2s ease;
+    
   }
+
 
   .featured-item .item-header:hover {
     background: linear-gradient(135deg, #96c9ff 0%, #5da9ff 100%);
@@ -157,6 +182,10 @@
     
   }
 
+  .dark .item-info{
+    color: white;
+  }
+
 
   .menu-btn:hover {
     background-color: rgba(0, 0, 0, 0.1);
@@ -172,8 +201,20 @@
     font-size: 16px;
   }
 
+  .dark .item-right{
+    color: white;
+  }
+
+  .dark .item-header{
+    background-color: rgb(46, 45, 45);
+  
+  }
+
   .content-item.expanded .expand-icon {
     transform: rotate(180deg);
+  }
+  .dark .post-detail{
+    border: none;
   }
 
   /* Post Detail Dropdown */
@@ -183,6 +224,7 @@
     transition: max-height 0.3s ease, padding 0.3s ease;
     background: white;
     border-top: 1px solid #e9ecef;
+    border: none;
   }
 
   .content-item.expanded .post-detail {
@@ -193,6 +235,7 @@
   .featured-item .post-detail {
     background: rgba(255, 255, 255, 0.95);
     color: #333;
+    border-radius: 15px;
   }
 
   .post-meta {
@@ -311,6 +354,7 @@
     box-shadow: 0 4px 16px rgba(66, 133, 244, 0.3);
     color: #fdfdfd;
     border-radius: 25px;
+    z-index: 1;
   }
 
   .dark .write-btn{
@@ -416,6 +460,7 @@
     border-radius: 8px;
     padding: 16px;
     transition: box-shadow 0.2s ease;
+    position: relative;
   }
 
   .comment-item:hover {
@@ -533,10 +578,12 @@
 
   .comment-menubtn {
     position: relative;
-    left: 880px;
-    bottom: 20px;
+    top: 0;
+    right: 10px;
+    cursor: pointer;
     font-weight: bolder;
     font-size: 18px;
+    position: absolute;
   }
 
   /*모달 창*/
@@ -564,6 +611,7 @@
     height: 50vh;
     background: white;
     border-radius: 12px;
+    max-height: 100vh;
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -580,6 +628,10 @@
     border-radius: 12px 12px 0 0;
   }
 
+  .dark .modal-header h3{
+    color: white;
+  }
+
   .dark .modal-header{
     background: #1b115a;
   }
@@ -587,6 +639,7 @@
   .modal-header h3 {
     margin: 0;
     font-size: 18px;
+    
   }
 
   
@@ -602,20 +655,37 @@
   }
 
   .modal-body {
-    flex: 1;
-    padding: 20px;
+    flex: 1 1 auto;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     gap: 15px;
+    overflow-y: auto;
   }
 
-  .title-input {
+  .title-input {  
     width: 100%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 16px;
     outline: none;
+  }
+
+  .dark .title-input {
+    color: #333;
+  }
+
+  .dark  .sub-title-input {
+    color: #333;
+  }
+
+  .dark  .toolbar {
+    color: #333;
+  }
+
+  .dark .content-editor{
+    color: #333;
   }
 
   .sub-title-input{
@@ -631,13 +701,50 @@
     border-color: #5da9ff;
   }
 
+  .sub-title-input:focus{
+    border-color: #5da9ff;
+  }
+
+  .file-upload {
+  display: flex;
+  position: relative;
+  right: 668px;
+  
+}
+
+
+.file-button {
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.file-button:hover {
+  background: white;
+}
+
+.dark .file-button {
+  
+  background-color: #1b115a;
+  
+}
+
   .toolbar {
     display: flex;
-    gap: 8px;
-    padding: 10px;
+    gap: 10px;
+    padding: 20px 20px;
     background: #f8f9fa;
     border-radius: 6px;
     flex-wrap: wrap;
+    
+  }
+
+  .toolbar select{
+    height: 30px;
+
   }
 
   .toolbar button,
@@ -649,6 +756,8 @@
     background: white;
     cursor: pointer;
     font-size: 12px;
+    position: relative;
+    bottom: 17px;
   }
 
   .toolbar button:hover {
@@ -753,7 +862,9 @@
 
   #article-side-menu > .category {
     width: 100%;
-    height: 92%;
+    height: 80%;
+    position: relative;
+    top: 20px;
   }
 
   .category-item {
@@ -766,7 +877,8 @@
     border: 1px solid #e4e9f2;
     padding: 5px;
     transition: border 0.3s ease, background-color 0.3s ease, transform 0.1s ease;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+    
   }
 
   .category-item.dark {
@@ -804,3 +916,62 @@
     transform: translate(-5px, -5px);
     box-shadow: 1.5px 6px 6px 0px rgba(0, 0, 0, 0.3);
   }
+
+  
+.search-box {
+  
+  display: flex;
+  align-items: center;
+  width: 240px; /* 너비는 필요에 따라 조절 */
+  left: 9px;
+  top: 1px;
+  position: relative;
+}
+
+.search-icon {
+   position: absolute;
+  left: 10px;
+  width: 20px;
+  height: 20px;
+  opacity: 0.6;
+}
+
+.dark .search-box{
+  background-color: #1b115a;
+  border-radius: 50px;
+  color: white;
+}
+.search-input {
+  width: 100%;
+  padding: 8px 8px 8px 36px; /* 왼쪽 padding으로 아이콘 공간 확보 */
+  border: 1px solid #dedede;
+  border-radius: 50px;
+  font-size: 16px;
+}
+
+.dark .search-input{
+  border: none;
+  color: white !important;
+}
+
+.dark .search-icon{
+  color: white;
+}
+
+.search-input::placeholder{
+  position: relative;
+  font-size: 14px;
+  bottom: 1px;
+  color: #252525;
+}
+
+.dark .search-input::placeholder{
+  color: white;
+  position: relative;
+  bottom: 1px;
+}
+
+
+.dark .search-icon{
+  filter: invert(5000%) brightness(5000%);
+}
