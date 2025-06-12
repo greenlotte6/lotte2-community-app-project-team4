@@ -21,6 +21,19 @@ server:
   port: 8080
   servlet:
     context-path: /
+
+zylo:
+  endpoints:
+    excluded-paths:
+      - /v1/login
+      - /v1/signup
+      - /v1/user/all # TODO: /v1/user/all을 excluded-paths에서 제외시키기
+    integrated-services:
+      uri: http://zylo-integrated-services:8081
+      path:
+        validation: /auth/jwt/validate
+        login: /auth/login
+        signup: /auth/signup
 ---
 #개발용 설정
 spring:
@@ -48,7 +61,7 @@ logging:
     root: info
 
 server:
-  port: 8081
+  port: 8082
   servlet:
     context-path: /
 
@@ -59,7 +72,7 @@ zylo:
       - /v1/signup
       - /v1/user/all # TODO: /v1/user/all을 excluded-paths에서 제외시키기
     integrated-services:
-      uri: http://localhost:8080
+      uri: http://localhost:8081
       path:
         validation: /auth/jwt/validate
         login: /auth/login
