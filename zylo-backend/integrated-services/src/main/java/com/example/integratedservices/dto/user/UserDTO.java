@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class UserDTO {
 
   private String id;
+  private String name;
   private String email;
   private String password;
   private int profileImageId;
@@ -24,9 +25,10 @@ public class UserDTO {
   private String planName;
   private String status;
 
-  public UserDTO(String id, String email, int profileImageId, String profileImageUploadPath,
+  public UserDTO(String id, String name, String email, int profileImageId, String profileImageUploadPath,
       int planId, int planNameId, String planName, String status) {
     this.id = id;
+    this.name = name;
     this.email = email;
     this.profileImageId = profileImageId;
     this.profileImageUploadPath = profileImageUploadPath;
