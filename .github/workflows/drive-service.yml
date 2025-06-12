@@ -78,7 +78,7 @@ jobs:
             --memory=320m \
             -e TZ=Asia/Seoul -e AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY }} -e AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_PRIVATE_KEY }} -e AWS_REGION=${{ secrets.AWS_REGION }} \
             -v zylo-drive-service:/var/www/drive-service \
-            -p 8081:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
+            -p 8083:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-drive-service
             sudo docker image prune -f
 
       - name: revoke runner ip address
