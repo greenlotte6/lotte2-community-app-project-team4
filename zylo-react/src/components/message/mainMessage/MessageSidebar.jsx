@@ -1,4 +1,5 @@
 import { useTheme } from "../../../contexts/ThemeContext";
+import { useEffect } from "react";
 
 export const MessageSidebar = ({
   channels,
@@ -6,6 +7,20 @@ export const MessageSidebar = ({
   onSelectChannel,
 }) => {
   const { toggled } = useTheme();
+
+  useEffect(() => {
+    const storedChannelId = localStorage.getItem("selectedChannelId");
+    if (storedChannelId && channels.length > 0) {
+      const channelToSelect = channels.find(
+        (channel) => channel.id === storedChannelId
+      );
+      if (channelToSelect) {
+        onSelectChannel(channelToSelect);
+      }
+    } else if (!storedChannelId && channels.length > 0) {
+      onSelectChannel(channels[0]);
+    }
+  }, [channels, onSelectChannel]);
 
   const dmChannels = channels.filter((ch) => ch.type === "DM");
   const groupChannels = channels.filter((ch) => ch.type === "GROUP");
@@ -17,7 +32,10 @@ export const MessageSidebar = ({
         (selectedChannel?.id === channel.id ? " selected" : "")
       }
       key={channel.id || index}
-      onClick={() => onSelectChannel(channel)}
+      onClick={() => {
+        onSelectChannel(channel);
+        localStorage.setItem("selectedChannelId", channel.id);
+      }}
     >
       <div className="avatar-wrapper">
         <img
@@ -50,7 +68,7 @@ export const MessageSidebar = ({
         {/* 온라인 사용자 (더미) */}
         <div className="online-now">
           <div className="online-header">
-            <p>접속 중</p>
+            <p>친구 목록</p>
             <button id="showAllBtn">모두보기</button>
           </div>
           <div className="avatars" id="avatarList">

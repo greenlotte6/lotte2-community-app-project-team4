@@ -153,6 +153,6 @@ public class ChannelService {
      * 채널 목록 조회 (참여 중인 것만)
      */
     public List<Channel> findUserChannels(String userId) {
-        return channelRepository.findByMembersContaining(userId);
+        return channelRepository.findByMembersContainingOrderByCreatedAtDesc(userId);
     }
 }

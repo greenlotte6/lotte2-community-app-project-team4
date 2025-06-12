@@ -6,9 +6,8 @@ export const ChatRoomMessage = ({ messages, selectedChannel }) => {
   const currentUserId = "user123";
   const bottomRef = useRef(null);
 
-  // 새 메시지 도착 시 자동 스크롤
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    bottomRef.current?.scrollIntoView({ behavior: "auto" });
   }, [messages]);
 
   if (!selectedChannel) {
