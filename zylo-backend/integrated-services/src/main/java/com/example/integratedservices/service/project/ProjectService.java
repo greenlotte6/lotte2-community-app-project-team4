@@ -1,6 +1,7 @@
 package com.example.integratedservices.service.project;
 
 import com.example.integratedservices.dto.project.ProjectDTO;
+import com.example.integratedservices.entity.project.Project;
 import com.example.integratedservices.repository.project.ProjectRepository;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,17 @@ public class ProjectService {
         return gson.toJson(projects);
     }
 
+
+    public void projectInsert(ProjectDTO projectDTO){
+
+        Project project = projectDTO.toEntity();
+        System.out.println(project);
+
+
+        projectRepository.save(project);
+
+
+    }
 
 
 

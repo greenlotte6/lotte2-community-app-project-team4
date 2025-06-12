@@ -23,7 +23,7 @@ public class CustomProjectRepositoryImpl implements CustomProjectRepository{
 
     @Override
     public List<ProjectDTO> getNameAll(){
-        return query.select(Projections.constructor(ProjectDTO.class, project.id, project.name, project.desc , project.row,
+        return query.select(Projections.constructor(ProjectDTO.class, project.id, project.name, project.description , project.row,
                         project.column, project.startDate, project.endDate))
                 .from(project)
                 .fetch();
