@@ -13,7 +13,7 @@ spring:
 
 logging:
   file:
-    path: /var/www/api-gateway/api-gateway.log
+    path: /var/www/api-gateway
   level:
     root: info
 
