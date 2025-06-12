@@ -1,9 +1,12 @@
 package com.example.chatservice.model;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -23,6 +26,10 @@ public class Channel {
     private Set<String> members;
     private ChannelType type;
     private InviteRule inviteRule;
+
+    @CreatedDate
+    @Indexed(name = "idx_created_at")
+    private LocalDateTime createdAt;
 
 
     /** 🔹 멤버별 권한: userId → Role */

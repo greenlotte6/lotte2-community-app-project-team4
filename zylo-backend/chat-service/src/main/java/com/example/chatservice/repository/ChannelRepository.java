@@ -11,10 +11,8 @@ import java.util.Optional;
 @Repository
 public interface ChannelRepository extends MongoRepository<Channel, String> {
 
-    /**
-     * 특정 사용자가 참여한 모든 채널 조회
-     */
-    List<Channel> findByMembersContaining(String userId);
+    // 특정 사용자가 참여한 모든 채널 조회 ( 최신순)
+    List<Channel> findByMembersContainingOrderByCreatedAtDesc(String userId);
 
     /**
      * 두 사용자가 모두 멤버이며 type = DM 인 채널 조회
