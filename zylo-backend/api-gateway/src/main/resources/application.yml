@@ -11,18 +11,6 @@ spring:
   application:
     name: api-gateway
 
-  cloud:
-    gateway:
-      server:
-        webflux:
-          routes:
-            - id: integrated-services
-              uri: http://zylo-integrated-services:8080
-              predicates:
-                - Path=/test
-              filters:
-                - RewritePath=/test, /ping
-
 logging:
   file:
     path: /var/www/api-gateway
@@ -63,3 +51,16 @@ server:
   port: 8081
   servlet:
     context-path: /
+
+zylo:
+  endpoints:
+    excluded-paths:
+      - /v1/login
+      - /v1/signup
+      - /v1/user/all # TODO: /v1/user/all을 excluded-paths에서 제외시키기
+    integrated-services:
+      uri: http://localhost:8080
+      path:
+        validation: /auth/jwt/validate
+        login: /auth/login
+        signup: /auth/signup

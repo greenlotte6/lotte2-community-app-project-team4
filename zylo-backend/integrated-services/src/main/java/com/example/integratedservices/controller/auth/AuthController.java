@@ -1,12 +1,16 @@
 package com.example.integratedservices.controller.auth;
 
 import com.example.integratedservices.dto.auth.SignUpDTO;
+import com.example.integratedservices.dto.response.ErrorResponseDTO;
 import com.example.integratedservices.dto.response.SuccessResponseDTO;
 import com.example.integratedservices.dto.user.UserDTO;
+import com.example.integratedservices.security.jwt.JwtTokenProvider;
 import com.example.integratedservices.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +28,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-  private final AuthenticationManager authManager;
   private final UserService service;
+  private final JwtTokenProvider tokenProvider;
+  private final AuthenticationManager authManager;
 
   @PostMapping("/signup")
   public ResponseEntity<Object> signup(@RequestBody SignUpDTO signUpRequest) {
@@ -37,10 +42,12 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<Object> login(@RequestBody UserDTO userDTO,
       @CookieValue(value = "refresh_token", required = false) String refreshToken) {
+    // 사용자 ID/PW 검증
     UsernamePasswordAuthenticationToken authToken =
         new UsernamePasswordAuthenticationToken(userDTO.getId(), userDTO.getPassword());
     authManager.authenticate(authToken); //사용자 ID, PW 인증. 인증 실패 시 자동으로 에러 응답 전송
 
+    // Access, Refresh token 발급
     HttpHeaders headers = new HttpHeaders();
     if (refreshToken != null) {
       log.info("리프레시 토큰이 이미 발급된 것으로 보이지만, 추가 검증이 필요합니다.");
@@ -67,4 +74,21 @@ public class AuthController {
         .header(HttpHeaders.SET_COOKIE, newAccessTokenCookie.toString())
         .body(new SuccessResponseDTO("토큰 갱신 성공"));
   }
+
+  @PostMapping("/jwt/validate")
+  public ResponseEntity<Object> validate(@CookieValue("access_token") HttpCookie accessToken) {
+    boolean isValid = tokenProvider.validateToken(accessToken.getValue());
+    if (isValid) {
+      String message = "액세스 토큰 인증 성공";
+      log.info(message);
+      SuccessResponseDTO successRes = new SuccessResponseDTO(message);
+      return ResponseEntity.ok(successRes);
+    } else {
+      String message = "액세스 토큰 인증 실패";
+      log.info(message);
+      ErrorResponseDTO errorRes = new ErrorResponseDTO("유효하지 않은 액세스 토큰입니다.", message);
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorRes);
+    }
+  }
+
 }
