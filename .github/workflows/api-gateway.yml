@@ -68,7 +68,7 @@ jobs:
             sudo docker volume ls | grep zylo-api-gateway || sudo docker volume create zylo-api-gateway
             sudo docker stop zylo-api-gateway || true && sudo docker rm zylo-api-gateway || true
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/zylo-api-gateway-service
-            sudo docker run -d --network zylo --name zylo-api-gateway --memory=128m -e TZ=Asia/Seoul  -v zylo-api-gateway:/var/www/api-gateway -p 8083:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-api-gateway
+            sudo docker run -d --network zylo --name zylo-api-gateway --memory=128m -e TZ=Asia/Seoul  -v zylo-api-gateway:/var/www/api-gateway -p 8082:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-api-gateway
             sudo docker image prune -f
 
       - name: revoke runner ip address

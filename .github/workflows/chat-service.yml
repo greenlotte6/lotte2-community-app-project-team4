@@ -70,7 +70,7 @@ jobs:
             sudo docker volume ls | grep zylo || sudo docker volume create zylo-chat-service
             sudo docker stop zylo-chat-service || true && sudo docker rm zylo-chat-service || true
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/zylo-chat-service
-            sudo docker run -d --network zylo --name zylo-chat-service --memory=256m -e TZ=Asia/Seoul  -v zylo-chat-service:/var/www/chat-service  -p 8082:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-chat-service
+            sudo docker run -d --network zylo --name zylo-chat-service --memory=256m -e TZ=Asia/Seoul  -v zylo-chat-service:/var/www/chat-service  -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/zylo-chat-service
             sudo docker image prune -f
 
       - name: revoke runner ip address
