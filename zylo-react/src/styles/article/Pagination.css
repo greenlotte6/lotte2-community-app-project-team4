@@ -16,16 +16,27 @@
 }
 
 .pagination button:hover {
-  background-color: inherit;
+  
 }
 
 .pagination .active {
   background-color: #007bff;
   color: white;
+  font-weight: bolder;
   border-color: #007bff;
 }
+
+
+
 
 .pagination button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.dark .pagination .active{
+  background-color: rgb(41, 25, 141);
+  border: #1b115a;
+  border-color: #1b115a;
+  font-weight: bolder;
 }

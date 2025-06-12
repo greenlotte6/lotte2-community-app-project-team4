@@ -83,8 +83,13 @@ export default function PostList() {
   const openModal = () => setIsModalVisible(true);
   const closeModal = ()=> setIsModalVisible(false);
 
+
+
   const handleModalSubmit = (data)=>{
     console.log("모달 제출 데이터: ", data);
+    setModalTitle(data.title);
+    setModalSubtitle(data.subtitle);
+    setModalContent(data.content);
     closeModal();
   };
 
@@ -103,7 +108,11 @@ export default function PostList() {
     };
     document.addEventListener("mousedown", handleOutside);
     return () => document.removeEventListener("mousedown", handleOutside);
+
   }, []);
+
+
+
 
   const toggleExpand = (id) => {
     if (expandedId === id) {
@@ -260,7 +269,7 @@ export default function PostList() {
 
       <Modal visible={isModalVisible}
               onClose={closeModal}
-              onSubmit={()=> handleModalSubmit({ title: modalTitle, subtitle: modalSubtitle, content: modalContent })}
+              onSubmit={handleModalSubmit}
               title={modalTitle}
               setTitle={setModalTitle}
               subtitle={modalSubtitle}
