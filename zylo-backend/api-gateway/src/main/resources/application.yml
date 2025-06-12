@@ -31,9 +31,18 @@ zylo:
     integrated-services:
       uri: http://zylo-integrated-services:8081
       path:
-        validation: /auth/jwt/validate
-        login: /auth/login
-        signup: /auth/signup
+        auth:
+          validation: /auth/jwt/validate
+          login: /auth/login
+          signup: /auth/signup
+        query:
+          user-all: /user/all
+    drive-service:
+      uri:
+        http://zylo-drive-service:8083
+      path:
+        upload: /drive/upload
+        download: /drive/download
 ---
 #개발용 설정
 spring:
@@ -74,6 +83,16 @@ zylo:
     integrated-services:
       uri: http://localhost:8081
       path:
-        validation: /auth/jwt/validate
-        login: /auth/login
-        signup: /auth/signup
+        health-check: /healthcheck
+        auth:
+          validation: /auth/jwt/validate
+          login: /auth/login
+          signup: /auth/signup
+        query:
+          user-all: /user/all
+    drive-service:
+      uri:
+        http://localhost:8083
+      path:
+        upload: /drive/upload
+        download: /drive/download

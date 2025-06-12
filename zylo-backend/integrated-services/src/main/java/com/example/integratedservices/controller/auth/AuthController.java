@@ -8,7 +8,6 @@ import com.example.integratedservices.security.jwt.JwtTokenProvider;
 import com.example.integratedservices.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -75,9 +75,10 @@ public class AuthController {
         .body(new SuccessResponseDTO("토큰 갱신 성공"));
   }
 
-  @PostMapping("/jwt/validate")
-  public ResponseEntity<Object> validate(@CookieValue("access_token") HttpCookie accessToken) {
-    boolean isValid = tokenProvider.validateToken(accessToken.getValue());
+  @GetMapping("/jwt/validate")
+  public ResponseEntity<Object> validate(@CookieValue("access_token") String accessToken) {
+    log.info("access_token({})에 대한 검증을 시작합니다.", accessToken);
+    boolean isValid = tokenProvider.validateToken(accessToken);
     if (isValid) {
       String message = "액세스 토큰 인증 성공";
       log.info(message);
