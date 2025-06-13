@@ -23,9 +23,12 @@ public class DriveRepository {
 
   public void save(String username, FileDocument fileDocument) {
     //TODO: Update current capacity
+    long currentCapacity = findCurrentCapacity(username);
+    long updatedCapacity = currentCapacity + fileDocument.getSize();
     Query query = new Query(Criteria.where("uid").is(username));
     Update update = new Update().setOnInsert("uid", username)
-        .push("files", fileDocument);
+        .push("files", fileDocument)
+        .setOnInsert("currentCapacity", updatedCapacity);
     template.upsert(query, update, UploadsDocument.class);
   }
 
