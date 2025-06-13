@@ -82,8 +82,13 @@ public class AuthController {
     if (isValid) {
       String message = "액세스 토큰 인증 성공";
       log.info(message);
+      String username = tokenProvider.getUsername(accessToken);
+      String role = tokenProvider.getRole(accessToken);
+
       SuccessResponseDTO successRes = new SuccessResponseDTO(message);
-      return ResponseEntity.ok(successRes);
+      return ResponseEntity.ok().header("X-User-Name", username)
+          .header("X-User-Role", role)
+          .body(successRes);
     } else {
       String message = "액세스 토큰 인증 실패";
       log.info(message);

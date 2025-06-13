@@ -9,6 +9,8 @@ import org.springframework.core.Ordered;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.server.ServerWebExchange;
@@ -44,14 +46,22 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
     return exchange.getResponse().setComplete();
   }
 
+  private void setCustomHeaders(ServerHttpRequest request, ResponseEntity<Void> serviceResponse) {
+    String xUserName = serviceResponse.getHeaders().getFirst("X-User-Name");
+    String xUserRole = serviceResponse.getHeaders().getFirst("X-User-Role");
+    request.getHeaders().set("X-User-Name", xUserName);
+    request.getHeaders().set("X-User-Role", xUserRole);
+  }
+
   @Override
   public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-    if (isExcludedPath(exchange.getRequest().getPath().value())) { //JWT 인증이 필요없는 URL로의 요청인 경우
+    ServerHttpRequest req = exchange.getRequest();
+    if (isExcludedPath(req.getPath().value())) { //JWT 인증이 필요없는 URL로의 요청인 경우
       return chain.filter(exchange);
     }
 
-    log.info("{}(으)로의 요청을 감지했습니다. JWT 검증을 시작합니다.", exchange.getRequest().getURI());
-    HttpCookie accessTokenCookie = exchange.getRequest()
+    log.info("{}(으)로의 요청을 감지했습니다. JWT 검증을 시작합니다.", req.getURI());
+    HttpCookie accessTokenCookie = req
         .getCookies()
         .getFirst("access_token");
 
@@ -71,6 +81,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
         .flatMap(response -> {
           if (response.getStatusCode().is2xxSuccessful()) {
             log.info("JWT 검증을 성공적으로 완료하였습니다. 요청을 라우팅합니다.");
+            setCustomHeaders(req, response);
             return chain.filter(exchange);
           } else {
             log.info("JWT 검증에 실패하였습니다.");
