@@ -28,7 +28,6 @@ public class DriveRepository {
   }
 
   public void save(String username, FileDocument fileDocument) {
-    // TODO: 중복되는 filename을 가진 파일은 업데이트만 하기
     long currentCapacity = findCurrentCapacity(username);
     UploadsDocument uploadList = fileExists(username, fileDocument.getFilename());
     if (uploadList != null) { //같은 이름의 파일이 있는 경우
