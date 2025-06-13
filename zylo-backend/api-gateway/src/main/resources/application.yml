@@ -30,7 +30,7 @@ zylo:
       - /v1/user/all
       - /v1/health
     integrated-services:
-      uri: http://zylo-integrated-services:8081
+      uri: http://zylo-integrated-services:8080
       path:
         health-check: /healthcheck
         auth:
@@ -41,7 +41,7 @@ zylo:
           user-all: /user/all
     drive-service:
       uri:
-        http://zylo-drive-service:8083
+        http://zylo-drive-service:8080
       path:
         upload: /drive/upload
         download: /drive/download
