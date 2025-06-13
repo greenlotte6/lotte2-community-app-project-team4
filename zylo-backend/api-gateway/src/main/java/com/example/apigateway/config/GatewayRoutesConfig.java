@@ -12,6 +12,9 @@ public class GatewayRoutesConfig {
   @Value("${zylo.endpoints.integrated-services.uri}")
   private String integratedServiceUri;
 
+  @Value("${zylo.endpoints.integrated-services.path.auth.signup}")
+  private String signupPath;
+
   @Value("${zylo.endpoints.integrated-services.path.auth.login}")
   private String loginPath;
 
@@ -30,7 +33,12 @@ public class GatewayRoutesConfig {
   @Bean
   public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
     return builder.routes()
-        .route("integrated-services", r -> r
+        .route("integrated-services/signup", r -> r
+            .path("/v1/signup")
+            .filters(f -> f.rewritePath("/v1/signup", signupPath))
+            .uri(integratedServiceUri)
+        )
+        .route("integrated-services/login", r -> r
             .path("/v1/login")
             .filters(f -> f.rewritePath("/v1/login", loginPath))
             .uri(integratedServiceUri)
