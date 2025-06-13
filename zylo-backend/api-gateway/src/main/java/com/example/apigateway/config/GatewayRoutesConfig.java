@@ -12,6 +12,9 @@ public class GatewayRoutesConfig {
   @Value("${zylo.endpoints.integrated-services.uri}")
   private String integratedServiceUri;
 
+  @Value("${zylo.endpoints.integrated-services.path.auth.signup}")
+  private String signupPath;
+
   @Value("${zylo.endpoints.integrated-services.path.auth.login}")
   private String loginPath;
 
@@ -30,7 +33,12 @@ public class GatewayRoutesConfig {
   @Bean
   public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
     return builder.routes()
-        .route("integrated-services", r -> r
+        .route("integrated-services/signup", r -> r
+            .path("/v1/signup")
+            .filters(f -> f.rewritePath("/v1/signup", signupPath))
+            .uri(integratedServiceUri)
+        )
+        .route("integrated-services/login", r -> r
             .path("/v1/login")
             .filters(f -> f.rewritePath("/v1/login", loginPath))
             .uri(integratedServiceUri)
@@ -40,8 +48,8 @@ public class GatewayRoutesConfig {
             .filters(f -> f.rewritePath("/v1/user/all", userAllPath))
             .uri(integratedServiceUri))
         .route("integrated-services/healthcheck", r -> r
-            .path("/v1/health")
-            .filters(f -> f.rewritePath("/v1/health", healthCheckPath))
+            .path("/v1/integrated/health")
+            .filters(f -> f.rewritePath("/v1/integrated/health", healthCheckPath))
             .uri(integratedServiceUri)
         )
         .route("drive-service/upload", r -> r

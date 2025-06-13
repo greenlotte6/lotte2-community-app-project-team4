@@ -28,7 +28,7 @@ zylo:
       - /v1/login
       - /v1/signup
       - /v1/user/all
-      - /v1/health
+      - /v1/integrated/health
     integrated-services:
       uri: http://zylo-integrated-services:8080
       path:
@@ -70,7 +70,7 @@ zylo:
       - /v1/login
       - /v1/signup
       - /v1/user/all
-      - /v1/health
+      - /v1/integrated/health
     integrated-services:
       uri: http://localhost:8081
       path:
