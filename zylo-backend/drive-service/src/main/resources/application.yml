@@ -18,6 +18,10 @@ spring:
       max-request-size: 11MB
       file-size-threshold: 1MB
 
+  data:
+    mongodb:
+      uri: mongodb+srv://zylo:7waYNx958XZidfzwlzb6R9Urnmqkm1djGIktd77iK@zylo.fplsain.mongodb.net/drive
+
 logging:
   file:
     path: /var/www/drive-service
@@ -49,6 +53,10 @@ spring:
       max-file-size: 10MB
       max-request-size: 11MB
       file-size-threshold: 1MB
+
+  data:
+    mongodb:
+      uri: mongodb+srv://zylo:7waYNx958XZidfzwlzb6R9Urnmqkm1djGIktd77iK@zylo.fplsain.mongodb.net/drive
 
 logging:
   level:
