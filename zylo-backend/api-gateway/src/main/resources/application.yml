@@ -28,7 +28,7 @@ zylo:
       - /v1/login
       - /v1/signup
       - /v1/user/all
-      - /v1/healthcheck
+      - /v1/health
     integrated-services:
       uri: http://zylo-integrated-services:8081
       path:
