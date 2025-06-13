@@ -40,8 +40,8 @@ public class GatewayRoutesConfig {
             .filters(f -> f.rewritePath("/v1/user/all", userAllPath))
             .uri(integratedServiceUri))
         .route("integrated-services/healthcheck", r -> r
-            .path("/v1/healthcheck")
-            .filters(f -> f.rewritePath("/v1/healthcheck", healthCheckPath))
+            .path("/v1/health")
+            .filters(f -> f.rewritePath("/v1/health", healthCheckPath))
             .uri(integratedServiceUri)
         )
         .route("drive-service/upload", r -> r
