@@ -4,7 +4,7 @@ import { initialBoardData } from "../data/project";
 
 const useProjectStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       projects: [],
       members: [],
       boards: initialBoardData,
@@ -12,9 +12,10 @@ const useProjectStore = create(
       setTeams: (data) => set({ teams: data }),
       setMembers: (data) => set({ members: data }),
       setProjects: (projects) => set({ projects }),
+      addProject: (project) => set({ projects: [...get().projects, project] }),
     }),
     {
-      name: "project-storage", // localStorage에 저장될 key 이름
+      name: "project-storage",
     }
   )
 );

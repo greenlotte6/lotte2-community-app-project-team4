@@ -26,8 +26,8 @@ public class Project {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "row_id")
-    private int row;
+    //@Column(name = "row_id")
+    //private int row;
 
     @Column(name = "start_date")
     private Date startDate;
