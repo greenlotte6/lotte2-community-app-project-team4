@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import "../../styles/project/modal.css";
 import { postCreate } from "../../api/projectAPI";
+import useProjectStore from "../../store/useProjectStore";
 
 export const ProjectRegisterModal = ({ modal, setModal }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const addProject = useProjectStore((state) => state.addProject);
 
   const handleCreate = async () => {
     try {
@@ -17,10 +19,15 @@ export const ProjectRegisterModal = ({ modal, setModal }) => {
         startDate,
         endDate,
       };
-      console.log("보내는 데이터:", payload); // 실제 전송되는 데이터 확인
-      await postCreate(payload); // postCreate에 payload 전달
+      console.log("보내는 데이터:", payload);
+
+      await postCreate(payload);
+      // 로컬 스토리지 추가
+      addProject(payload);
       setModal(false);
+      alert("프로젝트가 생성되었습니다.");
     } catch (err) {
+      console.log(err);
       alert("등록에 실패했습니다.");
     }
   };

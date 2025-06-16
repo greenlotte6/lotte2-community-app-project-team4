@@ -31,7 +31,6 @@ public class ProjectService {
     public void projectInsert(ProjectDTO projectDTO){
 
         Project project = projectDTO.toEntity();
-        System.out.println(project);
 
 
         projectRepository.save(project);
