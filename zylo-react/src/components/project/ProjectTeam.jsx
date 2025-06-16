@@ -6,6 +6,7 @@ import { useLocation } from "react-router-dom";
 import { dummyMembers, dummyProjectMember } from "../../data/project";
 import ProjectInviteModal from "./ProjectInviteModal";
 import { useTheme } from "../../contexts/ThemeContext";
+import useProjectStore from "../../store/useProjectStore";
 
 const ProjectTeam = () => {
   const { toggled, toggle } = useTheme();
@@ -16,15 +17,10 @@ const ProjectTeam = () => {
 
   const [modal, setModal] = useState(false);
 
-  // 해당 프로젝트의 멤버 ID 추출
-  const memberIds = dummyProjectMember
-    .filter((pm) => pm.projectId === projectId)
-    .map((pm) => pm.memberId);
+  const teams = useProjectStore((state) => state.teams);
 
-  // 해당 멤버 ID에 해당하는 멤버 정보 필터링
-  const members = dummyMembers.filter((member) =>
-    memberIds.includes(member.id)
-  );
+  const filteredTeams = teams.filter((team) => team.projectId === projectId);
+
   return (
     <>
       <div className="project-wrapper">
@@ -41,10 +37,10 @@ const ProjectTeam = () => {
             <ProjectInviteModal open={modal} onClose={() => setModal(false)} />
           </div>
           <div className="team-management-content-area">
-            {members.length === 0 ? (
+            {filteredTeams.length === 0 ? (
               <div>등록된 팀원이 없습니다.</div>
             ) : (
-              members.map((member) => (
+              filteredTeams.map((member) => (
                 <div
                   className={`team-member clickable-project ${
                     toggled ? "dark" : "light"
@@ -57,9 +53,15 @@ const ProjectTeam = () => {
                     alt="프로필"
                   />
                   <div className="team-member-info">
-                    <div className="team-member-name">{member.name}</div>
-                    <div className="team-member-position">{member.role}</div>
-                    <div className="team-member-currentStatus">온라인</div>
+                    <div className="team-member-name">
+                      {member.userId}(이름으로 구현 예정)
+                    </div>
+                    <div className="team-member-position">
+                      {member.role}(직책 구현예정)
+                    </div>
+                    <div className="team-member-currentStatus">
+                      온라인(구현예정)
+                    </div>
                   </div>
                 </div>
               ))
