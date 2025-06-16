@@ -15,18 +15,16 @@ public class ProjectDTO {
     private int id;
     private String name;
     private String description;
-    private int column;
     private int row;
 
 
     private Date startDate;
     private Date endDate;
 
-    public ProjectDTO(int id, String name, String description, int column, int row, Date startDate, Date endDate) {
+    public ProjectDTO(int id, String name, String description, int row, Date startDate, Date endDate) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.column = column;
         this.row = row;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -38,7 +36,6 @@ public class ProjectDTO {
                 .id(id)
                 .name(name)
                 .description(description)
-                .column(column)
                 .row(row)
                 .startDate(startDate)
                 .endDate(endDate)

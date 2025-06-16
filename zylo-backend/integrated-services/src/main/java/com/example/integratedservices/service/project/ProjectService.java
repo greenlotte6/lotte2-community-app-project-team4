@@ -1,7 +1,9 @@
 package com.example.integratedservices.service.project;
 
+import com.example.integratedservices.dto.project.ProjectCollaboratorsDTO;
 import com.example.integratedservices.dto.project.ProjectDTO;
 import com.example.integratedservices.entity.project.Project;
+import com.example.integratedservices.repository.project.ProjectCollaboratorsRepository;
 import com.example.integratedservices.repository.project.ProjectRepository;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final Gson gson;
+    private final ProjectCollaboratorsRepository projectCollaboratorsRepository;
 
 
     public String getNameAll(){
@@ -32,8 +35,11 @@ public class ProjectService {
 
 
         projectRepository.save(project);
+    }
 
-
+    public String getTeamAll(){
+        List<ProjectCollaboratorsDTO> projectMember = projectCollaboratorsRepository.getTeamAll();
+        return gson.toJson(projectMember);
     }
 
 

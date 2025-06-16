@@ -1,5 +1,6 @@
 package com.example.integratedservices.repository.project;
 
+import com.example.integratedservices.dto.project.ProjectCollaboratorsDTO;
 import com.example.integratedservices.dto.project.ProjectDTO;
 import com.example.integratedservices.entity.project.QProject;
 import com.example.integratedservices.entity.project.QProjectColumns;
@@ -23,11 +24,9 @@ public class CustomProjectRepositoryImpl implements CustomProjectRepository{
 
     @Override
     public List<ProjectDTO> getNameAll(){
-        return query.select(Projections.constructor(ProjectDTO.class, project.id, project.name, project.description , project.row,
-                        project.column, project.startDate, project.endDate))
+        return query.select(Projections.constructor(ProjectDTO.class, project.id, project.name, project.description , project.row, project.startDate, project.endDate))
                 .from(project)
                 .fetch();
     }
-
 
 }

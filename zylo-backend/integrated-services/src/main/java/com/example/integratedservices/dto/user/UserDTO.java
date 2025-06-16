@@ -16,6 +16,7 @@ public class UserDTO {
 
   private String id;
   private String email;
+  private String name;
   private String password;
   private int profileImageId;
   private String profileImageUploadPath;

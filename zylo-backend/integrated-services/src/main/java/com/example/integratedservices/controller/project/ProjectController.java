@@ -29,14 +29,20 @@ public class ProjectController {
 
 
   @PostMapping("")
-  public ResponseEntity<String> projectInsert(@RequestBody ProjectDTO projectDTO) {
+  public ResponseEntity<String> projectInsert(@RequestBody ProjectDTO projectDTO, @RequestParam(required = false) Integer projectId) {
 
 
     projectService.projectInsert(projectDTO);
 
-
     return ResponseEntity.ok("프로젝트 등록 완료");
 
+  }
+
+  @GetMapping("/team")
+  public ResponseEntity<String> teamGetAll() {
+
+    String result =  projectService.getTeamAll();
+    return ResponseEntity.ok(result);
   }
 
 

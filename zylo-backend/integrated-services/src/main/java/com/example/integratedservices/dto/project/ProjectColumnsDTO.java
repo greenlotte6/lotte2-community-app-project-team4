@@ -15,15 +15,15 @@ public class ProjectColumnsDTO {
 
     private int id;
 
-    private String title;
-    private String content;
+    private String name;
+    private int position;
 
 
     private ProjectColumns toEntity() {
         return ProjectColumns.builder()
                 .id(id)
-                .title(title)
-                .content(content)
+                .name(name)
+                .position(position)
                 .build();
     }
 
