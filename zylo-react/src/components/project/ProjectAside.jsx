@@ -21,14 +21,13 @@ const ProjectAside = () => {
   const projects = useProjectStore((state) => state.projects);
   const setProjects = useProjectStore((state) => state.setProjects);
 
-  console.log(projects);
-
   //const project = projects.find((p) => String(p.id) === selectedProjectId);
 
   const handleProjectClick = (projectId) => {
     navigate(`/project/outline?id=${encodeURIComponent(projectId)}`);
   };
 
+  /*
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -41,6 +40,7 @@ const ProjectAside = () => {
     };
     fetchData();
   }, [setProjects]);
+*/
 
   const [modal, setModal] = useState(false);
 
@@ -62,13 +62,26 @@ const ProjectAside = () => {
       {Array.isArray(projects) && projects.length > 0 && (
         <ul>
           {projects.map((project) => (
-            <li key={project.id} onClick={() => handleProjectClick(project.id)} className={String(project.id) === String(selectedProjectId) ? "selected" : ""}>
+            <li
+              key={project.id}
+              onClick={() => handleProjectClick(project.id)}
+              className={
+                String(project.id) === String(selectedProjectId)
+                  ? "selected"
+                  : ""
+              }
+            >
               {project.name}
               <div className="progress-container">
                 <div
                   className="progress-bar"
                   style={{
-                    width: project.totalWork && project.progressWork ? `${Math.round((project.progressWork / project.totalWork) * 100)}%` : "0%",
+                    width:
+                      project.totalWork && project.progressWork
+                        ? `${Math.round(
+                            (project.progressWork / project.totalWork) * 100
+                          )}%`
+                        : "0%",
                   }}
                 ></div>
               </div>
