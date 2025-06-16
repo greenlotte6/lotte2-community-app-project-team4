@@ -7,66 +7,8 @@ import { CommentForm } from "./CommentForm";
 import { Modal } from "./Modal";
 import "../../styles/header.css";
 import { SideMenu } from "./SideMenu";
+import { getArticles } from "../../api/articleAPI";
 
-const posts = [
-  {
-    id: 1,
-    icon: "/images/article/favicon.png",
-    title: "zyla",
-    subtitle: "4조",
-    views: 24,
-    date: "2024년 12월 15일",
-    author: "zyla",
-    contentTitle: "4조 프로젝트 진행 상황",
-    content: "진행중",
-    comments: [
-      {
-        author: "김철수",
-        date: "2025년 06월 02일 14:30",
-        content: "프로젝트 진행 상황이 궁금하네요!",
-        avatar: "/images/article/favicon.png",
-      },
-    ],
-  },
-  {
-    id: 2,
-    icon: "/images/article/liverpool.png",
-    title: "리버풀fc",
-    subtitle: "내년 챔스 우승 하는 법",
-    views: 24,
-    date: "2024년 12월 14일",
-    author: "리버풀fc",
-    contentTitle: "리버풀 챔피언스리그 우승 전략",
-    content: "비르츠",
-    comments: [
-      {
-        author: "클롭",
-        date: "2025년 06월 03일 15:00",
-        content: "인정",
-        avatar: "/images/article/liverpool.png",
-      },
-    ],
-  },
-  {
-    id: 3,
-    icon: "/images/article/123123123.png",
-    title: "CatOffice",
-    subtitle: "야옹",
-    views: 24,
-    date: "2024년 12월 13일",
-    author: "CatOffice",
-    contentTitle: "고양이",
-    content: "야옹",
-    comments: [
-      {
-        author: "김야옹",
-        date: "2025년 06월 02일 14:30",
-        content: "야옹",
-        avatar: "/images/article/123123123.png",
-      },
-    ],
-  },
-];
 
 export default function PostList() {
   const [expandedId, setExpandedId] = useState(null);
@@ -85,6 +27,7 @@ export default function PostList() {
   const openModal = () => setIsModalVisible(true);
   const closeModal = ()=> setIsModalVisible(false);
 
+  const [posts, setPosts] = useState([]);
 
 
   const handleModalSubmit = (data)=>{
@@ -95,7 +38,65 @@ export default function PostList() {
     closeModal();
   };
 
+  
+  const dummyPosts = [
+  {
+    id: 1,
+    icon: "https://cdn-icons-png.flaticon.com/512/1946/1946429.png",
+    title: "첫 번째 게시글",
+    subtitle: "리액트 게시판 더미 데이터 예시",
+    views: 123,
+    date: "2025-06-16",
+    author: "홍길동",
+    contentTitle: "첫 번째 게시글 내용",
+    content: "이것은 첫 번째 더미 게시글의 내용입니다. 게시판 구현 테스트용입니다.",
+    comments: [
+      {
+        author: "김철수",
+        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+        date: "2025-06-16",
+        content: "첫 번째 게시글에 대한 댓글입니다.",
+      },
+      {
+        author: "이영희",
+        avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+        date: "2025-06-16",
+        content: "잘 작성된 게시글이네요!",
+      },
+    ],
+  },
+  {
+    id: 2,
+    icon: "https://cdn-icons-png.flaticon.com/512/1946/1946488.png",
+    title: "두 번째 게시글",
+    subtitle: "두 번째 더미 게시글입니다.",
+    views: 456,
+    date: "2025-06-15",
+    author: "박민수",
+    contentTitle: "두 번째 게시글 내용",
+    content: "두 번째 게시글의 내용 예시입니다. 테스트용 댓글도 포함되어 있습니다.",
+    comments: [
+      {
+        author: "최지우",
+        avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+        date: "2025-06-15",
+        content: "댓글 남겨봅니다!",
+      },
+    ],
+  },
+];
+
   useEffect(() => {
+
+    getArticles()
+    .then((data) => {
+      if (data) setPosts(dummyPosts);
+    })
+      .catch((error)=>{
+        console.log("게시글 조회 실패:", error);
+      });
+
+
     const handleOutside = (e) => {
       Object.entries(btnRefs.current).forEach(([id, ref]) => {
         if (ref && !ref.contains(e.target)) {
@@ -111,6 +112,7 @@ export default function PostList() {
     document.addEventListener("mousedown", handleOutside);
     return () => document.removeEventListener("mousedown", handleOutside);
 
+    
   }, []);
 
 
@@ -138,6 +140,7 @@ export default function PostList() {
   const handleCommentClick = (id) => {
     setCommentingId((prev) => (prev === id ? null : id));
   };
+
 
   return (
     <div className="list">
