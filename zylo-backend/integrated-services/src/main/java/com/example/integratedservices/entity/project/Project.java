@@ -1,13 +1,11 @@
 package com.example.integratedservices.entity.project;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import kotlin.text.UStringsKt;
 import lombok.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,6 +17,7 @@ import java.util.Date;
 public class Project {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name")
@@ -27,11 +26,8 @@ public class Project {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "column_id")
-    private int column;
-
-    @Column(name = "row_id")
-    private int row;
+    //@Column(name = "row_id")
+    //private int row;
 
     @Column(name = "start_date")
     private Date startDate;

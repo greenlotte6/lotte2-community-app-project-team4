@@ -1,10 +1,9 @@
 package com.example.integratedservices.entity.project;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,12 +15,14 @@ import lombok.*;
 public class ProjectColumns {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "content")
-    private String content;
+    @Column(name = "position")
+    private int position;
+
 
 }

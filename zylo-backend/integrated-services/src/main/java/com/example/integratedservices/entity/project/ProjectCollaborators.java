@@ -1,9 +1,7 @@
 package com.example.integratedservices.entity.project;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.integratedservices.entity.user.User;
+import jakarta.persistence.*;
 import kotlin.text.UStringsKt;
 import lombok.*;
 
@@ -19,10 +17,11 @@ public class ProjectCollaborators {
     @Id
     private int id;
 
-    @Column(name = "user_id")
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "project_id")
-    private int projectId ;
-
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 }

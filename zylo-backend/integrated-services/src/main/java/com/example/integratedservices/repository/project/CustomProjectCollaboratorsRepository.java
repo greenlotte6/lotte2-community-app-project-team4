@@ -2,12 +2,10 @@ package com.example.integratedservices.repository.project;
 
 import com.example.integratedservices.dto.project.ProjectCollaboratorsDTO;
 import com.example.integratedservices.dto.project.ProjectDTO;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface CustomProjectRepository {
+public interface CustomProjectCollaboratorsRepository {
 
-    List<ProjectDTO> getNameAll();
+    List<ProjectCollaboratorsDTO> getTeamAll();
 }
