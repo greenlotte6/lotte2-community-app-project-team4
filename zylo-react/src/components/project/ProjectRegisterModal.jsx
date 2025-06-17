@@ -22,6 +22,7 @@ export const ProjectRegisterModal = ({ modal, setModal }) => {
       console.log("보내는 데이터:", payload);
 
       await postCreate(payload);
+      console.log(payload);
       // 로컬 스토리지 추가
       addProject(payload);
       setModal(false);

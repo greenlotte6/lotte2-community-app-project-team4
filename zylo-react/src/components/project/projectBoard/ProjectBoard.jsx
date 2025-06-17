@@ -7,7 +7,6 @@ import { ProjectBoardModal } from "./ProjectBoardModal";
 import { TaskDetailModal } from "./TaskDetailModal";
 import { useLocation } from "react-router-dom";
 import useProjectStore from "../../../store/useProjectStore";
-import { createTask } from "../../../api/projectAPI";
 
 // 더미데이터를 객체 형태로 변경
 const groupTasksByColumn = (tasks) => {
@@ -93,6 +92,7 @@ const DroppableColumn = ({
   onDropCard,
   onClickAddItem,
   onTaskClick,
+  projectColumns,
 }) => {
   const [, dropRef] = useDrop(
     () => ({
@@ -132,7 +132,10 @@ const DroppableColumn = ({
             onTaskClick={onTaskClick}
           />
         ))}
-        <button className="add-item" onClick={() => onClickAddItem(columnKey)}>
+        <button
+          className="add-item"
+          onClick={() => onClickAddItem(columnKey, projectColumns)}
+        >
           + Add item
         </button>
       </div>
@@ -169,10 +172,12 @@ const ProjectBoard = () => {
   const [selectedTaskColumn, setSelectedTaskColumn] = useState(null);
   const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
 
+  const [projectColumns, setProjectColumns] = useState("");
+
   // 컴포넌트 마운트 시 데이터 로드
   useEffect(() => {
     loadBoardData();
-  }, []);
+  }, [tasks]);
 
   const loadBoardData = () => {
     try {
@@ -247,20 +252,27 @@ const ProjectBoard = () => {
     }
   };
 
-  const handleClickAddItem = (columnKey) => {
+  const handleClickAddItem = (columnKey, projectColumns) => {
     setTargetColumnForNewItem(columnKey);
+    setProjectColumns(projectColumns);
     setIsModalOpen(true);
   };
 
   const handleCreateItem = async (title, desc) => {
     try {
-      const columnId = columnIdMap[targetColumnForNewItem];
-      const newTask = await createTask(project.id, columnId, title, desc);
+      // TODO: 실제 API 호출로 새 아이템 생성
+      const newItem = {
+        id: Date.now(), // 임시 ID
+        title,
+        description: desc,
+        project: project,
+        projectColumns: { name: targetColumnForNewItem },
+      };
 
       // 상태 업데이트
       setBoardState((prev) => ({
         ...prev,
-        [targetColumnForNewItem]: [...prev[targetColumnForNewItem], newTask],
+        [targetColumnForNewItem]: [...prev[targetColumnForNewItem], newItem],
       }));
 
       return true;
@@ -280,7 +292,6 @@ const ProjectBoard = () => {
     try {
       // API 호출 시뮬레이션
       await new Promise((resolve) => setTimeout(resolve, 300));
-      console.log("onUpdateTask 호출됨:", { taskId, newTitle, newDesc });
 
       // 상태 업데이트
       setBoardState((prev) => {
@@ -309,13 +320,30 @@ const ProjectBoard = () => {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="board-wrapper-container">
+        <div className="project-board-header">
+          <Clipboard className="project-board-icon" />
+          <div className="project-board-title">로딩 중...</div>
+        </div>
+        <div className="board-wrapper">
+          <div style={{ padding: "20px", textAlign: "center" }}>
+            데이터를 불러오는 중입니다...
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="board-wrapper-container">
       {isModalOpen && (
         <ProjectBoardModal
           setIsModalOpen={setIsModalOpen}
           targetColumnForNewItem={targetColumnForNewItem}
-          onCreateItem={handleCreateItem}
+          projectColumns={projectColumns}
+          //onCreateItem={handleCreateItem}
         />
       )}
       {isTaskDetailOpen && (
@@ -347,6 +375,7 @@ const ProjectBoard = () => {
           onDropCard={handleDropCard}
           onClickAddItem={handleClickAddItem}
           onTaskClick={handleTaskClick}
+          projectColumns={1}
         />
         <DroppableColumn
           title="To Do"
@@ -356,6 +385,7 @@ const ProjectBoard = () => {
           onDropCard={handleDropCard}
           onClickAddItem={handleClickAddItem}
           onTaskClick={handleTaskClick}
+          projectColumns={2}
         />
         <DroppableColumn
           title="In progress"
@@ -365,6 +395,7 @@ const ProjectBoard = () => {
           onDropCard={handleDropCard}
           onClickAddItem={handleClickAddItem}
           onTaskClick={handleTaskClick}
+          projectColumns={3}
         />
         <DroppableColumn
           title="In review"
@@ -374,6 +405,7 @@ const ProjectBoard = () => {
           onDropCard={handleDropCard}
           onClickAddItem={handleClickAddItem}
           onTaskClick={handleTaskClick}
+          projectColumns={4}
         />
         <DroppableColumn
           title="Done"
@@ -383,6 +415,7 @@ const ProjectBoard = () => {
           onDropCard={handleDropCard}
           onClickAddItem={handleClickAddItem}
           onTaskClick={handleTaskClick}
+          projectColumns={5}
         />
       </div>
     </div>

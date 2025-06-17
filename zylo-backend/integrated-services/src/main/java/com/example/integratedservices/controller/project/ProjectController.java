@@ -1,8 +1,13 @@
 package com.example.integratedservices.controller.project;
 
 import com.example.integratedservices.dto.project.ProjectDTO;
+import com.example.integratedservices.dto.project.ProjectTaskCreateRequestDTO;
 import com.example.integratedservices.dto.project.ProjectTaskDTO;
+import com.example.integratedservices.entity.project.Project;
+import com.example.integratedservices.entity.project.ProjectColumns;
 import com.example.integratedservices.entity.project.ProjectTask;
+import com.example.integratedservices.repository.project.ProjectColumnsRepository;
+import com.example.integratedservices.repository.project.ProjectRepository;
 import com.example.integratedservices.repository.project.ProjectTaskRepository;
 import com.example.integratedservices.service.project.ProjectService;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,6 +27,8 @@ public class ProjectController {
 
   private final ProjectService projectService;
   private final ProjectTaskRepository projectTaskRepository;
+  private final ProjectRepository projectRepository;
+  private final ProjectColumnsRepository projectColumnsRepository;
 
   @GetMapping("")
   public ResponseEntity<String> projectGetAll() {
@@ -71,17 +78,31 @@ public class ProjectController {
   }
 
 
+  @PostMapping("/task")
+  public ResponseEntity<?> createTask(@RequestBody ProjectTaskCreateRequestDTO req) {
 
-  @PatchMapping("/task/{id}")
-  public ResponseEntity<?> updateTask(
-          @PathVariable int id,
-          @RequestBody Map<String, String> body) {
-    ProjectTask task = projectTaskRepository.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Task not found"));
-    task.setTitle(body.get("title"));
-    task.setDescription(body.get("description"));
+    log.info(req.toString());
+    ProjectTask task = new ProjectTask();
+    task.setTitle(req.getTitle());
+    task.setDescription(req.getDescription());
+
+    // id로 실제 엔티티 조회
+    Project project = projectRepository.findById(req.getProjectId())
+            .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+
+
+    log.info("Retrieved Project: {}", project); // ← project 로그 출력
+
+    ProjectColumns columns = projectColumnsRepository.findById(req.getProjectColumns())
+            .orElseThrow(() -> new EntityNotFoundException("Columns not found"));
+
+    log.info("Retrieved columns: {}", columns); // ← project 로그 출력
+
+    task.setProject(project);
+    task.setProjectColumns(columns);
+
     projectTaskRepository.save(task);
-    return ResponseEntity.ok().build();
+    return ResponseEntity.ok(task);
   }
 
 }

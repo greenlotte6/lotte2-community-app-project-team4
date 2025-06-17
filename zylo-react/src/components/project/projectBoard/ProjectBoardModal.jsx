@@ -1,37 +1,46 @@
 import { useState } from "react";
 import "../../../styles/project/board.css";
+import { useLocation } from "react-router-dom";
+import { createTask } from "../../../api/projectAPI";
+import useProjectStore from "../../../store/useProjectStore";
 
 export const ProjectBoardModal = ({
   setIsModalOpen,
   targetColumnForNewItem,
   onCreateItem,
+  projectColumns,
 }) => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const projectId = queryParams.get("id");
+
   const [title, setTitle] = useState("");
-  const [desc, setDesc] = useState("");
+  const [description, setDescription] = useState("");
+  const addTask = useProjectStore((state) => state.addTask);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const tasks = useProjectStore((state) => state.tasks);
 
-  const createHandler = async () => {
-    if (!title.trim()) {
-      alert("작업 제목을 입력하세요.");
-      return;
-    }
-
+  const handleCreate = async () => {
     try {
-      setIsSubmitting(true);
-      const success = await onCreateItem(title, desc);
+      const payload = {
+        projectId,
+        projectColumns,
+        title,
+        description,
+      };
+      payload.projectId = parseInt(payload.projectId, 10);
+      payload.projectColumns = parseInt(payload.projectColumns, 10);
+      console.log("보내는 데이터:", payload);
 
-      if (success) {
-        setTitle("");
-        setDesc("");
-        setIsModalOpen(false);
-      } else {
-        alert("작업 생성에 실패했습니다.");
-      }
-    } catch (error) {
-      console.error("작업 생성 오류:", error);
-      alert("작업 생성 중 오류가 발생했습니다.");
-    } finally {
-      setIsSubmitting(false);
+      // 로컬 스토리지 추가
+      const createdTask = await createTask(payload);
+      addTask(createdTask);
+      setIsModalOpen(false);
+      alert("작업이 생성되었습니다.");
+    } catch (err) {
+      console.log(err);
+      alert("등록 실패");
     }
   };
 
@@ -52,11 +61,11 @@ export const ProjectBoardModal = ({
           />
         </div>
         <div className="prodjectBoard-modal-body">
-          <h4>작업 설명</h4>
+          <h4>작업 설명 </h4>
           <textarea
             className="prodjectBoard-modal-textarea"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             placeholder="작업에 대한 설명을 입력하세요"
             disabled={isSubmitting}
           />
@@ -71,7 +80,7 @@ export const ProjectBoardModal = ({
           </button>
           <button
             className="prodjectBoard-modal-create"
-            onClick={createHandler}
+            onClick={handleCreate}
             disabled={isSubmitting}
           >
             {isSubmitting ? "생성 중..." : "생성"}

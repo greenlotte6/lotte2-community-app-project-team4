@@ -3,7 +3,6 @@ import { useLocation } from "react-router-dom";
 import ProjectAside from "../../components/project/ProjectAside";
 import ProjectBoard from "../../components/project/projectBoard/ProjectBoard";
 import BasicLayout from "../../layouts/BasicLayout";
-import { dummyProjects } from "../../data/project";
 import ProjectContentMenu from "../../components/project/ProjectContentMenu";
 import { getTask } from "../../api/projectAPI";
 import useProjectStore from "../../store/useProjectStore";
@@ -13,7 +12,9 @@ export const ProjectBoardPage = () => {
   const queryParams = new URLSearchParams(location.search);
   const projectId = queryParams.get("id");
 
-  const project = dummyProjects.find((p) => String(p.id) === String(projectId));
+  const projects = useProjectStore((state) => state.projects);
+
+  const project = projects.find((p) => String(p.id) === String(projectId));
 
   const tasks = useProjectStore((state) => state.tasks);
   const setTasks = useProjectStore((state) => state.setTasks);
@@ -34,7 +35,6 @@ export const ProjectBoardPage = () => {
     fetchData();
   }, [setTasks]);
 
-  if (!project) return <div>존재하지 않는 프로젝트입니다.</div>;
   if (loading) return <div>로딩 중...</div>;
 
   return (
