@@ -7,7 +7,8 @@ import { CommentForm } from "./CommentForm";
 import { Modal } from "./Modal";
 import "../../styles/header.css";
 import { SideMenu } from "./SideMenu";
-import { getArticles } from "../../api/articleAPI";
+import { getArticles, createArticle } from "../../api/articleAPI";
+
 
 
 export default function PostList() {
@@ -30,67 +31,28 @@ export default function PostList() {
   const [posts, setPosts] = useState([]);
 
 
-  const handleModalSubmit = (data)=>{
-    console.log("모달 제출 데이터: ", data);
-    setModalTitle(data.title);
-    setModalSubtitle(data.subtitle);
-    setModalContent(data.content);
-    closeModal();
-  };
+  const handleModalSubmit = async (data) => {
+  try {
+    const result = await createArticle(data);
+    console.log("등록 성공", result);
+    // 추가 동작 (예: 목록 재조회, 모달 닫기 등)
+  } catch (error) {
+    console.error("게시글 등록 실패:", error);
+  }
+};
 
   
-  const dummyPosts = [
-  {
-    id: 1,
-    icon: "https://cdn-icons-png.flaticon.com/512/1946/1946429.png",
-    title: "첫 번째 게시글",
-    subtitle: "리액트 게시판 더미 데이터 예시",
-    views: 123,
-    date: "2025-06-16",
-    author: "홍길동",
-    contentTitle: "첫 번째 게시글 내용",
-    content: "이것은 첫 번째 더미 게시글의 내용입니다. 게시판 구현 테스트용입니다.",
-    comments: [
-      {
-        author: "김철수",
-        avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-        date: "2025-06-16",
-        content: "첫 번째 게시글에 대한 댓글입니다.",
-      },
-      {
-        author: "이영희",
-        avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-        date: "2025-06-16",
-        content: "잘 작성된 게시글이네요!",
-      },
-    ],
-  },
-  {
-    id: 2,
-    icon: "https://cdn-icons-png.flaticon.com/512/1946/1946488.png",
-    title: "두 번째 게시글",
-    subtitle: "두 번째 더미 게시글입니다.",
-    views: 456,
-    date: "2025-06-15",
-    author: "박민수",
-    contentTitle: "두 번째 게시글 내용",
-    content: "두 번째 게시글의 내용 예시입니다. 테스트용 댓글도 포함되어 있습니다.",
-    comments: [
-      {
-        author: "최지우",
-        avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-        date: "2025-06-15",
-        content: "댓글 남겨봅니다!",
-      },
-    ],
-  },
-];
+  
 
   useEffect(() => {
 
     getArticles()
     .then((data) => {
-      if (data) setPosts(dummyPosts);
+      const safeData= data.map(post =>({
+        ...post,
+        comments: Array.isArray(post.comments) ? post.comments : []
+      }));
+      setPosts(safeData);
     })
       .catch((error)=>{
         console.log("게시글 조회 실패:", error);
@@ -146,6 +108,12 @@ export default function PostList() {
     <div className="list">
       <h1 className="list-title">목록</h1>
       <div style={{ position: "relative", display: "inline-block" }}>
+      <select name="list-cate" id="list-cate">
+        <option value="1">공지사항</option>
+        <option value="1">자유게시판</option>
+        <option value="1">신고게시판</option>
+        <option value="1">Q&A</option>
+      </select>
       
     
 </div>
@@ -285,7 +253,7 @@ export default function PostList() {
               subtitle={modalSubtitle}
               setSubtitle={setModalSubtitle}
               content={modalContent}
-              setContent={setModalContent} 
+              setContent={setModalContent}
               
               />
     </div>

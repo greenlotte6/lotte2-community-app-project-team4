@@ -1,4 +1,4 @@
-const SERVER_HOST = "http://localhost:8081";
+export const SERVER_HOST = "http://localhost:8081";
 
 // project
 export const PROJECT_LIST = `${SERVER_HOST}/project`;

@@ -975,3 +975,13 @@
 .dark .search-icon{
   filter: invert(5000%) brightness(5000%);
 }
+
+#list-cate{
+  display: block;
+  width: 130px;
+  text-align: start;
+}
+
+.dark #list-cate{
+  background-color: #1b115a;
+}
