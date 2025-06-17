@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { X, Edit2, Calendar, User, Tag } from "lucide-react";
 import "../../../styles/project/board.css";
+import { createTask } from "../../../api/projectAPI";
+import useProjectStore from "../../../store/useProjectStore";
 
 export const TaskDetailModal = ({
   task,
