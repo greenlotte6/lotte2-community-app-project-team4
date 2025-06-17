@@ -84,3 +84,28 @@
 #project-content-container {
   width: 100%;
 }
+
+.project-progress-container {
+  width: 250px;
+  height: 10px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  background: #5da9fc;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); /* 부드러운 애니메이션 */
+  border-radius: 10px 0 0 10px; /* 왼쪽만 둥글게 */
+}
+
+.project-progress-container-aside {
+  width: 100%;
+  height: 10px;
+  background: #eee;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 8px 0;
+}

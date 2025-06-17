@@ -4,7 +4,7 @@ import ProjectContent from "../../components/project/ProjectContent";
 import { BasicLayout } from "../../layouts/BasicLayout";
 import useProjectStore from "../../store/useProjectStore";
 import { useEffect } from "react";
-import { getName, getTeam } from "../../api/projectAPI";
+import { getName, getTask, getTeam } from "../../api/projectAPI";
 
 export const ProjectOutlinePage = () => {
   // zustand 배열 가져오기
@@ -13,6 +13,9 @@ export const ProjectOutlinePage = () => {
 
   const projects = useProjectStore((state) => state.projects);
   const setProjects = useProjectStore((state) => state.setProjects);
+
+  const tasks = useProjectStore((state) => state.tasks);
+  const setTasks = useProjectStore((state) => state.setTasks);
 
   // projectCollaborators
   useEffect(() => {
@@ -32,7 +35,7 @@ export const ProjectOutlinePage = () => {
     const fetchData = async () => {
       try {
         const data = await getName();
-        setTeam(data);
+        setProjects(data);
       } catch (err) {
         console.error(err);
       }
@@ -40,13 +43,26 @@ export const ProjectOutlinePage = () => {
     fetchData();
   }, [setProjects]);
 
+  // task
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getTask();
+        setTasks(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+  }, [setTasks]);
+
   return (
     <BasicLayout title={"프로젝트"}>
       <div id="setting-content-container">
-        <ProjectAside />
+        <ProjectAside tasks={tasks} />
         <div id="project-content-container">
           <ProjectContentMenu />
-          <ProjectContent />
+          <ProjectContent team={team} tasks={tasks} />
         </div>
       </div>
     </BasicLayout>
