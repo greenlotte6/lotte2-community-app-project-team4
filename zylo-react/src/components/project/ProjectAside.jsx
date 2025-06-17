@@ -8,14 +8,14 @@ import useProjectStore from "../../store/useProjectStore";
 import { ProjectRegisterModal } from "./ProjectRegisterModal.jsx";
 import { getName } from "../../api/projectAPI.js";
 
-const ProjectAside = () => {
+const ProjectAside = ({ tasks }) => {
   const { toggled } = useTheme();
   const navigate = useNavigate();
 
   // 프로젝트 id 읽어오기
   const location = useLocation();
   const params = new URLSearchParams(location.search);
-  const selectedProjectId = params.get("id");
+  const projectId = parseInt(params.get("id"), 10);
 
   // zustand 배열 가져오기
   const projects = useProjectStore((state) => state.projects);
@@ -60,31 +60,16 @@ const ProjectAside = () => {
         {modal && <ProjectRegisterModal modal={modal} setModal={setModal} />}
       </div>
       {Array.isArray(projects) && projects.length > 0 && (
-        <ul>
+        <ul className="project-list">
           {projects.map((project) => (
             <li
               key={project.id}
               onClick={() => handleProjectClick(project.id)}
               className={
-                String(project.id) === String(selectedProjectId)
-                  ? "selected"
-                  : ""
+                String(project.id) === String(projectId) ? "selected" : ""
               }
             >
               {project.name}
-              <div className="progress-container">
-                <div
-                  className="progress-bar"
-                  style={{
-                    width:
-                      project.totalWork && project.progressWork
-                        ? `${Math.round(
-                            (project.progressWork / project.totalWork) * 100
-                          )}%`
-                        : "0%",
-                  }}
-                ></div>
-              </div>
             </li>
           ))}
         </ul>

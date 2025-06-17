@@ -9,27 +9,42 @@ function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-const ProjectContent = () => {
+const ProjectContent = ({ team, tasks }) => {
   const { toggled, toggle } = useTheme();
-
-  // zustand 배열 가져오기
   const projects = useProjectStore((state) => state.projects);
-
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const projectId = parseInt(params.get("id"), 10);
 
+  const setTeams = useProjectStore((state) => state.setTeams);
+
   const project = projects.find((pm) => pm.id === projectId);
 
-  // zustand 배열 가져오기
-  const team = useProjectStore((state) => state.teams);
-  const setTeam = useProjectStore((state) => state.setTeams);
-
   // 해당 프로젝트의 멤버 ID 추출
-  const members = team.filter((pm) => pm.projectId === projectId);
+  const members = team.filter(
+    (pm) => Number(pm.projectId) === Number(projectId)
+  );
+  const filterTasks = tasks.filter(
+    (task) => Number(task.project.id) === Number(projectId)
+  );
+  const countTasks = filterTasks.length;
+  const doneTasks = filterTasks.filter(
+    (task) => Number(task.projectColumns.id) === Number(5)
+  );
+  const countDoneTasks = doneTasks.length;
+  const progress = (countDoneTasks / countTasks) * 100;
+
+  useEffect(() => {
+    getTeam().then((data) => setTeams(data));
+  }, [projectId]);
 
   // 멤버 인원수
   const memberCount = members.length;
+
+  // 데이터가 준비되지 않았을 때 예외 처리
+  if (!team || !team.length || !projects || !projects.length) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="project-wrapper">
@@ -53,7 +68,14 @@ const ProjectContent = () => {
           </div>
           <div className="project-progress">
             <div>진행률</div>
-            <div className="project-progress-container"></div>
+            <div className="project-progress-container">
+              <div
+                className="progress-bar"
+                style={{
+                  width: `${progress}%`,
+                }}
+              ></div>
+            </div>
           </div>
         </div>
       </div>
@@ -65,10 +87,8 @@ const ProjectContent = () => {
           }`}
         >
           <div className="project-row-title">완료된 작업</div>
-          <div className="project-row-value">{/*project.progressWork*/}개</div>
-          <div className="project-row-total">
-            총 {/*project.totalWork*/}개 중
-          </div>
+          <div className="project-row-value">{countDoneTasks}개</div>
+          <div className="project-row-total">총 {countTasks}개 중</div>
         </div>
         <div
           className={`project-item clickable-project  ${
@@ -85,7 +105,7 @@ const ProjectContent = () => {
           }`}
         >
           <div className="project-row-title">진행률</div>
-          <div className="project-row-value"></div>
+          <div className="project-row-value">{Math.floor(progress)}%</div>
           <div className="project-row-total">진행중</div>
         </div>
       </div>

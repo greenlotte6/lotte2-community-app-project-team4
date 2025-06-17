@@ -69,3 +69,40 @@
   border-radius: 6px;
   transition: background 0.2s, color 0.2s;
 }
+
+.project-aside {
+  width: 220px;
+  min-height: 100vh;
+  background: #f7f9fc;
+  border-right: 1px solid #e0e6ed;
+  padding: 24px 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.04);
+}
+
+.project-list {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.project-list li {
+  margin-bottom: 8px;
+  border-radius: 6px;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background 0.2s, color 0.2s;
+}
+
+.project-list li:hover {
+  background: #e6f0fa;
+  color: #5da9fc;
+}
+
+.project-list li.selected {
+  background: #5da9fc;
+  color: #fff;
+  font-weight: bold;
+}
