@@ -13,7 +13,7 @@ export const TaskDetailModal = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editTitle, setEditTitle] = useState(task?.title || "");
-  const [editDesc, setEditDesc] = useState(task?.desc || "");
+  const [editDesc, setEditDesc] = useState(task?.description || "");
 
   if (!isOpen || !task) return null;
 
@@ -34,7 +34,7 @@ export const TaskDetailModal = ({
 
   const handleCancel = () => {
     setEditTitle(task.title);
-    setEditDesc(task.desc);
+    setEditDesc(task.description);
     setIsEditing(false);
   };
 
@@ -42,11 +42,11 @@ export const TaskDetailModal = ({
     const colors = {
       ready: "#27c93f",
       todo: "#1c92f2",
-      inProgress: "#ffb400",
-      inReview: "#a259ff",
+      inprogress: "#ffb400",
+      inreview: "#a259ff",
       done: "#ff5722",
     };
-    return colors[status] || "#666";
+    return colors[status?.toLowerCase()?.replace(/\s/g, "")] || "#666";
   };
 
   return (
@@ -96,18 +96,23 @@ export const TaskDetailModal = ({
             <Tag size={16} />
             <span
               className="task-detail-status"
-              style={{ color: getStatusColor(columnTitle?.toLowerCase()) }}
+              style={{ color: getStatusColor(task.projectColumns?.name) }}
             >
-              {columnTitle}
+              {task.projectColumns?.name || columnTitle}
             </span>
           </div>
           <div className="task-detail-meta-item">
             <Calendar size={16} />
-            <span>생성일: {new Date().toLocaleDateString()}</span>
+            <span>
+              프로젝트 시작일:{" "}
+              {task.project?.startDate
+                ? new Date(task.project.startDate).toLocaleDateString()
+                : "미정"}
+            </span>
           </div>
           <div className="task-detail-meta-item">
             <User size={16} />
-            <span>담당자: 미지정</span>
+            <span>프로젝트: {task.project?.name || "미지정"}</span>
           </div>
         </div>
 
@@ -124,7 +129,7 @@ export const TaskDetailModal = ({
             />
           ) : (
             <div className="task-detail-description">
-              {task.desc || "설명이 없습니다."}
+              {task.description || "설명이 없습니다."}
             </div>
           )}
         </div>
