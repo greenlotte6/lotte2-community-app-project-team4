@@ -7,73 +7,48 @@ import { ProjectBoardModal } from "./ProjectBoardModal";
 import { TaskDetailModal } from "./TaskDetailModal";
 import { useLocation } from "react-router-dom";
 import useProjectStore from "../../../store/useProjectStore";
+import { createTask } from "../../../api/projectAPI";
 
 // 더미데이터를 객체 형태로 변경
-const initialBoardData = {
-  ready: [
-    { id: 1, title: "RQ-101 랜딩 페이지 구현", desc: "" },
-    { id: 2, title: "RQ-202 약관", desc: "" },
-    { id: 3, title: "RQ-203 회원가입", desc: "" },
-    { id: 4, title: "RQ-300 메인 대시보드 구현", desc: "" },
-    { id: 5, title: "RQ-009 캘린더 화면 구현", desc: "" },
-    { id: 6, title: "RQ-301 페이지 생성", desc: "" },
-    { id: 7, title: "RQ-302 페이지 작성", desc: "" },
-  ],
-  todo: [],
-  inProgress: [
-    { id: 8, title: "RQ-011 게시판 화면 구현", desc: "" },
-    { id: 9, title: "RQ-004 데이터베이스 설계", desc: "" },
-    { id: 10, title: "RQ-012 프로젝트 화면 구현", desc: "" },
-    { id: 11, title: "RQ-201 로그인/로그아웃", desc: "" },
-  ],
-  inReview: [
-    { id: 12, title: "RQ-010 메시지 화면 구현", desc: "" },
-    { id: 13, title: "RQ-014 설정 화면 구현", desc: "" },
-  ],
-  done: [
-    { id: 14, title: "RQ-008 페이지 화면 구현", desc: "" },
-    { id: 15, title: "RQ-007 메인 대시보드 구현", desc: "" },
-    { id: 16, title: "RQ-002 화면 설계", desc: "" },
-    { id: 17, title: "RQ-003 프로젝트 아키텍처 설계", desc: "" },
-    { id: 18, title: "RQ-005 메인 화면 구현", desc: "" },
-    { id: 19, title: "RQ-006 회원 화면 구현", desc: "" },
-    { id: 20, title: "RQ-013 드라이브 화면 구현", desc: "" },
-  ],
-};
+const groupTasksByColumn = (tasks) => {
+  const columns = {
+    ready: [],
+    todo: [],
+    inProgress: [],
+    inReview: [],
+    done: [],
+  };
 
-// API 시뮬레이션 함수들
-const mockApi = {
-  // 보드 데이터 가져오기
-  fetchBoardData: async () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(initialBoardData);
-      }, 500); // 0.5초 지연으로 API 호출 시뮬레이션
-    });
-  },
+  tasks.forEach((task) => {
+    const columnName = task.projectColumns.name.toLowerCase();
+    let columnKey;
 
-  // 새 아이템 추가
-  createItem: async (title, desc, column) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const newItem = {
-          id: Date.now(), // 임시 ID 생성
-          title,
-          desc,
-        };
-        resolve(newItem);
-      }, 300);
-    });
-  },
+    switch (columnName) {
+      case "ready":
+        columnKey = "ready";
+        break;
+      case "to do":
+        columnKey = "todo";
+        break;
+      case "in progress":
+        columnKey = "inProgress";
+        break;
+      case "in review":
+        columnKey = "inReview";
+        break;
+      case "done":
+        columnKey = "done";
+        break;
+      default:
+        columnKey = "todo"; // 기본값
+    }
 
-  // 아이템 이동
-  moveItem: async (itemId, fromColumn, toColumn) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({ success: true });
-      }, 300);
-    });
-  },
+    if (columns[columnKey]) {
+      columns[columnKey].push(task);
+    }
+  });
+
+  return columns;
 };
 
 const DraggableCard = ({ item, index, column, onTaskClick }) => {
@@ -173,6 +148,8 @@ const ProjectBoard = () => {
   // zustand 배열
   const projects = useProjectStore((state) => state.projects);
 
+  const tasks = useProjectStore((state) => state.tasks);
+
   const project = projects.find(
     (item) => String(item.id) === String(projectId)
   );
@@ -184,6 +161,7 @@ const ProjectBoard = () => {
     inReview: [],
     done: [],
   });
+
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [targetColumnForNewItem, setTargetColumnForNewItem] = useState(null);
@@ -196,11 +174,15 @@ const ProjectBoard = () => {
     loadBoardData();
   }, []);
 
-  const loadBoardData = async () => {
+  const loadBoardData = () => {
     try {
       setIsLoading(true);
-      const data = await mockApi.fetchBoardData();
-      setBoardState(data);
+      // 현재 프로젝트에 해당하는 tasks만 필터링
+      const projectTasks = tasks.filter(
+        (task) => task.project.id === Number.parseInt(projectId)
+      );
+      const groupedTasks = groupTasksByColumn(projectTasks);
+      setBoardState(groupedTasks);
     } catch (error) {
       console.error("보드 데이터 로드 실패:", error);
     } finally {
@@ -208,28 +190,60 @@ const ProjectBoard = () => {
     }
   };
 
+  // 컬럼 이름 → 컬럼 ID 매핑 (더 좋게 하려면 project에서 받아와야 함)
+  const columnIdMap = {
+    ready: 1,
+    todo: 2,
+    inProgress: 3,
+    inReview: 4,
+    done: 5,
+  };
+
   const handleDropCard = async (draggedItem, targetColumn) => {
     const { item, column } = draggedItem;
     if (column === targetColumn) return;
 
+    console.log(
+      `[드래그앤드롭] "${item.title}" (id: ${item.id})를 "${column}"에서 "${targetColumn}"로 이동`
+    );
+
+    // 1. 낙관적 UI 업데이트
+    setBoardState((prev) => {
+      const newSource = prev[column].filter((i) => i.id !== item.id);
+      const newTarget = [
+        ...prev[targetColumn],
+        {
+          ...item,
+          projectColumns: {
+            ...item.projectColumns,
+            name: targetColumn,
+            id: columnIdMap[targetColumn],
+          },
+        },
+      ];
+      return {
+        ...prev,
+        [column]: newSource,
+        [targetColumn]: newTarget,
+      };
+    });
+
     try {
-      // 낙관적 업데이트 (UI 먼저 업데이트)
-      setBoardState((prev) => {
-        const newSource = prev[column].filter((i) => i.id !== item.id);
-        const newTarget = [...prev[targetColumn], item];
-        return {
-          ...prev,
-          [column]: newSource,
-          [targetColumn]: newTarget,
-        };
+      // 2. 실제 백엔드에 컬럼 ID 전송
+      await fetch(`http://localhost:8081/project/task/${item.id}`, {
+        method: "post",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          columnId: columnIdMap[targetColumn], // 숫자 ID 전송
+        }),
       });
 
-      // API 호출 (실제로는 백엔드에 이동 요청)
-      await mockApi.moveItem(item.id, column, targetColumn);
+      console.log(
+        `[백엔드 저장 성공] Task ID: ${item.id}, Column: ${targetColumn} (ID: ${columnIdMap[targetColumn]})`
+      );
     } catch (error) {
       console.error("카드 이동 실패:", error);
-      // 실패 시 원래 상태로 복구
-      loadBoardData();
+      loadBoardData(); // 복구
     }
   };
 
@@ -240,17 +254,13 @@ const ProjectBoard = () => {
 
   const handleCreateItem = async (title, desc) => {
     try {
-      // API 호출로 새 아이템 생성
-      const newItem = await mockApi.createItem(
-        title,
-        desc,
-        targetColumnForNewItem
-      );
+      const columnId = columnIdMap[targetColumnForNewItem];
+      const newTask = await createTask(project.id, columnId, title, desc);
 
       // 상태 업데이트
       setBoardState((prev) => ({
         ...prev,
-        [targetColumnForNewItem]: [...prev[targetColumnForNewItem], newItem],
+        [targetColumnForNewItem]: [...prev[targetColumnForNewItem], newTask],
       }));
 
       return true;
@@ -270,6 +280,7 @@ const ProjectBoard = () => {
     try {
       // API 호출 시뮬레이션
       await new Promise((resolve) => setTimeout(resolve, 300));
+      console.log("onUpdateTask 호출됨:", { taskId, newTitle, newDesc });
 
       // 상태 업데이트
       setBoardState((prev) => {
@@ -298,22 +309,6 @@ const ProjectBoard = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="board-wrapper-container">
-        <div className="project-board-header">
-          <Clipboard className="project-board-icon" />
-          <div className="project-board-title">로딩 중...</div>
-        </div>
-        <div className="board-wrapper">
-          <div style={{ padding: "20px", textAlign: "center" }}>
-            데이터를 불러오는 중입니다...
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="board-wrapper-container">
       {isModalOpen && (
@@ -341,7 +336,7 @@ const ProjectBoard = () => {
       )}
       <div className="project-board-header clickable-header">
         <Clipboard className="project-board-icon" />
-        <div className="project-board-title">{project.title}</div>
+        <div className="project-board-title">{project.name}</div>
       </div>
       <div className="board-wrapper">
         <DroppableColumn

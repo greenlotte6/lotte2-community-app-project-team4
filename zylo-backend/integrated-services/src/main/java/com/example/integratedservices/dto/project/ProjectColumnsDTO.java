@@ -19,6 +19,12 @@ public class ProjectColumnsDTO {
     private int position;
 
 
+
+    public ProjectColumnsDTO(String name) {
+        this.name = name;
+    }
+
+
     private ProjectColumns toEntity() {
         return ProjectColumns.builder()
                 .id(id)

@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import ProjectAside from "../../components/project/ProjectAside";
 import ProjectBoard from "../../components/project/projectBoard/ProjectBoard";
 import BasicLayout from "../../layouts/BasicLayout";
 import { dummyProjects } from "../../data/project";
 import ProjectContentMenu from "../../components/project/ProjectContentMenu";
+import { getTask } from "../../api/projectAPI";
+import useProjectStore from "../../store/useProjectStore";
 
 export const ProjectBoardPage = () => {
   const location = useLocation();
@@ -13,13 +15,35 @@ export const ProjectBoardPage = () => {
 
   const project = dummyProjects.find((p) => String(p.id) === String(projectId));
 
+  const tasks = useProjectStore((state) => state.tasks);
+  const setTasks = useProjectStore((state) => state.setTasks);
+
+  const [loading, setLoading] = React.useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getTask();
+        setTasks(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [setTasks]);
+
+  if (!project) return <div>존재하지 않는 프로젝트입니다.</div>;
+  if (loading) return <div>로딩 중...</div>;
+
   return (
     <BasicLayout title={"프로젝트"}>
       <div id="setting-content-container">
         <ProjectAside />
         <div id="project-content-container">
           <ProjectContentMenu />
-          <ProjectBoard projectTitle={project.title} />
+          <ProjectBoard projectTitle={project.title} tasks={tasks} />
         </div>
       </div>
     </BasicLayout>
