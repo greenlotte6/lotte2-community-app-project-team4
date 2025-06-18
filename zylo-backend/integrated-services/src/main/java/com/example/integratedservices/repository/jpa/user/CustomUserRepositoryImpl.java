@@ -27,9 +27,8 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
     // DTO Projection을 사용해서 조회 결과를 바로 DTO로 반환.
     // UserDTO에 id, email, profileImageId, profileImageUploadPath를 인자로 사용하는 생성자를 직접 생성해야함.
     return query
-        .select(Projections.constructor(UserDTO.class, user.id, user.email,
-            profileImages.id, profileImages.uploadPath, plan.id, planName.id, planName.name,
-            user.status))
+        .select(Projections.constructor(UserDTO.class, user.id, user.name, user.dept, user.email,
+            profileImages.uploadPath, planName.name, user.status))
         .from(user)
         .leftJoin(user.profileImage, profileImages)
         .join(user.plan, plan)
@@ -42,9 +41,9 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
   @Override
   public UserDTO findByUserId(String userId) {
     return query
-        .select(Projections.constructor(UserDTO.class, user.id, user.email, user.password,
-            profileImages.id, profileImages.uploadPath, plan.id, planName.id, planName.name,
-            user.status))
+        .select(
+            Projections.constructor(UserDTO.class, user.id, user.name, user.dept, user.email,
+                profileImages.uploadPath, planName.name, user.status))
         .from(user)
         .leftJoin(user.profileImage, profileImages)
         .join(user.plan, plan)
