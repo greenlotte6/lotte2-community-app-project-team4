@@ -17,6 +17,7 @@ public class UserDTO {
   private String id;
   private String email;
   private String name;
+  private String dept;
   private String password;
   private int profileImageId;
   private String profileImageUploadPath;
@@ -25,15 +26,25 @@ public class UserDTO {
   private String planName;
   private String status;
 
-  public UserDTO(String id, String name, String email, int profileImageId, String profileImageUploadPath,
-      int planId, int planNameId, String planName, String status) {
+  public UserDTO(String id, String name, String dept, String email,
+      String profileImageUploadPath, String planName, String status) {
     this.id = id;
-    this.name=name;
+    this.name = name;
+    this.dept = dept;
     this.email = email;
-    this.profileImageId = profileImageId;
     this.profileImageUploadPath = profileImageUploadPath;
-    this.planId = planId;
-    this.planNameId = planNameId;
+    this.planName = planName;
+    this.status = status;
+  }
+
+  public UserDTO(String id, String password, String name, String dept, String email,
+      String profileImageUploadPath, String planName, String status) {
+    this.id = id;
+    this.password = password;
+    this.name = name;
+    this.dept = dept;
+    this.email = email;
+    this.profileImageUploadPath = profileImageUploadPath;
     this.planName = planName;
     this.status = status;
   }
@@ -56,6 +67,7 @@ public class UserDTO {
     return User.builder()
         .id(id)
         .name(name)
+        .dept(dept)
         .email(email)
         .password(password)
         .plan(plan)

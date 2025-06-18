@@ -304,6 +304,7 @@
   gap: 8px;
 }
 
+.task-detail-delete-btn,
 .task-detail-edit-btn,
 .task-detail-close-btn {
   background: none;
@@ -315,6 +316,11 @@
   transition: all 0.2s ease;
 }
 
+.task-detail-delete-btn:hover {
+  background-color: #f0f0f0;
+  color: #007bff;
+}
+
 .task-detail-edit-btn:hover {
   background-color: #f0f0f0;
   color: #007bff;
@@ -322,7 +328,7 @@
 
 .task-detail-close-btn:hover {
   background-color: #f0f0f0;
-  color: #dc3545;
+  color: #007bff;
 }
 
 .task-detail-meta {

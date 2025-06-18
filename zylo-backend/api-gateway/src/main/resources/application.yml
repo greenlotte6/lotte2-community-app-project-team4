@@ -48,6 +48,7 @@ zylo:
       path:
         upload: /drive/upload
         download: /drive/download
+        list: /drive/list
 ---
 #개발용 설정
 spring:
@@ -93,3 +94,4 @@ zylo:
       path:
         upload: /drive/upload
         download: /drive/download
+        list: /drive/list

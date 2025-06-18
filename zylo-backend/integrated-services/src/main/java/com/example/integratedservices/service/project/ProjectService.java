@@ -63,5 +63,12 @@ public class ProjectService {
         projectTaskRepository.save(task);
     }
 
+    public void deleteTask(int taskId) {
+        projectTaskRepository.deleteById(taskId);
+    }
+
+    public void deleteTeamMember(int memberId) {
+        projectCollaboratorsRepository.deleteById(memberId);
+    }
 
 }

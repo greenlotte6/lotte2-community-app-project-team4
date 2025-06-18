@@ -91,12 +91,9 @@ public class ProjectController {
             .orElseThrow(() -> new EntityNotFoundException("Project not found"));
 
 
-    log.info("Retrieved Project: {}", project); // ← project 로그 출력
-
     ProjectColumns columns = projectColumnsRepository.findById(req.getProjectColumns())
             .orElseThrow(() -> new EntityNotFoundException("Columns not found"));
 
-    log.info("Retrieved columns: {}", columns); // ← project 로그 출력
 
     task.setProject(project);
     task.setProjectColumns(columns);
@@ -104,5 +101,22 @@ public class ProjectController {
     projectTaskRepository.save(task);
     return ResponseEntity.ok(task);
   }
+
+  @DeleteMapping("/task/{id}")
+  public ResponseEntity<Void> deleteTask(@PathVariable int id) {
+
+    projectService.deleteTask(id);
+    return ResponseEntity.ok().build();
+  }
+
+
+  @DeleteMapping("/team/{id}")
+  public ResponseEntity<Void> deleteTeamMember(@PathVariable int id) {
+
+    log.info(String.valueOf(id));
+    projectService.deleteTeamMember(id);
+    return ResponseEntity.ok().build();
+  }
+
 
 }

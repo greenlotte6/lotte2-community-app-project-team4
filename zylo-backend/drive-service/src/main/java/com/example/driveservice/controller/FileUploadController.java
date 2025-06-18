@@ -5,7 +5,7 @@ import com.example.driveservice.dto.UserHeaderDTO;
 import com.example.driveservice.exception.DriveUploadFailException;
 import com.example.driveservice.exception.IllegalUsernameException;
 import com.example.driveservice.exception.OutOfCapacityException;
-import com.example.driveservice.service.UploadService;
+import com.example.driveservice.service.DriveService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 public class FileUploadController {
 
   private final Gson gson;
-  private final UploadService uploadService;
+  private final DriveService driveService;
 
   @PostMapping
   public ResponseEntity<String> upload(@RequestPart("file") MultipartFile file,
@@ -50,7 +50,7 @@ public class FileUploadController {
     }
 
     try {
-      String uploadedS3Key = uploadService.upload(headers, file);
+      String uploadedS3Key = driveService.upload(headers, file);
       String message = String.format("%s로 정상적으로 업로드 되었습니다.", uploadedS3Key);
       SuccessResponseBody body = new SuccessResponseBody(message);
       return ResponseEntity.ok(gson.toJson(body));

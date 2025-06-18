@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { validator } from "../../lib/validator";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const SignUp = () => {
-  const [formData, setFormData] = useState({
-    id: "",
+  const navigate = useNavigate();
+  const [userInfo, setuserInfo] = useState({
+    userId: "",
     email: "",
     password: "",
     passwordConfirm: "",
@@ -13,7 +15,7 @@ export const SignUp = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
+    setuserInfo((prev) => ({
       ...prev,
       [name]: value,
       [name]: type === "checkbox" ? checked : value,
@@ -22,16 +24,16 @@ export const SignUp = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isIdValid = validator.isValidId(formData.id);
-    const isValidEmail = validator.isValidEmail(formData.email);
+    const isIdValid = validator.isValidId(userInfo.userId);
+    const isValidEmail = validator.isValidEmail(userInfo.email);
     const isPasswordValid = validator.confirmPasswords(
-      formData.password,
-      formData.passwordConfirm
+      userInfo.password,
+      userInfo.passwordConfirm
     );
-    const agreed = formData.agreed;
+    const agreed = userInfo.agreed;
 
     const errors = {
-      id: !isIdValid,
+      userId: !isIdValid,
       email: !isValidEmail,
       password: !isPasswordValid,
       agreed: !agreed,
@@ -43,7 +45,19 @@ export const SignUp = () => {
 
     if (invalidFields.length === 0) {
       // 모든 유효성 검사 통과
-      alert("[성공] TODO: Axios로 요청 보내기");
+      axios
+        .post("https://api.greenlotteon.com/v1/signup", userInfo, {
+          headers: { "Content-Type": "application/json;utf-8" },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            alert("회원가입이 성공적으로 완료되었습니다");
+            navigate("/login");
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
     } else {
       alert(
         `유효하지 않은 데이터 또는 빈 문자열이 포함되어 있습니다: ${invalidFields.join(
@@ -61,9 +75,23 @@ export const SignUp = () => {
           <input
             className="sign-up-input"
             type="text"
-            name="id"
+            name="userId"
             onChange={handleChange}
             placeholder="아이디"
+          />
+          <input
+            className="sign-up-input"
+            type="text"
+            name="name"
+            onChange={handleChange}
+            placeholder="실명"
+          />
+          <input
+            className="sign-up-input"
+            type="text"
+            name="dept"
+            onChange={handleChange}
+            placeholder="부서명"
           />
           <input
             className="sign-up-input"
@@ -95,9 +123,9 @@ export const SignUp = () => {
           </div>
           <button
             className={
-              formData.agreed ? "register-btn" : "register-btn disabled"
+              userInfo.agreed ? "register-btn" : "register-btn disabled"
             }
-            disabled={!formData.agreed}
+            disabled={!userInfo.agreed}
           >
             회원가입
           </button>
