@@ -26,7 +26,7 @@ export const Messenger = () => {
   /* ------------------ 1. WebSocket 연결 ------------------ */
   useEffect(() => {
     const client = new Client({
-      webSocketFactory: () => new SockJS("https://api.greenlotteon.com/ws"),
+      webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
       reconnectDelay: 5000,
       debug: (str) => console.log("[STOMP]", str),
     });
