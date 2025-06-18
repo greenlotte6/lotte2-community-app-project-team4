@@ -78,6 +78,8 @@ CREATE TABLE IF NOT EXISTS `integrated_services`.`user` (
   `profile_image_id` INT NULL,
   `plan_id` INT NOT NULL,
   `status` ENUM("normal", "stopped") NOT NULL DEFAULT 'normal',
+  `name` VARCHAR(255) NOT NULL,
+  `dept` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
@@ -232,47 +234,15 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `integrated_services`.`project_colums`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `integrated_services`.`project_colums` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(16) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `integrated_services`.`project_rows`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `integrated_services`.`project_rows` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(50) NOT NULL,
-  `content` TEXT NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `integrated_services`.`project`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `integrated_services`.`project` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(50) NOT NULL,
-  `column_id` INT NULL,
-  `row_id` INT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_project_project_colums1_idx` (`column_id` ASC) VISIBLE,
-  INDEX `fk_project_project_rows1_idx` (`row_id` ASC) VISIBLE,
-  CONSTRAINT `fk_project_project_colums1`
-    FOREIGN KEY (`column_id`)
-    REFERENCES `integrated_services`.`project_colums` (`id`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_project_project_rows1`
-    FOREIGN KEY (`row_id`)
-    REFERENCES `integrated_services`.`project_rows` (`id`)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE)
+  `description` VARCHAR(200) NULL,
+  `start_date` DATE NULL,
+  `end_date` DATE NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -314,6 +284,17 @@ CREATE TABLE IF NOT EXISTS `integrated_services`.`default_setting` (
     REFERENCES `integrated_services`.`user` (`id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `integrated_services`.`project_columns`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `integrated_services`.`project_columns` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(16) NOT NULL,
+  `position` INT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -370,6 +351,31 @@ CREATE TABLE IF NOT EXISTS `integrated_services`.`purchase_history` (
   CONSTRAINT `fk_purchase_history_user1`
     FOREIGN KEY (`user_id`)
     REFERENCES `integrated_services`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `integrated_services`.`project_task`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `integrated_services`.`project_task` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `project_id` INT NOT NULL,
+  `project_columns_id` INT NOT NULL,
+  `title` VARCHAR(50) NOT NULL,
+  `description` VARCHAR(100) NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_table1_project_colums1_idx` (`project_columns_id` ASC) VISIBLE,
+  INDEX `fk_table1_project1_idx` (`project_id` ASC) VISIBLE,
+  CONSTRAINT `fk_table1_project_colums1`
+    FOREIGN KEY (`project_columns_id`)
+    REFERENCES `integrated_services`.`project_columns` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_table1_project1`
+    FOREIGN KEY (`project_id`)
+    REFERENCES `integrated_services`.`project` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
