@@ -4,7 +4,7 @@ const isLocal =
 
 export const SERVER_HOST = isLocal
   ? "http://localhost:8081"
-  : "https://greenlotteon.com/";
+  : "https://api.greenlotteon.com";
 
 // project
 export const PROJECT_LIST = `${SERVER_HOST}/project`;
