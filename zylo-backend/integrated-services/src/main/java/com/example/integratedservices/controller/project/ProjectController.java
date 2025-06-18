@@ -110,7 +110,13 @@ public class ProjectController {
   }
 
 
+  @DeleteMapping("/team/{id}")
+  public ResponseEntity<Void> deleteTeamMember(@PathVariable int id) {
 
+    log.info(String.valueOf(id));
+    projectService.deleteTeamMember(id);
+    return ResponseEntity.ok().build();
+  }
 
 
 }

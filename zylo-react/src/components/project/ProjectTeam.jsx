@@ -3,10 +3,11 @@ import "../../styles/project/team.css";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation } from "react-router-dom";
-import { dummyMembers, dummyProjectMember } from "../../data/project";
 import ProjectInviteModal from "./ProjectInviteModal";
 import { useTheme } from "../../contexts/ThemeContext";
 import useProjectStore from "../../store/useProjectStore";
+import { X } from "lucide-react";
+import { deleteTeam } from "../../api/projectAPI";
 
 const ProjectTeam = () => {
   const { toggled, toggle } = useTheme();
@@ -20,6 +21,37 @@ const ProjectTeam = () => {
   const teams = useProjectStore((state) => state.teams);
 
   const filteredTeams = teams.filter((team) => team.projectId === projectId);
+
+  const removeTeam = useProjectStore((state) => state.removeTeam);
+
+  const clickhandler = (memberId) => {
+    const userConfirmed = window.confirm("해당 팀원을 삭제하시겠습니까?");
+    if (userConfirmed) {
+      const fetchData = async () => {
+        try {
+          // teams에서 해당 팀원을 찾음
+          const targetMember = filteredTeams.find(
+            (team) => team.userId === memberId
+          );
+
+          const targetMemberId = targetMember.id;
+          console.log(targetMemberId);
+
+          if (targetMemberId) {
+            await deleteTeam(targetMemberId);
+            removeTeam(targetMemberId);
+            alert("해당 팀원을 삭제하였습니다.");
+          } else {
+            alert("해당되는 팀원이 없습니다.");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("삭제 중 오류가 발생했습니다.");
+        }
+      };
+      fetchData();
+    }
+  };
 
   return (
     <>
@@ -47,20 +79,28 @@ const ProjectTeam = () => {
                   }`}
                   key={member.id}
                 >
-                  <img
-                    className="team-profile"
-                    src="/default-profile.png"
-                    alt="프로필"
-                  />
-                  <div className="team-member-info">
-                    <div className="team-member-name">
-                      {member.userId}(이름으로 구현 예정)
+                  <div className="member-info">
+                    <img
+                      className="team-profile"
+                      src="/default-profile.png"
+                      alt="프로필"
+                    />
+                    <div className="team-member-info">
+                      <div className="team-member-name">
+                        {member.userId}(이름으로)
+                      </div>
+                      <div className="team-member-position">
+                        {member.role}(직책 구현예정)
+                      </div>
+                      <div className="team-member-currentStatus">
+                        온라인(구현예정)
+                      </div>
                     </div>
-                    <div className="team-member-position">
-                      {member.role}(직책 구현예정)
-                    </div>
-                    <div className="team-member-currentStatus">
-                      온라인(구현예정)
+                    <div className="team-delete-btn">
+                      <X
+                        size={20}
+                        onClick={() => clickhandler(member.userId)}
+                      />
                     </div>
                   </div>
                 </div>
