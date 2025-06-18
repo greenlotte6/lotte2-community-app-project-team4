@@ -1,7 +1,7 @@
 package com.example.driveservice.controller;
 
 import com.example.driveservice.document.UploadsDocument;
-import com.example.driveservice.service.UploadService;
+import com.example.driveservice.service.DriveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/drive", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FileQueryController {
 
-  private final UploadService service;
+  private final DriveService service;
 
   @GetMapping("/list")
   public UploadsDocument list(@RequestHeader("X-User-Name") String username) {

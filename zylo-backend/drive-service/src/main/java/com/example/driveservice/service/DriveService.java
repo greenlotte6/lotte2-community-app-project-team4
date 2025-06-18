@@ -24,7 +24,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UploadService {
+public class DriveService {
 
   private final S3Client s3Client;
   private final DriveRepository repo;
