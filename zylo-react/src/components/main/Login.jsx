@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { validator } from "../../lib/validator";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 export const Login = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "",
     password: "",
@@ -30,9 +33,20 @@ export const Login = () => {
 
     if (invalidFields.length === 0) {
       // 모든 유효성 검사 통과
-      alert(
-        "[성공] TODO: Axios로 요청 보내기 & Server side validation error 핸들링"
-      );
+      axios
+        .post("https://api.greenlotteon.com/v1/login", formData, {
+          headers: { "Content-Type": "application/json;utf-8" },
+          withCredentials: true,
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            console.log(response);
+            navigate("/dashboard");
+          }
+        })
+        .catch((err) => {
+          alert(err);
+        });
     } else {
       alert(`빈 문자열 입니다: ${invalidFields.join(", ")}`);
     }
