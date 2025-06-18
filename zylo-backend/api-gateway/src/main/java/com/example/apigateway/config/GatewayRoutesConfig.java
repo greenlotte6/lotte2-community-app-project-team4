@@ -24,6 +24,9 @@ public class GatewayRoutesConfig {
   @Value("${zylo.endpoints.integrated-services.path.health-check}")
   private String healthCheckPath;
 
+  @Value("${zylo.endpoints.integrated-services.path.project.list}")
+  private String projectListPath;
+
   @Value("${zylo.endpoints.drive-service.uri}")
   private String driveServiceUri;
 
@@ -56,6 +59,11 @@ public class GatewayRoutesConfig {
             .path("/v1/drive/upload")
             .filters(f -> f.rewritePath("/v1/drive/upload", uploadPath))
             .uri(driveServiceUri)
+        )
+        .route("integrated-services/project", r -> r
+            .path("/v1/project/list")
+            .filters(f -> f.rewritePath("/v1/project/list", projectListPath))
+            .uri(integratedServiceUri)
         )
         .build();
   }
