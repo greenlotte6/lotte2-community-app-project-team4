@@ -89,7 +89,7 @@ export const MessageSidebar = ({
 
         <div className="online-now">
           <div className="online-header">
-            <p>친구 목록</p>
+            <p>즐겨찾기 목록</p>
             <button id="showAllBtn">모두보기</button>
           </div>
           <div className="avatars" id="avatarList">
