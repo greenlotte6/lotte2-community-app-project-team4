@@ -20,6 +20,11 @@ public class ChannelService {
     private final ChannelRepository channelRepository;
     private final UserRepository userRepository;
 
+    // 즐겨찾기 된 친구 목록 조회
+    public List<User> findMarks(String userId){
+        return null;
+    }
+
     // 그룹 채팅방 만들기
     @Transactional
     public Channel createChannel(CreateChannelDTO req, String ownerId) {
@@ -56,6 +61,12 @@ public class ChannelService {
             user.joinChannel(channelId);
             userRepository.save(user);
         });
+    }
+
+
+    // 내가 참여 중인 채널 목록 조회
+    public List<Channel> findUserChannels(String userId) {
+        return channelRepository.findByMembersContainingOrderByCreatedAtDesc(userId);
     }
 
 
@@ -147,12 +158,5 @@ public class ChannelService {
 
         channel.setOwnerId(newOwnerId);
         channelRepository.save(channel);
-    }
-
-    /**
-     * 채널 목록 조회 (참여 중인 것만)
-     */
-    public List<Channel> findUserChannels(String userId) {
-        return channelRepository.findByMembersContainingOrderByCreatedAtDesc(userId);
     }
 }

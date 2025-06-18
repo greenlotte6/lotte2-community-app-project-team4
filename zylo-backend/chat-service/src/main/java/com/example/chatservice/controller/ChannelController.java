@@ -3,6 +3,7 @@ package com.example.chatservice.controller;
 import com.example.chatservice.dto.CreateChannelDTO;
 import com.example.chatservice.dto.UserDTO;
 import com.example.chatservice.model.Channel;
+import com.example.chatservice.model.User;
 import com.example.chatservice.service.ChannelService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,13 @@ import java.util.List;
 public class ChannelController {
 
     private final ChannelService channelService;
+
+    // 즐겨찾기 된 친구 목록 조회
+    @GetMapping("/makrs")
+    public List<User> getMakrs(@RequestParam String userId) {
+        List<User> users = channelService.findMarks(userId);
+        return users;
+    }
 
 
     // 내가 참여 중인 채널 목록 조회

@@ -78,6 +78,7 @@ public class UserService {
 
     UserDTO userDTO = UserDTO.builder()
         .id(signUpDTO.getUserId())
+        .name(signUpDTO.getName())
         .email(signUpDTO.getEmail())
         .password(encryptedPassword)
         .planId(1)

@@ -1,8 +1,7 @@
-// InviteSearchList.jsx
 import React from "react";
 
 export const InviteSearchList = ({
-  users = [], // 빈배열 기본
+  users = [],
   selected = [],
   onToggleUser = () => {},
 }) => {
@@ -20,7 +19,6 @@ export const InviteSearchList = ({
             className={`invite-item ${isSel ? "selected" : ""}`}
             onClick={() => onToggleUser(u)}
           >
-            {/* 👉 실제 컨텐츠 */}
             <img
               src="/images/message/avatars.png"
               className="avatar"

@@ -25,4 +25,5 @@ public interface UserRepository extends MongoRepository<User, String> {
      * 특정 역할(BASIC / PREMIUM) 사용자 목록 조회 (옵션)
      */
     List<User> findByRole(User.Role role);
+
 }

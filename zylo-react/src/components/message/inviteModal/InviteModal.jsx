@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react"; // useEffect 임포트 추가
+import React, { useRef, useState, useEffect } from "react";
 import "../../../styles/message/message.css";
 import { InviteModalTabs } from "./InviteModalTabs";
 import { InviteModalSelected } from "./InviteModalSelected";
@@ -18,23 +18,33 @@ export const InviteModal = ({ onClose, roomName, inviteRule }) => {
     const fetchUsers = async () => {
       setUsersLoading(true);
       setUsersError(null);
+
       try {
-        const response = await axios.get("http://localhost:8082/v1/user/all", {
-          headers: { "X-User-Id": "user123" },
-        });
-        if (response.data && Array.isArray(response.data)) {
-          console.log(response.data);
+        let response;
+        if (activeTab === "search") {
+          response = await axios.get("http://localhost:8082/v1/user/all", {
+            headers: { "X-User-Id": "user123" },
+          });
+        } else if (activeTab === "marks") {
+          response = await axios.get("/api/channel/marks", {
+            headers: { "X-User-Id": "user123" },
+          });
+        }
+
+        if (response?.data && Array.isArray(response.data)) {
+          console.log("가져온 사용자 목록:", response.data);
           setAllUsers(response.data);
         }
       } catch (err) {
         console.error("사용자 목록 가져오기 오류:", err);
+        setUsersError("사용자 목록을 불러오는 데 실패했습니다.");
       } finally {
         setUsersLoading(false);
       }
     };
 
     fetchUsers();
-  }, []);
+  }, [activeTab]);
 
   const toggleUser = (u) =>
     setSelected((prev) =>
