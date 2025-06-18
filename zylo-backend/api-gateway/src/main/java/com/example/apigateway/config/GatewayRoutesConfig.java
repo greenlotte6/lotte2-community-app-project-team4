@@ -33,6 +33,9 @@ public class GatewayRoutesConfig {
   @Value("${zylo.endpoints.drive-service.path.upload}")
   private String uploadPath;
 
+  @Value("${zylo.endpoints.drive-service.path.list}")
+  private String listPath;
+
   @Bean
   public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
     return builder.routes()
@@ -55,15 +58,21 @@ public class GatewayRoutesConfig {
             .filters(f -> f.rewritePath("/v1/integrated/health", healthCheckPath))
             .uri(integratedServiceUri)
         )
+        .route("integrated-services/project", r -> r
+            .path("/v1/project/list")
+            .filters(f -> f.rewritePath("/v1/project/list", projectListPath))
+            .uri(integratedServiceUri)
+        )
         .route("drive-service/upload", r -> r
             .path("/v1/drive/upload")
             .filters(f -> f.rewritePath("/v1/drive/upload", uploadPath))
             .uri(driveServiceUri)
         )
-        .route("integrated-services/project", r -> r
-            .path("/v1/project/list")
-            .filters(f -> f.rewritePath("/v1/project/list", projectListPath))
-            .uri(integratedServiceUri)
+
+        .route("drive-service/list", r -> r
+            .path("/v1/drive/list")
+            .filters(f -> f.rewritePath("/v1/drive/list", listPath))
+            .uri(driveServiceUri)
         )
         .build();
   }

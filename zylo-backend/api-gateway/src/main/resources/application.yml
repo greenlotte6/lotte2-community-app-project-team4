@@ -31,7 +31,7 @@ zylo:
       - /v1/integrated/health
       - /v1/project/list
     integrated-services:
-      uri: http://zylo-integrated-services:8080
+      uri: http://localhost:8081
       path:
         health-check: /healthcheck
         auth:
@@ -44,10 +44,11 @@ zylo:
           list: /project
     drive-service:
       uri:
-        http://zylo-drive-service:8080
+        http://localhost:8083
       path:
         upload: /drive/upload
         download: /drive/download
+        list: /drive/list
 ---
 #개발용 설정
 spring:
@@ -93,3 +94,4 @@ zylo:
       path:
         upload: /drive/upload
         download: /drive/download
+        list: /drive/list

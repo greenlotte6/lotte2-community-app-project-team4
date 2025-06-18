@@ -3,7 +3,6 @@ package com.example.driveservice.dao;
 import com.example.driveservice.document.FileDocument;
 import com.example.driveservice.document.UploadsDocument;
 import com.example.driveservice.exception.IllegalUsernameException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -89,8 +88,8 @@ public class DriveRepository {
     return 0;
   }
 
-  public List<UploadsDocument> findAllByUsername(String username) {
+  public UploadsDocument findAllByUsername(String username) {
     Query query = new Query(Criteria.where("uid").is(username));
-    return template.find(query, UploadsDocument.class);
+    return template.findOne(query, UploadsDocument.class);
   }
 }

@@ -9,7 +9,6 @@ import com.example.driveservice.exception.IllegalUsernameException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,7 +83,7 @@ public class UploadService {
     }
   }
 
-  public List<UploadsDocument> list(String username) {
+  public UploadsDocument list(String username) {
     return repo.findAllByUsername(username);
   }
 }
