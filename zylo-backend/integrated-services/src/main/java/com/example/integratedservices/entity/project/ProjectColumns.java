@@ -21,8 +21,5 @@ public class ProjectColumns {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "position")
-    private int position;
-
 
 }

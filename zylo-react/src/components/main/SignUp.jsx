@@ -46,9 +46,14 @@ export const SignUp = () => {
     if (invalidFields.length === 0) {
       // 모든 유효성 검사 통과
       axios
-        .post("https://api.greenlotteon.com/v1/signup", userInfo, {
-          headers: { "Content-Type": "application/json;utf-8" },
-        })
+        .post(
+          /*"https://api.greenlotteon.com/v1/signup"*/
+          "http://localhost:8082/v1/signup",
+          userInfo,
+          {
+            headers: { "Content-Type": "application/json;utf-8" },
+          }
+        )
         .then((response) => {
           if (response.status === 200) {
             alert("회원가입이 성공적으로 완료되었습니다");

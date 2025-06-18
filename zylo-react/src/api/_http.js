@@ -3,8 +3,8 @@ const isLocal =
   window.location.hostname === "127.0.0.1";
 
 export const SERVER_HOST = isLocal
-  ? "http://localhost:8081"
-  : "https://api.greenlotteon.com";
+  ? "http://localhost:8082/v1"
+  : "https://api.greenlotsteon.com";
 
 // project
 export const PROJECT_LIST = `${SERVER_HOST}/project`;

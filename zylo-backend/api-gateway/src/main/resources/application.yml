@@ -27,9 +27,7 @@ zylo:
     excluded-paths:
       - /v1/login
       - /v1/signup
-      - /v1/user/all
       - /v1/integrated/health
-      - /v1/project/list
     integrated-services:
       uri: http://localhost:8081
       path:
@@ -42,6 +40,8 @@ zylo:
           user-all: /user/all
         project:
           list: /project
+          team: /project/team
+          task: /project/task
     drive-service:
       uri:
         http://localhost:8083
@@ -73,9 +73,7 @@ zylo:
     excluded-paths:
       - /v1/login
       - /v1/signup
-      - /v1/user/all
       - /v1/integrated/health
-      - /v1/project/list
     integrated-services:
       uri: http://localhost:8081
       path:
@@ -88,6 +86,9 @@ zylo:
           user-all: /user/all
         project:
           list: /project
+          team: /project/team
+          task: /project/task
+          task-detail: /project/task/{id}
     drive-service:
       uri:
         http://localhost:8083

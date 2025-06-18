@@ -1,12 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
 import "../../../styles/project/board.css";
-import { Clipboard } from "lucide-react";
+import { Clipboard, Cookie } from "lucide-react";
 import { useDrag, useDrop } from "react-dnd";
 import { ProjectBoardModal } from "./ProjectBoardModal";
 import { TaskDetailModal } from "./TaskDetailModal";
 import { useLocation } from "react-router-dom";
 import useProjectStore from "../../../store/useProjectStore";
+import { PROJECT_TASK_LIST } from "../../../api/_http";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 // 더미데이터를 객체 형태로 변경
 const groupTasksByColumn = (tasks) => {
@@ -233,15 +236,18 @@ const ProjectBoard = () => {
       };
     });
 
+    const payload = JSON.stringify({
+      columnId: columnIdMap[targetColumn], // 숫자 ID 전송
+    });
     try {
-      // 2. 실제 백엔드에 컬럼 ID 전송
-      await fetch(`http://localhost:8081/project/task/${item.id}`, {
-        method: "post",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          columnId: columnIdMap[targetColumn], // 숫자 ID 전송
-        }),
-      });
+      await axios
+        .post(`${PROJECT_TASK_LIST}/${item.id}`, payload, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        })
+        .catch((err) => {
+          alert(err);
+        });
 
       console.log(
         `[백엔드 저장 성공] Task ID: ${item.id}, Column: ${targetColumn} (ID: ${columnIdMap[targetColumn]})`
