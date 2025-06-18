@@ -25,9 +25,11 @@ public class UserDTO {
   private String planName;
   private String status;
 
-  public UserDTO(String id, String email, int profileImageId, String profileImageUploadPath,
+  public UserDTO(String id, String email, String password, int profileImageId,
+      String profileImageUploadPath,
       int planId, int planNameId, String planName, String status) {
     this.id = id;
+    this.password = password;
     this.email = email;
     this.profileImageId = profileImageId;
     this.profileImageUploadPath = profileImageUploadPath;
