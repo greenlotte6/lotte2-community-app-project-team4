@@ -54,6 +54,22 @@ public class CustomUserRepositoryImpl implements CustomUserRepository {
   }
 
   @Override
+  public UserDTO findByUserIdWithPassword(String userId) {
+    return query
+        .select(
+            Projections.constructor(UserDTO.class, user.id, user.password, user.name, user.dept,
+                user.email,
+                profileImages.uploadPath, planName.name, user.status))
+        .from(user)
+        .leftJoin(user.profileImage, profileImages)
+        .join(user.plan, plan)
+        .join(plan.name, planName)
+        .where(user.id.eq(userId))
+        .orderBy(user.id.asc())
+        .fetchOne();
+  }
+
+  @Override
   public long countByUserId(String userId) {
     Long result = query.select(user.id.count()).from(user).where(user.id.eq(userId)).fetchFirst();
     return result == null ? 0 : result;

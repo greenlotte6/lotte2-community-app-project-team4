@@ -31,12 +31,20 @@ public class UserDTO {
     this.id = id;
     this.name = name;
     this.dept = dept;
-    this.password = password;
     this.email = email;
-    this.profileImageId = profileImageId;
     this.profileImageUploadPath = profileImageUploadPath;
-    this.planId = planId;
-    this.planNameId = planNameId;
+    this.planName = planName;
+    this.status = status;
+  }
+
+  public UserDTO(String id, String password, String name, String dept, String email,
+      String profileImageUploadPath, String planName, String status) {
+    this.id = id;
+    this.password = password;
+    this.name = name;
+    this.dept = dept;
+    this.email = email;
+    this.profileImageUploadPath = profileImageUploadPath;
     this.planName = planName;
     this.status = status;
   }

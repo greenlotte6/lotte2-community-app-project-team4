@@ -17,6 +17,8 @@ public interface CustomUserRepository {
 
   UserDTO findByUserId(String userId);
 
+  UserDTO findByUserIdWithPassword(String userId);
+
   long countByUserId(String userId);
 
   UserDTO findPlanNameByUserId(String userId);
