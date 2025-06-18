@@ -59,3 +59,14 @@ export async function createTask(payload) {
     console.log(err);
   }
 }
+
+// 프로젝트 delete task
+export const deleteTask = async (taskId) => {
+  try {
+    const response = await axios.delete(`${PROJECT_TASK_LIST}/${taskId}`);
+    return response.data;
+  } catch (err) {
+    console.error("작업 삭제 실패:", err);
+    throw err;
+  }
+};

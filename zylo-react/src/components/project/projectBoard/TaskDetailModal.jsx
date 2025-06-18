@@ -1,9 +1,7 @@
-"use client";
-
 import { useState } from "react";
-import { X, Edit2, Calendar, User, Tag } from "lucide-react";
+import { X, Edit2, User, Tag, Trash2 } from "lucide-react";
 import "../../../styles/project/board.css";
-import { createTask } from "../../../api/projectAPI";
+import { deleteTask } from "../../../api/projectAPI";
 import useProjectStore from "../../../store/useProjectStore";
 
 export const TaskDetailModal = ({
@@ -51,6 +49,27 @@ export const TaskDetailModal = ({
     return colors[status?.toLowerCase()?.replace(/\s/g, "")] || "#666";
   };
 
+  const removeTask = useProjectStore((state) => state.removeTask);
+
+  const getDelete = () => {
+    const userConfirmed = confirm("정말로 작업을 삭제하시겠습니까?");
+    const taskId = task.id;
+
+    if (userConfirmed) {
+      const fetchData = async () => {
+        try {
+          const data = await deleteTask(taskId);
+          removeTask(taskId);
+          alert("작업을 삭제하였습니다.");
+          onClose();
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      fetchData();
+    }
+  };
+
   return (
     <div className="task-detail-modal-overlay" onClick={onClose}>
       <div
@@ -73,6 +92,13 @@ export const TaskDetailModal = ({
             )}
           </div>
           <div className="task-detail-header-right">
+            <button
+              className="task-detail-delete-btn"
+              title="삭제"
+              onClick={() => getDelete()}
+            >
+              <Trash2 size={16} />
+            </button>
             {!isEditing && (
               <button
                 className="task-detail-edit-btn"
@@ -101,15 +127,6 @@ export const TaskDetailModal = ({
               style={{ color: getStatusColor(task.projectColumns?.name) }}
             >
               {task.projectColumns?.name || columnTitle}
-            </span>
-          </div>
-          <div className="task-detail-meta-item">
-            <Calendar size={16} />
-            <span>
-              프로젝트 시작일:{" "}
-              {task.project?.startDate
-                ? new Date(task.project.startDate).toLocaleDateString()
-                : "미정"}
             </span>
           </div>
           <div className="task-detail-meta-item">
