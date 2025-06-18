@@ -36,6 +36,9 @@ public class GatewayRoutesConfig {
   @Value("${zylo.endpoints.drive-service.path.list}")
   private String listPath;
 
+  @Value("${zylo.endpoints.drive-service.path.download}")
+  private String downloadPath;
+
   @Bean
   public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
     return builder.routes()
@@ -68,12 +71,15 @@ public class GatewayRoutesConfig {
             .filters(f -> f.rewritePath("/v1/drive/upload", uploadPath))
             .uri(driveServiceUri)
         )
-
         .route("drive-service/list", r -> r
             .path("/v1/drive/list")
             .filters(f -> f.rewritePath("/v1/drive/list", listPath))
             .uri(driveServiceUri)
         )
+        .route("drive-service/download", r -> r
+            .path("/v1/drive/download")
+            .filters(f -> f.rewritePath("/v1/drive/download", downloadPath))
+            .uri(driveServiceUri))
         .build();
   }
 }

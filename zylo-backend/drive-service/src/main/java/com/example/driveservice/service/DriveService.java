@@ -9,16 +9,17 @@ import com.example.driveservice.exception.IllegalUsernameException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 import software.amazon.awssdk.services.s3.model.S3Exception;
@@ -30,7 +31,6 @@ public class DriveService {
 
   private final S3Client s3Client;
   private final DriveRepository repo;
-  private final S3Client client;
 
   @Value("${aws.s3.name}")
   private String bucketName;
@@ -86,11 +86,15 @@ public class DriveService {
     }
   }
 
-  public Resource download(String username) {
-    UploadsDocument uploads = repo.findAllByUsername(username);
-    List<FileDocument> fileDocs = uploads.getFiles();
-    for (FileDocument fileDoc : fileDocs) {
-
+  public ResponseInputStream<GetObjectResponse> download(String username, String uploadPath,
+      String filename) {
+    UploadsDocument result = repo.fileExists(username, filename);
+    if (result != null) {
+      GetObjectRequest request = GetObjectRequest.builder()
+          .bucket(bucketName)
+          .key(uploadPath)
+          .build();
+      return s3Client.getObject(request);
     }
     return null;
   }
