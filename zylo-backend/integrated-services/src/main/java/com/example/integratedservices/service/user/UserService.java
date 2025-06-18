@@ -111,7 +111,7 @@ public class UserService {
   }
 
   public ResponseCookie getRefreshToken(String userId) {
-    Duration expiry = Duration.ofDays(7);
+    Duration expiry = Duration.ofDays(1);
     log.info("Refresh JWT 발급 중...");
     String token = tokenProvider.createRefreshToken();
     log.info("Refresh JWT 발급 완료: {}", token);
