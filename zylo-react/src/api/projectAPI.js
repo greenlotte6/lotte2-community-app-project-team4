@@ -70,3 +70,14 @@ export const deleteTask = async (taskId) => {
     throw err;
   }
 };
+
+// 프로젝트 delete team
+export const deleteTeam = async (teamId) => {
+  try {
+    const response = await axios.delete(`${PROJECT_TEAM_LIST}/${teamId}`);
+    return response.data;
+  } catch (err) {
+    console.error("작업 삭제 실패:", err);
+    throw err;
+  }
+};

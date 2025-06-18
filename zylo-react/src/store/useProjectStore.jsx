@@ -18,6 +18,10 @@ const useProjectStore = create(
         set((state) => ({
           tasks: state.tasks.filter((task) => task.id !== taskId),
         })),
+      removeTeam: (memberId) =>
+        set((state) => ({
+          members: state.tasks.filter((team) => team.id !== memberId),
+        })),
     }),
     {
       name: "project-storage",

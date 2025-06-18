@@ -67,5 +67,8 @@ public class ProjectService {
         projectTaskRepository.deleteById(taskId);
     }
 
+    public void deleteTeamMember(int memberId) {
+        projectCollaboratorsRepository.deleteById(memberId);
+    }
 
 }

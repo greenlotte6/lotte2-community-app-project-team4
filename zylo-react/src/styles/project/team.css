@@ -24,7 +24,7 @@
   width: 313px;
   border: 1px solid #d0d0d0;
   border-radius: 10px;
-  padding: 25px;
+  padding: 20px;
   cursor: default;
 }
 
@@ -62,4 +62,20 @@
   border-radius: 5px;
   font-size: 15px;
   cursor: pointer;
+}
+
+.team-delete-btn {
+  cursor: pointer;
+  display: flex;
+  justify-content: flex-end;
+  color: #727272;
+}
+
+.team-member {
+  flex-direction: column;
+}
+
+.member-info {
+  display: flex;
+  justify-content: space-between;
 }
