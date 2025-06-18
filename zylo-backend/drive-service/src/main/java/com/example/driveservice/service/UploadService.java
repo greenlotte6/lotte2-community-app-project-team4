@@ -2,12 +2,14 @@ package com.example.driveservice.service;
 
 import com.example.driveservice.dao.DriveRepository;
 import com.example.driveservice.document.FileDocument;
+import com.example.driveservice.document.UploadsDocument;
 import com.example.driveservice.dto.UserHeaderDTO;
 import com.example.driveservice.exception.DriveUploadFailException;
 import com.example.driveservice.exception.IllegalUsernameException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -80,5 +82,9 @@ public class UploadService {
       saveMetadata(username, fileDocument); // MongoDB에 메타데이터 저장
       return s3Key;
     }
+  }
+
+  public List<UploadsDocument> list(String username) {
+    return repo.findAllByUsername(username);
   }
 }
