@@ -94,11 +94,13 @@
   font-size: 14px;
   color: #333;
   transition: background 0.2s, color 0.2s;
+  border: 1px solid #c9c9c9;
 }
 
 .project-list li:hover {
   background: #e6f0fa;
   color: #5da9fc;
+  border: 1px solid #c9c9c9;
 }
 
 .project-list li.selected {

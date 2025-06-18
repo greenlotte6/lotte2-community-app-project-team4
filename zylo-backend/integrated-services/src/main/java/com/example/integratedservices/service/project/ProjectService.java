@@ -63,5 +63,9 @@ public class ProjectService {
         projectTaskRepository.save(task);
     }
 
+    public void deleteTask(int taskId) {
+        projectTaskRepository.deleteById(taskId);
+    }
+
 
 }
