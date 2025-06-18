@@ -1,0 +1,19 @@
+package com.example.integratedservices.config;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+
+public class WebConfig implements WebMvcConfigurer {
+
+  @Value("${cors.origin}")
+  private String origin;
+
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**")
+        .allowedOrigins(origin)
+        .allowedMethods("*");
+  }
+}

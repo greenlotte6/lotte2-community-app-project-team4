@@ -25,8 +25,7 @@ export const InviteSearchList = ({
               alt="User"
             />
             <div className="user-info">
-              <div className="user-name">{u.position}</div>
-              <div className="user-detail">{u.name}</div>
+              <div className="user-name">{u.name}</div>
             </div>
           </div>
         );

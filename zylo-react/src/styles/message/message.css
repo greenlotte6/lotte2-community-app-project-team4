@@ -736,14 +736,8 @@
 }
 
 .user-info .user-name {
-  font-size: 13px;
-  color: var(--text-main);
-  font-weight: 500;
-}
-
-.user-info .user-detail {
-  font-size: 11px;
-  color: var(--text-sub);
+  font-size: 15px;
+  color: #333;
 }
 
 .invite-item.selected {
