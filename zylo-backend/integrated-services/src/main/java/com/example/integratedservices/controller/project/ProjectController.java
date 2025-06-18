@@ -2,22 +2,27 @@ package com.example.integratedservices.controller.project;
 
 import com.example.integratedservices.dto.project.ProjectDTO;
 import com.example.integratedservices.dto.project.ProjectTaskCreateRequestDTO;
-import com.example.integratedservices.dto.project.ProjectTaskDTO;
 import com.example.integratedservices.entity.project.Project;
 import com.example.integratedservices.entity.project.ProjectColumns;
 import com.example.integratedservices.entity.project.ProjectTask;
-import com.example.integratedservices.repository.project.ProjectColumnsRepository;
-import com.example.integratedservices.repository.project.ProjectRepository;
-import com.example.integratedservices.repository.project.ProjectTaskRepository;
+import com.example.integratedservices.repository.jpa.project.ProjectColumnsRepository;
+import com.example.integratedservices.repository.jpa.project.ProjectRepository;
+import com.example.integratedservices.repository.jpa.project.ProjectTaskRepository;
 import com.example.integratedservices.service.project.ProjectService;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/project", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -43,8 +48,8 @@ public class ProjectController {
 
 
   @PostMapping("")
-  public ResponseEntity<String> projectInsert(@RequestBody ProjectDTO projectDTO, @RequestParam(required = false) Integer projectId) {
-
+  public ResponseEntity<String> projectInsert(@RequestBody ProjectDTO projectDTO,
+      @RequestParam(required = false) Integer projectId) {
 
     projectService.projectInsert(projectDTO);
 
@@ -55,7 +60,7 @@ public class ProjectController {
   @GetMapping("/team")
   public ResponseEntity<String> teamGetAll() {
 
-    String result =  projectService.getTeamAll();
+    String result = projectService.getTeamAll();
     return ResponseEntity.ok(result);
   }
 
@@ -70,8 +75,8 @@ public class ProjectController {
 
   @PostMapping("/task/{id}")
   public ResponseEntity<Void> updateTaskColumn(
-          @PathVariable int id,
-          @RequestBody Map<String, Integer> body) {
+      @PathVariable int id,
+      @RequestBody Map<String, Integer> body) {
     int columnId = body.get("columnId");
     projectService.updateTaskColumn(id, columnId);
     return ResponseEntity.ok().build();
@@ -88,12 +93,10 @@ public class ProjectController {
 
     // id로 실제 엔티티 조회
     Project project = projectRepository.findById(req.getProjectId())
-            .orElseThrow(() -> new EntityNotFoundException("Project not found"));
-
+        .orElseThrow(() -> new EntityNotFoundException("Project not found"));
 
     ProjectColumns columns = projectColumnsRepository.findById(req.getProjectColumns())
-            .orElseThrow(() -> new EntityNotFoundException("Columns not found"));
-
+        .orElseThrow(() -> new EntityNotFoundException("Columns not found"));
 
     task.setProject(project);
     task.setProjectColumns(columns);
