@@ -9,9 +9,11 @@ import com.example.driveservice.exception.IllegalUsernameException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,7 @@ public class DriveService {
 
   private final S3Client s3Client;
   private final DriveRepository repo;
+  private final S3Client client;
 
   @Value("${aws.s3.name}")
   private String bucketName;
@@ -81,6 +84,15 @@ public class DriveService {
       saveMetadata(username, fileDocument); // MongoDB에 메타데이터 저장
       return s3Key;
     }
+  }
+
+  public Resource download(String username) {
+    UploadsDocument uploads = repo.findAllByUsername(username);
+    List<FileDocument> fileDocs = uploads.getFiles();
+    for (FileDocument fileDoc : fileDocs) {
+
+    }
+    return null;
   }
 
   public UploadsDocument list(String username) {
