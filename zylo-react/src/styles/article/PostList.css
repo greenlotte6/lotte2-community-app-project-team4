@@ -378,15 +378,15 @@
   }
 
   .dropdown-menu {
-    position: absolute;
+    /*position: absolute;
     top: 100%;
-    right: 0;
+    right: 0;*/
     background: white;
     border: 1px solid #e9ecef;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     min-width: 120px;
-    z-index: 1100;
+    z-index: 10000;
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);

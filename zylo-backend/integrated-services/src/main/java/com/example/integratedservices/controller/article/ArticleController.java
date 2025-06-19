@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/article", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1/article", produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Slf4j
 public class ArticleController {
@@ -37,5 +37,12 @@ public class ArticleController {
         log.info("POST /article요청 도착 데이터 : {}", articleDTO);
         ArticleDTO createdArticle= articleService.createArticle(articleDTO);
         return ResponseEntity.ok(createdArticle);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<ArticleDTO> deleteArticle(@PathVariable int id){
+        log.info("DELETE/article/{} 요청 도착",id);
+        articleService.deleteArticle(id);
+        return ResponseEntity.ok().build();
     }
 }
