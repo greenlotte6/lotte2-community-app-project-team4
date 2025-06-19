@@ -51,6 +51,7 @@ public class Article {
         }
     }
 
-    public void setUserId(String tempUser) {
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

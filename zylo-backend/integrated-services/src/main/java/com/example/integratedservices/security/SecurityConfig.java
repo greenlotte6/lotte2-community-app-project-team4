@@ -9,6 +9,11 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 public class SecurityConfig {
@@ -22,7 +27,10 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(request -> request.anyRequest().permitAll())
+    http
+            .cors()
+            .and()
+            .authorizeHttpRequests(request -> request.anyRequest().permitAll())
             .sessionManagement(
                     (session) -> {
                       session.sessionFixation()
@@ -31,6 +39,7 @@ public class SecurityConfig {
                               .maxSessionsPreventsLogin(true);
                     })
             .csrf(AbstractHttpConfigurer::disable);
+
     return http.build();
   }
 
@@ -38,5 +47,19 @@ public class SecurityConfig {
   public PasswordEncoder passwordEncoder() {
     // Security 암호화 인코더 설정
     return new BCryptPasswordEncoder();
+  }
+
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration configuration = new CorsConfiguration();
+    configuration.setAllowedOrigins(List.of("http://localhost:5173"));  // 프론트엔드 주소
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setAllowCredentials(true);
+
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/**", configuration);
+    return source;
+
   }
 }
