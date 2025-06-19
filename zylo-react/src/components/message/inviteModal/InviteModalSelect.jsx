@@ -1,7 +1,6 @@
 import React from "react";
 import { InviteSearchBody } from "./inviteSearch/InviteSearchBody";
 import { InviteMarksBody } from "./inviteMarks/InviteMarksBody";
-import { InviteDepartBody } from "./inviteDepart/InviteDepartBody";
 
 export const InviteModalSelect = ({
   activeTab,
@@ -18,15 +17,7 @@ export const InviteModalSelect = ({
       />
     )}
 
-    {activeTab === "org" && (
-      <InviteDepartBody
-        users={users}
-        selected={selected}
-        onToggleUser={onToggleUser}
-      />
-    )}
-
-    {activeTab === "favorites" && (
+    {activeTab === "marks" && (
       <InviteMarksBody
         users={users}
         selected={selected}

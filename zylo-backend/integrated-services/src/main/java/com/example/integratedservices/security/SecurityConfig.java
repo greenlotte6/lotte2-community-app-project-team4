@@ -23,14 +23,14 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(request -> request.anyRequest().permitAll())
-        .sessionManagement(
-            (session) -> {
-              session.sessionFixation()
-                  .changeSessionId()
-                  .maximumSessions(1)
-                  .maxSessionsPreventsLogin(true);
-            })
-        .csrf(AbstractHttpConfigurer::disable);
+            .sessionManagement(
+                    (session) -> {
+                      session.sessionFixation()
+                              .changeSessionId()
+                              .maximumSessions(1)
+                              .maxSessionsPreventsLogin(true);
+                    })
+            .csrf(AbstractHttpConfigurer::disable);
     return http.build();
   }
 

@@ -25,11 +25,11 @@ public class User {
   @Id
   private String id;
 
-  @Column(name = "email")
-  private String email;
-
   @Column(name = "name")
   private String name;
+
+  @Column(name = "email")
+  private String email;
 
   @Column(name = "dept")
   private String dept;

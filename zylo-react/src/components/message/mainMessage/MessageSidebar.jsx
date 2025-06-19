@@ -1,5 +1,6 @@
 import { useTheme } from "../../../contexts/ThemeContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export const MessageSidebar = ({
   channels,
@@ -7,6 +8,27 @@ export const MessageSidebar = ({
   onSelectChannel,
 }) => {
   const { toggled } = useTheme();
+
+  // 즐겨찾기 친구 목록 상태
+  const [friends, setFriends] = useState([]);
+
+  // 즐겨찾기 목록 가져오기
+  useEffect(() => {
+    const fetchFriends = async () => {
+      try {
+        const res = await axios.get("/api/friend", {
+          withCredentials: true,
+        });
+        if (res.data && Array.isArray(res.data)) {
+          setFriends(res.data);
+        }
+      } catch (e) {
+        console.error("즐겨찾기 친구 불러오기 실패:", e);
+      }
+    };
+
+    fetchFriends();
+  }, []);
 
   useEffect(() => {
     const storedChannelId = localStorage.getItem("selectedChannelId");
@@ -65,18 +87,21 @@ export const MessageSidebar = ({
           <input type="text" placeholder="검색" />
         </header>
 
-        {/* 온라인 사용자 (더미) */}
         <div className="online-now">
           <div className="online-header">
-            <p>친구 목록</p>
+            <p>즐겨찾기 목록</p>
             <button id="showAllBtn">모두보기</button>
           </div>
           <div className="avatars" id="avatarList">
-            {[...Array(4)].map((_, i) => (
-              <div className="avatar-wrapper" key={i}>
+            {friends.map((friend, i) => (
+              <div
+                className="avatar-wrapper"
+                key={friend.uid || i}
+                title={friend.name}
+              >
                 <img
-                  src="/images/message/avatars.png"
-                  alt="user"
+                  src={`/images/profiles/${friend.profileImageId || 0}.png`} // 없으면 기본 이미지
+                  alt={friend.name}
                   className="avatar"
                 />
                 <span className="online-indicator"></span>

@@ -64,6 +64,10 @@ public class UserService {
     }
   }
 
+  public UserDTO get(String username) {
+    return repo.findByUserId(username);
+  }
+
   public String getAll(int size) {
     List<UserDTO> users = repo.findAll(size);
     return gson.toJson(users);
@@ -111,7 +115,7 @@ public class UserService {
   }
 
   public ResponseCookie getRefreshToken(String userId) {
-    Duration expiry = Duration.ofDays(7);
+    Duration expiry = Duration.ofDays(1);
     log.info("Refresh JWT 발급 중...");
     String token = tokenProvider.createRefreshToken();
     log.info("Refresh JWT 발급 완료: {}", token);

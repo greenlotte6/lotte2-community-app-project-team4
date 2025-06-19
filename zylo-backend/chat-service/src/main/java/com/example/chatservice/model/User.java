@@ -18,25 +18,25 @@ public class User {
     @Id
     private String id;
 
-    private String username;
     private String email;
-
-    private Role role; // BASIC or PREMIUM
+    private String username;
+    private String dept;
+    private Role role; // FREE or PLUS
 
     // 사용자가 참여 중인 채널 ID 목록 (옵션)
     private Set<String> joinedChannelIds;
 
     public enum Role {
-        BASIC,
-        PREMIUM
+        FREE,
+        PLUS
     }
 
     public boolean isBasic() {
-        return this.role == Role.BASIC;
+        return this.role == Role.FREE;
     }
 
     public boolean isPremium() {
-        return this.role == Role.PREMIUM;
+        return this.role == Role.PLUS;
     }
 
     public void joinChannel(String channelId) {

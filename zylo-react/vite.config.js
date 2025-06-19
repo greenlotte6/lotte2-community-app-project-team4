@@ -10,15 +10,10 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://api.greenlotteon.com",  
-        changeOrigin: true,  
-        secure: true,  
-        rewrite: (path) => path,  
-      },
-      "/ws": {
-        target: "wss://api.greenlotteon.com/ws", 
-        ws: true, 
-        changeOrigin: true,  
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path,
       },
     },
   },
