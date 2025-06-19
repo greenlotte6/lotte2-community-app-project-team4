@@ -43,7 +43,7 @@ public class DriveRepository {
           .set("files.$.size", fileDocument.getSize())
           .set("files.$.uploadDate", fileDocument.getUploadDate());
       template.updateFirst(query, update, UploadsDocument.class);
-    } else {
+    } else { // 같은 이름의 파일이 없는 경우
       long updatedCapacity = currentCapacity + fileDocument.getSize();
       Query query = new Query(Criteria.where("uid").is(username));
       Update update = new Update().setOnInsert("uid", username)

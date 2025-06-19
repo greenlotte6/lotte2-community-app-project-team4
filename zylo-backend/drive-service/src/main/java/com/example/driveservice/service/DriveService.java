@@ -66,6 +66,10 @@ public class DriveService {
         RequestBody.fromInputStream(in, file.getSize()));
   }
 
+  public void save(String username, FileDocument fileDocument) {
+    repo.save(username, fileDocument);
+  }
+
   @Transactional
   public String upload(UserHeaderDTO headers, MultipartFile file)
       throws S3Exception, IOException, DriveUploadFailException, IllegalUsernameException {
@@ -76,6 +80,7 @@ public class DriveService {
     String s3Key = "drive/" + username + uploadPath + "/" + filename;
     FileDocument fileDocument = createMetaData(s3Key, file);
 
+    // 업로드
     PutObjectResponse putResponse = doUploadToS3(s3Key, file); // S3에 업로드
     if (!putResponse.sdkHttpResponse().isSuccessful()) {  // S3 업로드 실패
       throw new DriveUploadFailException(
