@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class FileDocument {
 
   @Field("uploadPath")
