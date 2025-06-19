@@ -1,13 +1,21 @@
 package com.example.driveservice.dao;
 
-import com.example.driveservice.document.FileDocument;
-import com.example.driveservice.document.UploadsDocument;
+import com.example.driveservice.document.Directory;
+import com.example.driveservice.document.File;
+import com.example.driveservice.document.Node;
 import com.example.driveservice.exception.IllegalUsernameException;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.bson.Document;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.GroupOperation;
+import org.springframework.data.mongodb.core.aggregation.MatchOperation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,80 +24,56 @@ public class DriveRepository {
 
   private final MongoTemplate template;
 
-  public boolean usernameExists(String username) {
-    Query query = new Query(Criteria.where("uid").is(username));
-    return template.exists(query, UploadsDocument.class);
+  public boolean fileExists(String username, String filename) {
+    Criteria condition = Criteria.where("owner").is(username).and("filename").is(filename);
+    Query query = new Query(condition);
+    File result = template.findOne(query, File.class);
+    return result != null;
   }
 
-  public UploadsDocument fileExists(String username, String filename) {
-    Query query = new Query(
-        Criteria.where("uid").is(username).and("files.filename").is(filename));
-    return template.findOne(query, UploadsDocument.class);
+  public void save(Node node) {
+    template.save(node, "vfs");
   }
 
-  public void save(String username, FileDocument fileDocument) {
-    long currentCapacity = findCurrentCapacity(username);
-    UploadsDocument uploadList = fileExists(username, fileDocument.getFilename());
-    if (uploadList != null) { //같은 이름의 파일이 있는 경우
-      FileDocument originalFile = uploadList.getFiles().get(0);
-      long originalSize = originalFile.getSize(); // 기존 파일의 크기 가져오기
-      long newSize = fileDocument.getSize(); // 새로 업로드 할 파일의 크기
-      long updatedSize = currentCapacity - originalSize + newSize;
-      Query query = new Query(
-          Criteria.where("uid").is(username).and("files.filename").is(fileDocument.getFilename()));
-      Update update = new Update()
-          .set("currentCapacity", updatedSize)
-          .set("files.$.uploadPath", fileDocument.getUploadPath())
-          .set("files.$.size", fileDocument.getSize())
-          .set("files.$.uploadDate", fileDocument.getUploadDate());
-      template.updateFirst(query, update, UploadsDocument.class);
-    } else { // 같은 이름의 파일이 없는 경우
-      long updatedCapacity = currentCapacity + fileDocument.getSize();
-      Query query = new Query(Criteria.where("uid").is(username));
-      Update update = new Update().setOnInsert("uid", username)
-          .push("files", fileDocument)
-          .set("currentCapacity", updatedCapacity);
-      template.upsert(query, update, UploadsDocument.class);
-    }
+  public boolean isSavable(File file, long maxSize) {
+    long fileSize = file.getSize();
+    long currentCapacity = findCurrentSize(file.getOwner());
+    return fileSize + currentCapacity <= maxSize;
   }
 
-  public long findCapacity(String username) throws IllegalUsernameException {
-    boolean exists = usernameExists(username);
-
-    if (!exists) {
-      String message = String.format("사용자 %s(이)가 존재하지 않습니다.", username);
-      throw new IllegalUsernameException(message);
-    }
-    Query query = new Query(Criteria.where("uid").is(username));
-    query.fields().include("capacity");
-
-    UploadsDocument result = template.findOne(query, UploadsDocument.class);
-    if (result != null) {
-      return result.getCapacity();
-    }
-    return 0;
+  public long findCurrentSize(String username) throws IllegalUsernameException {
+    MatchOperation condition = Aggregation.match(
+        Criteria.where("owner").is(username).and("isDir").is(false));
+    GroupOperation group = Aggregation.group().sum("size").as("currentSize");
+    Aggregation aggregation = Aggregation.newAggregation(condition, group);
+    AggregationResults<Document> result = template.aggregate(aggregation, "vfs", Document.class);
+    Document output = result.getUniqueMappedResult();
+    return output != null ? output.getLong("currentSize") : 0L;
   }
 
-  public long findCurrentCapacity(String username) throws IllegalUsernameException {
-    boolean exists = usernameExists(username);
+  public List<Node> findAllByUsername(String username) {
+    Criteria condition = Criteria.where("owner").is(username);
+    Sort sorting = Sort.by(Sort.Direction.ASC, "depth");
+    Query query = new Query();
+    query.addCriteria(condition);
+    query.with(sorting);
 
-    if (!exists) {
-      String message = String.format("사용자 %s(이)가 존재하지 않습니다.", username);
-      throw new IllegalUsernameException(message);
+    List<Document> docs = template.find(query, Document.class, "vfs");
+    List<Node> result = new ArrayList<>();
+    for (Document doc : docs) {
+      boolean isDir = doc.getBoolean("isDir");
+      if (isDir) {
+        Directory dir = template.getConverter().read(Directory.class, doc);
+        result.add(dir);
+      } else {
+        File file = template.getConverter().read(File.class, doc);
+        result.add(file);
+      }
     }
-
-    Query query = new Query(Criteria.where("uid").is(username));
-    query.fields().include("currentCapacity");
-
-    UploadsDocument result = template.findOne(query, UploadsDocument.class);
-    if (result != null) {
-      return result.getCurrentCapacity();
-    }
-    return 0;
+    return result;
   }
 
-  public UploadsDocument findAllByUsername(String username) {
-    Query query = new Query(Criteria.where("uid").is(username));
-    return template.findOne(query, UploadsDocument.class);
+  public void delete(Node node) {
+    template.remove(node, "vfs");
   }
 }
