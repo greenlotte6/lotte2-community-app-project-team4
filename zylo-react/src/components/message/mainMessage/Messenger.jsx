@@ -10,20 +10,17 @@ import { Client } from "@stomp/stompjs";
 import axios from "axios";
 
 export const Messenger = () => {
+  const stompClient = useRef(null);
+  const [isConnected, setIsConnected] = useState(false);
+  const [userId, setUserId] = useState(null);
   const { toggled } = useTheme();
-
-  // -------- 상태 --------
   const [channels, setChannels] = useState([]);
   const [selectedChannel, setSelectedChannel] = useState(null);
-  const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isConnected, setIsConnected] = useState(false); // 🔹 STOMP 연결 여부
+  const subscriptionRef = useRef(null);
+  const [messages, setMessages] = useState([]);
 
-  // -------- STOMP --------
-  const stompClient = useRef(null);
-  const subscriptionRef = useRef(null); // 현재 구독 저장
-
-  /* ------------------ 1. WebSocket 연결 ------------------ */
+  // WebSocket 연결
   useEffect(() => {
     const client = new Client({
       webSocketFactory: () => new SockJS("http://localhost:8080/ws"),
@@ -32,7 +29,7 @@ export const Messenger = () => {
     });
 
     client.onConnect = () => {
-      console.log("✅ STOMP CONNECTED");
+      console.log("STOMP CONNECTED");
       setIsConnected(true);
     };
 
@@ -45,11 +42,29 @@ export const Messenger = () => {
     return () => client.deactivate();
   }, []);
 
-  /* ------------------ 2. 채널 목록 ------------------ */
+  // 로그인 한 사용자 정보 가져오기
   useEffect(() => {
     axios
-      .get("/api/channel/list", { params: { userId: "user123" } })
+      .get("http://localhost:8082/v1/user", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          setUserId(response.data.id);
+        }
+      });
+  }, []);
+
+  // 채널 목록 가져오기
+  useEffect(() => {
+    if (!userId) return;
+    console.log("userId: ", userId);
+    axios
+      .get("http://localhost:8080/channel/list", {
+        params: { userId },
+      })
       .then(({ data }) => {
+        console.log("받아온 채널 목록: ", data);
         setChannels(data);
         setLoading(false);
       })
@@ -57,63 +72,78 @@ export const Messenger = () => {
         console.error("채널 목록 실패:", err);
         setLoading(false);
       });
-  }, []);
+  }, [userId]);
 
-  /* ------------------ 3. 선택 채널 변경 시 ------------------ */
+  // 선택 채널 변경 시
   useEffect(() => {
-    if (!selectedChannel || !isConnected) return;
+    if (!selectedChannel || !isConnected || !stompClient?.current) return;
 
-    // ① 과거 메시지
+    // 과거 메시지
     axios
-      .get("/api/chat/messages", {
+      .get("http://localhost:8080/chat/messages", {
         params: { channelId: selectedChannel.id },
       })
       .then(({ data }) => setMessages(data))
       .catch((err) => console.error("메시지 불러오기 실패:", err));
 
-    // ② 기존 구독 해제
+    // 기존 구독 해제
     subscriptionRef.current?.unsubscribe();
 
-    // ③ 새 구독
+    // 새 구독
     const topic = `/topic/channel.${selectedChannel.id}`;
     subscriptionRef.current = stompClient.current.subscribe(topic, (frame) => {
       const newMsg = JSON.parse(frame.body);
-      setMessages((prev) => [...prev, newMsg]); // 실시간 추가
+      setMessages((prev) => [...prev, newMsg]);
     });
 
-    // ④ cleanup
+    // cleanup
     return () => subscriptionRef.current?.unsubscribe();
-  }, [selectedChannel, isConnected]);
+  }, [selectedChannel, isConnected, stompClient]);
 
-  /* ------------------ 로딩 스피너 ------------------ */
-  if (loading) {
-    return <div className="loading">채널 목록을 불러오는 중...</div>;
-  }
+  // 초기 선택 채널 처리
+  useEffect(() => {
+    const storedChannelId = localStorage.getItem("selectedChannelId");
+    if (storedChannelId && channels.length > 0) {
+      const channel = channels.find((ch) => ch.id === storedChannelId);
+      if (channel) setSelectedChannel(channel);
+    } else if (channels.length > 0) {
+      setSelectedChannel(channels[0]);
+    }
+  }, [channels]);
 
-  /* ------------------ UI ------------------ */
+  const handleChannelClick = (channel) => {
+    setSelectedChannel(channel);
+    localStorage.setItem("selectedChannelId", channel.id);
+  };
+
+  // JSX 렌더링
   return (
-    <>
-      <main className={toggled ? "main-content dark" : "main-content"}>
-        {/* 채널 목록 */}
-        <MessageSidebar
-          channels={channels}
-          selectedChannel={selectedChannel}
-          onSelectChannel={setSelectedChannel}
-        />
-
-        {/* 채팅 영역 */}
-        <section className="chat-room">
-          <ChatRoomMessage
-            messages={messages}
+    <main className={toggled ? "main-content dark" : "main-content"}>
+      {loading ? (
+        <div className="loading">채널 목록을 불러오는 중...</div>
+      ) : (
+        <>
+          <MessageSidebar
+            channels={channels}
             selectedChannel={selectedChannel}
+            onSelectChannel={handleChannelClick}
           />
-          <ChatRoomInput
-            selectedChannel={selectedChannel}
-            stompClient={stompClient.current}
-          />
-        </section>
-      </main>
-    </>
+          <section className="chat-room">
+            <ChatRoomMessage
+              selectedChannel={selectedChannel}
+              messages={messages}
+              stompClient={stompClient}
+              senderId={userId}
+            />
+            <ChatRoomInput
+              selectedChannel={selectedChannel}
+              stompClient={stompClient}
+              senderId={userId}
+            />
+          </section>
+        </>
+      )}
+    </main>
   );
 };
 

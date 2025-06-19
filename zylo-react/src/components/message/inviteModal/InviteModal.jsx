@@ -26,7 +26,7 @@ export const InviteModal = ({ onClose, roomName, inviteRule }) => {
             headers: { "X-User-Id": "user123" },
           });
         } else if (activeTab === "marks") {
-          response = await axios.get("/api/channel/marks", {
+          response = await axios.get("http://localhost:8080/channel/marks", {
             headers: { "X-User-Id": "user123" },
           });
         }

@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import { useTheme } from "../../../contexts/ThemeContext";
 
-export const ChatRoomMessage = ({ messages, selectedChannel }) => {
+export const ChatRoomMessage = ({ messages, selectedChannel, senderId }) => {
   const { toggled } = useTheme();
-  const currentUserId = "user123";
   const bottomRef = useRef(null);
 
   useEffect(() => {
@@ -17,7 +16,7 @@ export const ChatRoomMessage = ({ messages, selectedChannel }) => {
   return (
     <div className="chat-room-messages">
       {messages.map((msg, idx) => {
-        const isSelf = msg.senderId === currentUserId;
+        const isSelf = msg.senderId === senderId;
 
         return (
           <div

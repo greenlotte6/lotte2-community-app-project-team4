@@ -20,7 +20,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/chat")
+@RequestMapping("/chat")
 @RequiredArgsConstructor
 public class ChatController {
 
@@ -50,7 +50,6 @@ public class ChatController {
         messagingTemplate.convertAndSend("/topic/channel." + chatMessageDTO.getChannelId(), chatMessage);
         return chatMessage;
     }
-
 
 
     // 채팅방 입장 시 사용자 정보 저장 (옵션)

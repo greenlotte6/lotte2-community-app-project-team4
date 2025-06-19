@@ -15,17 +15,17 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/channel")
+@RequestMapping("/channel")
 @RequiredArgsConstructor
 public class ChannelController {
 
     private final ChannelService channelService;
 
     // 즐겨찾기 된 친구 목록 조회
-    @GetMapping("/makrs")
-    public List<User> getMakrs(@RequestParam String userId) {
-        List<User> users = channelService.findMarks(userId);
-        return users;
+    @GetMapping("/friends")
+    public List<String> findFriends(@RequestParam String userId) {
+        List<String> friendIds = channelService.findFriends(userId);
+        return friendIds;
     }
 
 
@@ -33,6 +33,7 @@ public class ChannelController {
     @GetMapping("/list")
     public List<Channel> getMyChannels(@RequestParam String userId) {
         List<Channel> channels = channelService.findUserChannels(userId);
+        log.info("channels : {}", channels);
         return channels;
     }
 
@@ -44,38 +45,5 @@ public class ChannelController {
         Channel channel = channelService.createChannel(req, ownerId);
         return ResponseEntity.ok(channel);
     }
-
-    /**
-     * 멤버 추가
-     */
-    @PostMapping("/{channelId}/add")
-    public ResponseEntity<String> addMember(@PathVariable String channelId,
-                                            @RequestParam String targetUserId,
-                                            @RequestParam String requesterId) {
-        channelService.addMember(channelId, targetUserId, requesterId);
-        return ResponseEntity.ok("멤버가 추가되었습니다.");
-    }
-
-    /**
-     * 채널 나가기
-     */
-    @PostMapping("/{channelId}/leave")
-    public ResponseEntity<String> leaveChannel(@PathVariable String channelId,
-                                               @RequestParam String userId) {
-        channelService.leaveChannel(channelId, userId);
-        return ResponseEntity.ok("채널을 나갔습니다.");
-    }
-
-    /**
-     * 개설자 권한 이임
-     */
-    @PostMapping("/{channelId}/transfer")
-    public ResponseEntity<String> transferOwnership(@PathVariable String channelId,
-                                                    @RequestParam String newOwnerId,
-                                                    @RequestParam String currentOwnerId) {
-        channelService.transferOwnership(channelId, newOwnerId, currentOwnerId);
-        return ResponseEntity.ok("채널 권한을 이임했습니다.");
-    }
-
 
 }

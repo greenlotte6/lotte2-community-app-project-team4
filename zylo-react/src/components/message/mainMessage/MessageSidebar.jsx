@@ -8,41 +8,52 @@ export const MessageSidebar = ({
   onSelectChannel,
 }) => {
   const { toggled } = useTheme();
-
-  // 즐겨찾기 친구 목록 상태
+  const [userId, setUserId] = useState(null);
   const [friends, setFriends] = useState([]);
 
-  // 즐겨찾기 목록 가져오기
+  // 유저 ID 가져오기
   useEffect(() => {
+    axios
+      .get("http://localhost:8082/v1/user", { withCredentials: true })
+      .then((res) => setUserId(res.data.id))
+      .catch((err) => console.error("유저 정보 오류:", err));
+  }, []);
+
+  // 친구 목록 가져오기
+  useEffect(() => {
+    if (!userId) return;
+
     const fetchFriends = async () => {
       try {
-        const res = await axios.get("/api/friend", {
-          withCredentials: true,
+        const idRes = await axios.get("http://localhost:8080/channel/friends", {
+          params: { userId },
         });
-        if (res.data && Array.isArray(res.data)) {
-          setFriends(res.data);
+
+        const friendIds = idRes.data;
+
+        if (!Array.isArray(friendIds) || friendIds.length === 0) {
+          setFriends([]);
+          return;
         }
+
+        // const userRes = await axios.post(
+        //   "http://localhost:8082/v1/user",
+        //   friendIds,
+        //   {
+        //     withCredentials: true,
+        //   }
+        // );
+
+        // if (Array.isArray(userRes.data)) {
+        //   setFriends(userRes.data);
+        // }
       } catch (e) {
-        console.error("즐겨찾기 친구 불러오기 실패:", e);
+        console.error("친구 정보 가져오기 실패: ", e);
       }
     };
 
     fetchFriends();
-  }, []);
-
-  useEffect(() => {
-    const storedChannelId = localStorage.getItem("selectedChannelId");
-    if (storedChannelId && channels.length > 0) {
-      const channelToSelect = channels.find(
-        (channel) => channel.id === storedChannelId
-      );
-      if (channelToSelect) {
-        onSelectChannel(channelToSelect);
-      }
-    } else if (!storedChannelId && channels.length > 0) {
-      onSelectChannel(channels[0]);
-    }
-  }, [channels, onSelectChannel]);
+  }, [userId]);
 
   const dmChannels = channels.filter((ch) => ch.type === "DM");
   const groupChannels = channels.filter((ch) => ch.type === "GROUP");
@@ -69,72 +80,63 @@ export const MessageSidebar = ({
       </div>
       <div className="chat-info">
         <div className="chat-name">{channel.name}</div>
-        <div className="chat-sub">{channel.lastMessage || "..."}</div>
-      </div>
-      <div className="chat-meta">
-        <span className="chat-time">{channel.lastTime || "오전 9:00"}</span>
-        <span className="chat-status unread">{channel.unreadCount || ""}</span>
       </div>
     </li>
   );
 
   return (
-    <>
-      <section className={toggled ? "Message dark" : "Message"}>
-        <header className="Message-header">
-          <h1>메세지</h1>
-          <p>{dmChannels.length + groupChannels.length} 메세지</p>
-          <input type="text" placeholder="검색" />
-        </header>
+    <section className={toggled ? "Message dark" : "Message"}>
+      <header className="Message-header">
+        <h1>메세지</h1>
+        <input type="text" placeholder="검색" />
+      </header>
 
-        <div className="online-now">
-          <div className="online-header">
-            <p>즐겨찾기 목록</p>
-            <button id="showAllBtn">모두보기</button>
+      {/* 친구 목록 */}
+      <div className="online-now">
+        <div className="online-header">
+          <p>친구 목록</p>
+          <button id="showAllBtn">모두보기</button>
+        </div>
+        <div className="avatars" id="avatarList">
+          {friends.map((friend, i) => (
+            <div
+              className="avatar-wrapper"
+              key={friend.uid || i}
+              title={friend.name}
+            >
+              <img
+                src={`/images/profiles/${friend.profileImageId || 0}.png`}
+                alt={friend.name}
+                className="avatar"
+              />
+              <span className="online-indicator"></span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 채팅 목록 */}
+      <section className="group-section">
+        <div className="project-group">
+          <div className="project-header">
+            <h5 className="project-title">다이렉트 메세지</h5>
+            <span className="toggle-icon">▼</span>
           </div>
-          <div className="avatars" id="avatarList">
-            {friends.map((friend, i) => (
-              <div
-                className="avatar-wrapper"
-                key={friend.uid || i}
-                title={friend.name}
-              >
-                <img
-                  src={`/images/profiles/${friend.profileImageId || 0}.png`} // 없으면 기본 이미지
-                  alt={friend.name}
-                  className="avatar"
-                />
-                <span className="online-indicator"></span>
-              </div>
-            ))}
-          </div>
+          <ul className="chat-list collapsible">
+            {dmChannels.map(renderChannelItem)}
+          </ul>
         </div>
 
-        {/* 채팅 목록 */}
-        <section className="group-section">
-          {/* DM 목록 */}
-          <div className="project-group">
-            <div className="project-header">
-              <h5 className="project-title">다이렉트 메세지</h5>
-              <span className="toggle-icon">▼</span>
-            </div>
-            <ul className="chat-list collapsible">
-              {dmChannels.map(renderChannelItem)}
-            </ul>
+        <div className="project-group">
+          <div className="project-header">
+            <h5 className="project-title">그룹 채팅</h5>
+            <span className="toggle-icon">▼</span>
           </div>
-
-          {/* 그룹 채팅 목록 */}
-          <div className="project-group">
-            <div className="project-header">
-              <h5 className="project-title">그룹 채팅</h5>
-              <span className="toggle-icon">▼</span>
-            </div>
-            <ul className="chat-list collapsible">
-              {groupChannels.map(renderChannelItem)}
-            </ul>
-          </div>
-        </section>
+          <ul className="chat-list collapsible">
+            {groupChannels.map(renderChannelItem)}
+          </ul>
+        </div>
       </section>
-    </>
+    </section>
   );
 };
