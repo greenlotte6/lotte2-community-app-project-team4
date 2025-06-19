@@ -51,7 +51,7 @@ public class DriveService {
   }
 
   private void saveMetadata(String username, FileDocument fileDocument) {
-    repo.save(username, fileDocument);
+    //TODO Impl This
   }
 
   private PutObjectResponse doUploadToS3(String s3Key, MultipartFile file)
@@ -67,7 +67,7 @@ public class DriveService {
   }
 
   public void save(String username, FileDocument fileDocument) {
-    repo.save(username, fileDocument);
+    //TODO Impl This
   }
 
   @Transactional
@@ -93,8 +93,8 @@ public class DriveService {
 
   public ResponseInputStream<GetObjectResponse> download(String username, String uploadPath,
       String filename) {
-    UploadsDocument result = repo.fileExists(username, filename);
-    if (result != null) {
+    boolean fileExists = repo.fileExists(username, filename);
+    if (fileExists) {
       GetObjectRequest request = GetObjectRequest.builder()
           .bucket(bucketName)
           .key(uploadPath)
@@ -105,6 +105,6 @@ public class DriveService {
   }
 
   public UploadsDocument list(String username) {
-    return repo.findAllByUsername(username);
+    return null;
   }
 }

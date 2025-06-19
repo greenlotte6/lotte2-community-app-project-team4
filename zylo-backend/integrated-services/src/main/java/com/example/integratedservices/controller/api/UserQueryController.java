@@ -3,6 +3,7 @@ package com.example.integratedservices.controller.api;
 import com.example.integratedservices.dto.user.UserDTO;
 import com.example.integratedservices.security.jwt.JwtTokenProvider;
 import com.example.integratedservices.service.user.UserService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,12 @@ public class UserQueryController {
       return ResponseEntity.notFound().build();
     }
     return ResponseEntity.ok(user);
+  }
+
+  @GetMapping
+  public ResponseEntity<List<UserDTO>> getUsers() {
+    // TODO: Impl this
+    return null;
   }
 
   @GetMapping("/all")

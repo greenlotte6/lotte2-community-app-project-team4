@@ -11,9 +11,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Data
 @Builder
-@Document(collection = "uploads")
 @NoArgsConstructor
 @AllArgsConstructor
+@Document(collection = "uploads")
+@Deprecated
 public class UploadsDocument {
 
   @Id
