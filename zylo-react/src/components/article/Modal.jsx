@@ -11,6 +11,8 @@ export const Modal = ({
   content,
   setContent,
   onSubmit,
+  categoryId,
+  setCategoryId,
 }) => {
   const editorRef = useRef(null);
 
@@ -109,10 +111,11 @@ export const Modal = ({
             <button type="button" onClick={() => formatText("underline")}>
               <u>U</u>
             </button>
-            <select onChange={(e) => formatText("fontSize", e.target.value)}>
-              <option value="3">보통</option>
-              <option value="1">작게</option>
-              <option value="5">크게</option>
+           <select value={categoryId} onChange={(e) => setCategoryId(parseInt(e.target.value))}>
+              <option value={1}>공지사항</option>
+              <option value={2}>자유게시판</option>
+              <option value={3}>신고게시판</option>
+              <option value={4}>Q&A</option>
             </select>
             <input
               type="color"

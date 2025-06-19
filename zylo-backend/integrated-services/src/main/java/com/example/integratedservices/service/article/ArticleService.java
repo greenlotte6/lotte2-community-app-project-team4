@@ -48,4 +48,8 @@ public class ArticleService {
       throw e;
     }
   }
+
+  public void deleteArticle(int id) {
+    articleRepository.deleteById(id);
+  }
 }
