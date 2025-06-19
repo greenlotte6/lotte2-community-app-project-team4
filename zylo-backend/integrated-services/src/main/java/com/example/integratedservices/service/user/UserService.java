@@ -64,6 +64,10 @@ public class UserService {
     }
   }
 
+  public UserDTO get(String username) {
+    return repo.findByUserId(username);
+  }
+
   public String getAll(int size) {
     List<UserDTO> users = repo.findAll(size);
     return gson.toJson(users);
