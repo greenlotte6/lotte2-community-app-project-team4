@@ -19,6 +19,7 @@
     "@uiw/react-markdown-preview": "^5.1.4",
     "@uiw/react-md-editor": "^4.0.7",
     "axios": "^1.9.0",
+    "js-cookie": "^3.0.5",
     "lucide-react": "^0.263.1",
     "react": "^18.3.1",
     "react-arborist": "^3.4.3",

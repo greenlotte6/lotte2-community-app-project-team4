@@ -16,7 +16,6 @@ public class ProjectColumnsDTO {
     private int id;
 
     private String name;
-    private int position;
 
 
 
@@ -29,7 +28,6 @@ public class ProjectColumnsDTO {
         return ProjectColumns.builder()
                 .id(id)
                 .name(name)
-                .position(position)
                 .build();
     }
 
