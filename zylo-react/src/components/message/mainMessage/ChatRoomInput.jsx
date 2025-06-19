@@ -3,19 +3,15 @@ import { useTheme } from "../../../contexts/ThemeContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMicrophone, faPaperclip } from "@fortawesome/free-solid-svg-icons";
 
-export const ChatRoomInput = ({
-  selectedChannel,
-  stompClient,
-  senderId = "user123",
-}) => {
+export const ChatRoomInput = ({ selectedChannel, stompClient, senderId }) => {
   const { toggled } = useTheme();
   const [input, setInput] = useState("");
 
-  /** DM 상대 찾기 */
+  // DM 상대 찾기
   const getDMReceiverId = (members, sender) =>
     members.find((id) => id !== sender);
 
-  /** 메시지 전송 */
+  // 메시지 전송
   const sendMessage = useCallback(() => {
     if (!input.trim() || !selectedChannel) {
       console.warn("[ChatRoomInput] 입력값 또는 채널 없음, 전송 취소");
@@ -38,8 +34,8 @@ export const ChatRoomInput = ({
 
     console.log("[ChatRoomInput] publish →", destination, message);
 
-    if (stompClient?.connected) {
-      stompClient.publish({
+    if (stompClient.current?.connected) {
+      stompClient.current.publish({
         destination,
         headers: { "content-type": "application/json" },
         body: JSON.stringify(message),

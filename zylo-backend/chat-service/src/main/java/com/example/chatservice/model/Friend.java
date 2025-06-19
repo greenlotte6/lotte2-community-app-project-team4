@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Friend {
 
-    private String id;
+    private String userId;
 
     private List<String> friends;
 }

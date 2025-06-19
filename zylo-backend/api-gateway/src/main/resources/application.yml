@@ -51,6 +51,11 @@ zylo:
         upload: /drive/upload
         download: /drive/download
         list: /drive/list
+    chat-service:
+      uri:
+        http://zylo-chat-service:8080
+      path:
+        friends: /api/channel/friends
 ---
 #개발용 설정
 spring:
@@ -99,3 +104,8 @@ zylo:
         upload: /drive/upload
         download: /drive/download
         list: /drive/list
+    chat-service:
+      uri:
+        http://localhost:8080
+      path:
+        friends: /api/channel/friends
