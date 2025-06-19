@@ -43,6 +43,7 @@ zylo:
           list: /project
           team: /project/team
           task: /project/task
+          task-detail: /project/task/{id}
     drive-service:
       uri:
         http://zylo-drive-service:8080
