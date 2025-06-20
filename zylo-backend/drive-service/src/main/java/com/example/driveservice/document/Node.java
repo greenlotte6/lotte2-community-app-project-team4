@@ -13,31 +13,31 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public abstract class Node {
 
   @Id
-  private String id;
+  protected String id;
 
   @Field("nodeId")
-  private String nodeId;
+  protected String nodeId;
 
   @Field("owner")
-  private String owner;
+  protected String owner;
 
   @Field("filename")
-  private String filename;
+  protected String filename;
 
   @Field("isDir")
-  private boolean isDir;
+  protected boolean isDir;
 
   @Field("depth")
-  private int depth;
+  protected int depth;
 
   @Field("parentId")
-  private String parentId;
+  protected String parentId;
 
   @Field("path")
-  private String path;
+  protected String path;
 
   @Field("lastModified")
-  private LocalDateTime lastModified;
+  protected LocalDateTime lastModified;
 
   protected boolean dirty;
 
