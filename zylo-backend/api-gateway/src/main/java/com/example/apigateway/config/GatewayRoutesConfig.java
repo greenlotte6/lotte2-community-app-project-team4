@@ -57,19 +57,27 @@ public class GatewayRoutesConfig {
   @Value("${zylo.endpoints.chat-service.path.friends}")
   private String friendsPath;
 
+  @Value("${zylo.endpoints.chat-service.path.create}")
+  private String createPath;
+
+  @Value("${zylo.endpoints.chat-service.path.messages}")
+  private String chatMessagesPath;
+
+  @Value("${zylo.endpoints.chat-service.path.friend}")
+  private String friendPath;
+
+
   @Bean
   public RouteLocator gatewayRoutes(RouteLocatorBuilder builder) {
     return builder.routes()
         .route("integrated-services/signup", r -> r
             .path("/v1/signup")
             .filters(f -> f.rewritePath("/v1/signup", signupPath))
-            .uri(integratedServiceUri)
-        )
+            .uri(integratedServiceUri))
         .route("integrated-services/login", r -> r
             .path("/v1/login")
             .filters(f -> f.rewritePath("/v1/login", loginPath))
-            .uri(integratedServiceUri)
-        )
+            .uri(integratedServiceUri))
         .route("integrated-services/user/all", r -> r
             .path("/v1/user/all")
             .filters(f -> f.rewritePath("/v1/user/all", userAllPath))
@@ -81,46 +89,55 @@ public class GatewayRoutesConfig {
         .route("integrated-services/healthcheck", r -> r
             .path("/v1/integrated/health")
             .filters(f -> f.rewritePath("/v1/integrated/health", healthCheckPath))
-            .uri(integratedServiceUri)
-        )
+            .uri(integratedServiceUri))
         .route("integrated-services/project", r -> r
             .path("/v1/project")
             .filters(f -> f.rewritePath("/v1/project", projectListPath))
-            .uri(integratedServiceUri)
-        )
+            .uri(integratedServiceUri))
         .route("integrated-services/project/team", r -> r
                 .path("/v1/project/team")
                 .filters(f -> f.rewritePath("/v1/project/team", projectTeamPath))
-                .uri(integratedServiceUri)
-        )
+                .uri(integratedServiceUri))
         .route("integrated-services/project/task-with-id", r -> r // "task-no-id"에서 "task-with-id"로 변경 제안
                 .path("/v1/project/task/{segment}") // /v1/project/task/123 과 같은 경로 매칭
                 .filters(f -> f.rewritePath("/v1/project/task/(?<segment>.*)", projectTaskPath + "/${segment}")) // <--- 여기를 projectTaskPath로 변경!
-                .uri(integratedServiceUri)
-        )
+                .uri(integratedServiceUri))
         .route("integrated-services/project/task-base", r -> r // "integrated-services/project/task"에서 "task-base"로 변경 제안
                 .path("/v1/project/task") // 정확히 이 경로만 매칭
                 .filters(f -> f.rewritePath("/v1/project/task", projectTaskPath)) // 백엔드에는 /project/task 로 전달
-                .uri(integratedServiceUri)
-        )
+                .uri(integratedServiceUri))
         .route("drive-service/upload", r -> r
             .path("/v1/drive/upload")
             .filters(f -> f.rewritePath("/v1/drive/upload", uploadPath))
-            .uri(driveServiceUri)
-        )
+            .uri(driveServiceUri))
         .route("drive-service/list", r -> r
             .path("/v1/drive/list")
             .filters(f -> f.rewritePath("/v1/drive/list", listPath))
-            .uri(driveServiceUri)
-        )
+            .uri(driveServiceUri))
         .route("drive-service/download", r -> r
             .path("/v1/drive/download")
             .filters(f -> f.rewritePath("/v1/drive/download", downloadPath))
             .uri(driveServiceUri))
-        .route("chat-service/friends", r -> r
-            .path("/v1/chat/friends")
-            .filters(f -> f.rewritePath("/v1/chat/friends", friendsPath))
+        .route("chat-service/channel-friends", r -> r
+            .path("/v1/chat/channel/friends")
+            .filters(f -> f.rewritePath("/v1/chat/channel/friends", friendsPath))
             .uri(chatServiceUri))
-        .build();
+        .route("chat-service/channel-list", r -> r
+            .path("/v1/chat/channel/list")
+            .filters(f -> f.rewritePath("/v1/chat/channel/list", listPath))
+            .uri(chatServiceUri))
+        .route("chat-service/channel-create", r -> r
+            .path("/v1/chat/channel/create")
+            .filters(f -> f.rewritePath("/v1/chat/channel/create", createPath))
+            .uri(chatServiceUri))
+        .route("chat-service/chat-messages", r -> r
+                .path("/v1/chat/messages")
+                .filters(f -> f.rewritePath("/v1/chat/messages", chatMessagesPath))
+                .uri(chatServiceUri))
+        .route("chat-service/friend", r -> r
+                .path("/v1/chat/friend")
+                .filters(f -> f.rewritePath("/v1/chat/friend", friendPath))
+                .uri(chatServiceUri))
+            .build();
   }
 }

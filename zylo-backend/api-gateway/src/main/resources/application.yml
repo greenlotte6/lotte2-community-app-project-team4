@@ -55,7 +55,11 @@ zylo:
       uri:
         http://zylo-chat-service:8080
       path:
-        friends: /api/channel/friends
+        friends: /channel/friends
+        chat-list: /channel/list
+        create: /channel/create
+        messages: /chat/messages
+        friend: /friend
 ---
 #개발용 설정
 spring:
@@ -108,4 +112,8 @@ zylo:
       uri:
         http://localhost:8080
       path:
-        friends: /api/channel/friends
+        friends: /channel/friends
+        chat-list: /channel/list
+        create: /channel/create
+        messages: /chat/messages
+        friend: /friend
