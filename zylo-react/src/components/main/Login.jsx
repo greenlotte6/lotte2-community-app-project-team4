@@ -35,8 +35,9 @@ export const Login = () => {
       // 모든 유효성 검사 통과
       axios
         .post(
-          "https://api.greenlotteon.com/v1/login",
-          /*"http://localhost:8082/v1/login"*/ formData,
+          /*"https://api.greenlotteon.com/v1/login",*/
+          "http://localhost:8082/v1/login",
+          formData,
           {
             headers: { "Content-Type": "application/json;utf-8" },
             withCredentials: true,
