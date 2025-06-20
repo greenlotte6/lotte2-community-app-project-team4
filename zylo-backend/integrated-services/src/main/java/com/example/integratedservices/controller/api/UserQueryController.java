@@ -32,7 +32,7 @@ public class UserQueryController {
     return ResponseEntity.ok(user);
   }
 
-  @GetMapping
+  @GetMapping("/info")
   public ResponseEntity<List<UserDTO>> getUsers() {
     // TODO: Impl this
     return null;
