@@ -47,9 +47,8 @@ export const SignUp = () => {
       // 모든 유효성 검사 통과
       axios
         .post(
-          /*"https://api.greenlotteon.com/v1/signup"*/
-          "http://localhost:8082/v1/signup",
-          userInfo,
+          "https://api.greenlotteon.com/v1/signup",
+          /*"http://localhost:8082/v1/signup"*/ userInfo,
           {
             headers: { "Content-Type": "application/json;utf-8" },
           }
