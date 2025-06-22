@@ -22,6 +22,10 @@ spring:
     mongodb:
       uri: mongodb+srv://zylo:7waYNx958XZidfzwlzb6R9Urnmqkm1djGIktd77iK@zylo.fplsain.mongodb.net/drive
 
+    redis:
+      host: clustercfg.zylo.4jfnkp.apn2.cache.amazonaws.com
+      port: 6379
+
 logging:
   file:
     path: /var/www/drive-service
@@ -56,7 +60,11 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb+srv://zylo:7waYNx958XZidfzwlzb6R9Urnmqkm1djGIktd77iK@zylo.fplsain.mongodb.net/drive
+      uri: localhost:27017/drive
+
+    redis:
+      host: localhost
+      port: 6379
 
 logging:
   level:
