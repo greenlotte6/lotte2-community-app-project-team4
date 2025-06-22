@@ -1,4 +1,4 @@
-package com.example.driveservice.dao;
+package com.example.driveservice.dao.mong;
 
 import com.example.driveservice.document.Directory;
 import com.example.driveservice.document.File;

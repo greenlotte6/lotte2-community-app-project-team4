@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.example.driveservice.dao.DriveRepository;
+import com.example.driveservice.dao.mong.DriveRepository;
 import com.example.driveservice.document.Directory;
 import com.example.driveservice.document.File;
 import com.example.driveservice.document.Node;
