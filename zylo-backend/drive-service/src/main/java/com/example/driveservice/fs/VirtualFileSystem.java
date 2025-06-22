@@ -4,6 +4,7 @@ import com.example.driveservice.document.Directory;
 import com.example.driveservice.document.Node;
 import com.example.driveservice.exception.IllegalUsernameException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public interface VirtualFileSystem {
 
@@ -13,7 +14,7 @@ public interface VirtualFileSystem {
 
   void create(Node newNode) throws IllegalArgumentException;
 
-  Directory mv(Node src, Node dest) throws IllegalArgumentException;
+  void mv(Node src, Directory dest) throws IllegalArgumentException, NoSuchElementException;
 
   void rm(Node target) throws IllegalUsernameException;
 
