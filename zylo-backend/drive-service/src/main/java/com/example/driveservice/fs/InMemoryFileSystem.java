@@ -1,28 +1,101 @@
 package com.example.driveservice.fs;
 
-import com.example.driveservice.dao.mong.DriveRepository;
+import com.example.driveservice.dao.mongo.DriveRepository;
+import com.example.driveservice.dao.redis.VfsCacheRepository;
 import com.example.driveservice.document.Directory;
+import com.example.driveservice.document.File;
 import com.example.driveservice.document.Node;
 import com.example.driveservice.exception.IllegalUsernameException;
+import com.example.driveservice.service.UploadService;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class InMemoryFileSystem implements VirtualFileSystem {
 
+  // VFS 메타 데이터
+  @Getter
+  @Setter
+  @JsonProperty("username")
+  private String username;
+
+  @Getter
+  @Setter
+  @JsonProperty("subscription")
+  private String subscription;
+
+  @Getter
+  @Setter
+  @JsonProperty("currentSize")
+  private long currentSize;
+
+  @Getter
+  @Setter
+  @JsonProperty("maxSize")
+  private long maxSize;
+
+  // 의존성
+  @JsonIgnore
+  @Getter
+  @Setter
+  private DriveRepository driveRepo;
+
+  @JsonIgnore
+  @Getter
+  @Setter
+  private VfsCacheRepository cacheRepo;
+
+  @JsonIgnore
+  @Getter
+  @Setter
+  private UploadService uploadService;
+
+  // VFS 속성
+  @JsonIgnore
   private Directory root;
+
+  @JsonIgnore
   private Directory pwd;
-  private final DriveRepository repo;
+
+  @JsonIgnore
   private final List<Node> deleteQueue = new ArrayList<>();
 
+  @JsonIgnore
+  private final Map<Node, InputStream> uploadQueue = new HashMap<>();
+
+
+  public InMemoryFileSystem() {
+    // Empty Constructor for deserialization using ObjectMapper
+  }
+
+  //TODO Deprecate this constructor and make users use Factory class
   public InMemoryFileSystem(List<Node> nodes, DriveRepository repo) {
     buildTree(nodes);
-    this.repo = repo;
+    this.driveRepo = repo;
+  }
+
+  protected InMemoryFileSystem(Directory root, String username, String subscription,
+      long currentSize, long maxSize,
+      DriveRepository driveRepo, VfsCacheRepository cacheRepo, UploadService uploadService) {
+    this.root = root;
+    this.pwd = root;
+    this.username = username;
+    this.subscription = subscription;
+    this.currentSize = currentSize;
+    this.maxSize = maxSize;
+    this.driveRepo = driveRepo;
+    this.cacheRepo = cacheRepo;
+    this.uploadService = uploadService;
   }
 
   /**
@@ -116,7 +189,7 @@ public class InMemoryFileSystem implements VirtualFileSystem {
   private void flushRecursively(Node node) {
     if (node.isDirty()) {
       log.info("변경된 {}(을)를 저장 중...", node.getNodeId());
-      repo.save(node);
+      driveRepo.save(node);
       node.clean();
     }
 
@@ -137,15 +210,28 @@ public class InMemoryFileSystem implements VirtualFileSystem {
     return this.pwd;
   }
 
+
   @Override
-  public void create(Node newNode) throws IllegalArgumentException {
-    String parentId = newNode.getParentId();
+  public void touch(File newFile, InputStream fileStream) throws IllegalArgumentException {
+    String parentId = newFile.getParentId();
     Directory parent = findDirRecursively(parentId, root); // root 디렉터리에서부터 검색
     if (parent == null) {
       throw new IllegalArgumentException("parentId = " + parentId + "에 해당하는 부모 노드를 찾을 수 없습니다");
     }
-    parent.getChildren().add(newNode);
-    newNode.markDirty();
+    uploadQueue.put(newFile, fileStream);
+    parent.getChildren().add(newFile);
+    newFile.markDirty();
+  }
+
+  @Override
+  public void mkdir(Directory newDir) throws IllegalArgumentException {
+    String parentId = newDir.getParentId();
+    Directory parent = findDirRecursively(parentId, root); // root 디렉터리에서부터 검색
+    if (parent == null) {
+      throw new IllegalArgumentException("parentId = " + parentId + "에 해당하는 부모 노드를 찾을 수 없습니다");
+    }
+    parent.getChildren().add(newDir);
+    newDir.markDirty();
   }
 
   @Override
@@ -228,14 +314,18 @@ public class InMemoryFileSystem implements VirtualFileSystem {
    */
   @Override
   public void flush() {
-    log.info("flush 호출이 감지되었습니다. 변경 지점 동기화를 시작합니다.");
+    log.info("flush 호출이 감지되었습니다. 변경 노드를 동기화합니다.");
+
+    log.info("Delete Queue에 따라 노드 삭제 중...");
+    for (Node node : deleteQueue) {
+      log.info("[노드 삭제]DB에서 {} 노드를 삭제합니다", node.getNodeId());
+      driveRepo.delete(node);
+    }
+
+    log.info("변경된 노드 수집 중...");
     flushRecursively(root);
 
-    log.info("Delete Queue로부터 노드 삭제 중...");
-    for (Node node : deleteQueue) {
-      log.info("{} 노드를 삭제합니다", node.getNodeId());
-      repo.delete(node);
-    }
+    log.info("변경된 노드 동기화 중...");
 
     deleteQueue.clear();
   }

@@ -1,4 +1,4 @@
-package com.example.driveservice.dao.mong;
+package com.example.driveservice.dao.mongo;
 
 import com.example.driveservice.document.Directory;
 import com.example.driveservice.document.File;
@@ -75,5 +75,8 @@ public class DriveRepository {
 
   public void delete(Node node) {
     template.remove(node, "vfs");
+  }
+
+  public void bulkDelete(List<Node> node) {
   }
 }

@@ -1,8 +1,8 @@
-package com.example.driveservice.dao;
+package com.example.driveservice.dao.redis;
 
-import com.example.driveservice.fs.VirtualFileSystem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -12,11 +12,16 @@ public class VfsCacheRepository {
   private static final String PREFIX = "vfs";
   private final RedisTemplate<String, String> template;
 
-  public void cache(VirtualFileSystem vfs) {
-
+  public void cache(String username, String serializedVfs) {
+    String key = PREFIX + ":" + username;
+    ValueOperations<String, String> ops = template.opsForValue();
   }
 
-  public void invalidate(String key) {
+  public String get(String username) {
+    return template.opsForValue().get(PREFIX + ":" + username);
+  }
+
+  public void invalidate(String username) {
 
   }
 }

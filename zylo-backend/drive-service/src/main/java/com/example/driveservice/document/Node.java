@@ -18,10 +18,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
-    @JsonSubTypes.Type(value = File.class),
-    @JsonSubTypes.Type(value = Directory.class)
+    @JsonSubTypes.Type(value = File.class, name = "file"),
+    @JsonSubTypes.Type(value = Directory.class, name = "directory")
 })
 @JsonPropertyOrder({
     "id", "nodeId", "owner", "filename", "isDir",

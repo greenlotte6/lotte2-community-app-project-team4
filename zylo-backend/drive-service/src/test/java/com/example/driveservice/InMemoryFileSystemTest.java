@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.example.driveservice.dao.mong.DriveRepository;
+import com.example.driveservice.dao.mongo.DriveRepository;
 import com.example.driveservice.document.Directory;
 import com.example.driveservice.document.File;
 import com.example.driveservice.document.Node;
@@ -12,6 +12,8 @@ import com.example.driveservice.fs.InMemoryFileSystem;
 import com.example.driveservice.fs.VirtualFileSystem;
 import com.example.driveservice.fs.VirtualFileSystemSerializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -202,7 +204,9 @@ class InMemoryFileSystemTest {
         .mimeType("text/plain")
         .build(); // depth = 2 , isDir = false ,mimeType = text
 
-    vfs.create(createdFile);
+    byte[] buf = {};
+    InputStream inputStream = new ByteArrayInputStream(buf);
+    vfs.touch(createdFile, inputStream);
 
     List<Node> childrenOfRoot = vfs.ls();
     assertEquals(3, childrenOfRoot.size());
