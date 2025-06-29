@@ -1,132 +1,142 @@
-import React from "react";
 import { useTheme } from "../../../contexts/ThemeContext";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
-export const MessageSidebar = () => {
+export const MessageSidebar = ({
+  channels,
+  selectedChannel,
+  onSelectChannel,
+}) => {
   const { toggled } = useTheme();
-  return (
-    <>
-      <section className={toggled ? "Message dark" : "Message"}>
-        <header className="Message-header">
-          <h1>메세지</h1>
-          <p>125 메세지 - 5 안읽음</p>
-          <input type="text" placeholder="검색" />
-        </header>
+  const [userId, setUserId] = useState(null);
+  const [friends, setFriends] = useState([]);
 
-        {/* 온라인 사용자 */}
-        <div className="online-now">
-          <div className="online-header">
-            <p>접속 중</p>
-            <button id="showAllBtn">모두보기</button>
+  // 유저 ID 가져오기
+  useEffect(() => {
+    axios
+      .get("http://localhost:8082/v1/user", { withCredentials: true })
+      .then((res) => setUserId(res.data.id))
+      .catch((err) => console.error("유저 정보 오류:", err));
+  }, []);
+
+  // 친구 목록 가져오기
+  useEffect(() => {
+    if (!userId) return;
+
+    const fetchFriends = async () => {
+      try {
+        const idRes = await axios.get("http://localhost:8080/channel/friends", {
+          params: { userId },
+        });
+
+        const friendIds = idRes.data;
+
+        if (!Array.isArray(friendIds) || friendIds.length === 0) {
+          setFriends([]);
+          return;
+        }
+
+        // const userRes = await axios.post(
+        //   "http://localhost:8082/v1/user",
+        //   friendIds,
+        //   {
+        //     withCredentials: true,
+        //   }
+        // );
+
+        // if (Array.isArray(userRes.data)) {
+        //   setFriends(userRes.data);
+        // }
+      } catch (e) {
+        console.error("친구 정보 가져오기 실패: ", e);
+      }
+    };
+
+    fetchFriends();
+  }, [userId]);
+
+  const dmChannels = channels.filter((ch) => ch.type === "DM");
+  const groupChannels = channels.filter((ch) => ch.type === "GROUP");
+
+  const renderChannelItem = (channel, index) => (
+    <li
+      className={
+        (toggled ? "chat-item dark" : "chat-item") +
+        (selectedChannel?.id === channel.id ? " selected" : "")
+      }
+      key={channel.id || index}
+      onClick={() => {
+        onSelectChannel(channel);
+        localStorage.setItem("selectedChannelId", channel.id);
+      }}
+    >
+      <div className="avatar-wrapper">
+        <img
+          className="avatar"
+          src="/images/message/avatars.png"
+          alt={channel.name}
+        />
+        <span className="online-indicator"></span>
+      </div>
+      <div className="chat-info">
+        <div className="chat-name">{channel.name}</div>
+      </div>
+    </li>
+  );
+
+  return (
+    <section className={toggled ? "Message dark" : "Message"}>
+      <header className="Message-header">
+        <h1>메세지</h1>
+        <input type="text" placeholder="검색" />
+      </header>
+
+      {/* 친구 목록 */}
+      <div className="online-now">
+        <div className="online-header">
+          <p>친구 목록</p>
+          <button id="showAllBtn">모두보기</button>
+        </div>
+        <div className="avatars" id="avatarList">
+          {friends.map((friend, i) => (
+            <div
+              className="avatar-wrapper"
+              key={friend.uid || i}
+              title={friend.name}
+            >
+              <img
+                src={`/images/profiles/${friend.profileImageId || 0}.png`}
+                alt={friend.name}
+                className="avatar"
+              />
+              <span className="online-indicator"></span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* 채팅 목록 */}
+      <section className="group-section">
+        <div className="project-group">
+          <div className="project-header">
+            <h5 className="project-title">다이렉트 메세지</h5>
+            <span className="toggle-icon">▼</span>
           </div>
-          <div className="avatars" id="avatarList">
-            {[...Array(4)].map((_, i) => (
-              <div className="avatar-wrapper" key={i}>
-                <img
-                  src="/images/message/avatars.png"
-                  alt="user"
-                  className="avatar"
-                />
-                <span className="online-indicator"></span>
-              </div>
-            ))}
-          </div>
+          <ul className="chat-list collapsible">
+            {dmChannels.map(renderChannelItem)}
+          </ul>
         </div>
 
-        {/* 채팅 목록 영역 */}
-        <section className="group-section">
-          {/* 다이렉트 메시지 */}
-          <div className="project-group">
-            <div className="project-header" data-toggle="group1">
-              <h5 className="project-title">다이렉트 메세지</h5>
-              <span className="toggle-icon">▼</span>
-            </div>
-            <ul className="chat-list collapsible" id="group1">
-              <li className={toggled ? "chat-item dark" : "chat-item"}>
-                <div className="avatar-wrapper">
-                  <img
-                    className="avatar"
-                    src="/images/message/avatars.png"
-                    alt="Robert Fox"
-                  />
-                  <span className="online-indicator"></span>
-                </div>
-                <div className="chat-info">
-                  <div className="chat-name">Robert Fox</div>
-                  <div className="chat-sub">Typing...</div>
-                </div>
-                <div className="chat-meta">
-                  <span className="chat-time">10:52 AM</span>
-                  <span className="chat-status typing"></span>
-                </div>
-              </li>
-
-              <li className={toggled ? "chat-item dark" : "chat-item"}>
-                <div className="avatar-wrapper">
-                  <img
-                    className="avatar"
-                    src="/images/message/avatars.png"
-                    alt="Devon Lane"
-                  />
-                </div>
-                <div className="chat-info">
-                  <div className="chat-name">Devon Lane</div>
-                  <div className="chat-sub">If we so can, tomorrow</div>
-                </div>
-                <div className="chat-meta">
-                  <span className="chat-time">04:25 PM</span>
-                  <span className="chat-status read"></span>
-                </div>
-              </li>
-            </ul>
+        <div className="project-group">
+          <div className="project-header">
+            <h5 className="project-title">그룹 채팅</h5>
+            <span className="toggle-icon">▼</span>
           </div>
-
-          {/* 그룹 채팅 */}
-          <div className="project-group">
-            <div className="project-header" data-toggle="group2">
-              <h5 className="project-title">그룹 채팅</h5>
-              <span className="toggle-icon">▼</span>
-            </div>
-            <ul className="chat-list collapsible" id="group2">
-              <li className={toggled ? "chat-item dark" : "chat-item"}>
-                <div className="avatar-wrapper">
-                  <img
-                    className="avatar"
-                    src="/images/message/avatars.png"
-                    alt="Kristin Watson"
-                  />
-                  <span className="online-indicator"></span>
-                </div>
-                <div className="chat-info">
-                  <div className="chat-name">Kristin Watson</div>
-                  <div className="chat-sub">If we so can, tomorrow</div>
-                </div>
-                <div className="chat-meta">
-                  <span className="chat-time">3:12 AM</span>
-                  <span className="chat-status unread">3</span>
-                </div>
-              </li>
-
-              <li className={toggled ? "chat-item dark" : "chat-item"}>
-                <div className="avatar-wrapper">
-                  <img
-                    className="avatar"
-                    src="/images/message/avatars.png"
-                    alt="Courtney Henry"
-                  />
-                </div>
-                <div className="chat-info">
-                  <div className="chat-name">Courtney Henry</div>
-                  <div className="chat-sub">If we so can, tomorrow</div>
-                </div>
-                <div className="chat-meta">
-                  <span className="chat-time">1:03 AM</span>
-                  <span className="chat-status read">3</span>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </section>
+          <ul className="chat-list collapsible">
+            {groupChannels.map(renderChannelItem)}
+          </ul>
+        </div>
       </section>
-    </>
+    </section>
   );
 };

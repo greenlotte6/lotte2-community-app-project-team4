@@ -1,0 +1,81 @@
+spring:
+  profiles:
+    default: prod
+---
+#배포용 설정
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: drive-service
+    version: 0.0.1
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+      file-size-threshold: 1MB
+
+  data:
+    mongodb:
+      uri: mongodb+srv://zylo:7waYNx958XZidfzwlzb6R9Urnmqkm1djGIktd77iK@zylo.fplsain.mongodb.net/drive
+
+    redis:
+      host: clustercfg.zylo.4jfnkp.apn2.cache.amazonaws.com
+      port: 6379
+
+logging:
+  file:
+    path: /var/www/drive-service
+  level:
+    root: info
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+aws:
+  s3:
+    name: lotte2-zylo-bucket
+  region: ap-northeast-2
+---
+#개발용 설정
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: drive-service
+    version: 0.0.1
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 11MB
+      file-size-threshold: 1MB
+
+  data:
+    mongodb:
+      uri: localhost:27017/drive
+
+    redis:
+      host: localhost
+      port: 6379
+
+logging:
+  level:
+    root: info
+
+server:
+  port: 8083
+  servlet:
+    context-path: /
+
+aws:
+  s3:
+    name: lotte2-zylo-bucket
+  region: ap-northeast-2

@@ -1,0 +1,138 @@
+spring:
+  profiles:
+    default: prod
+---
+# 배포용 설정
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  jackson:
+    default-property-inclusion: always
+
+  application:
+    name: integrated-services
+    version: 0.0.1
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://zylo-mysql.cb48u8208g0z.ap-northeast-2.rds.amazonaws.com:3306/integrated_services?useSSL=false&characterEncoding=UTF-8
+    username: root
+    password: a8imbsha6eMK8IcQkXC7zbul8QQK9xIZQWB6Z9z15
+
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 5
+      minimum-idle: 1
+      idle-timeout: 30000
+      max-lifetime: 1800000
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 20
+        cache:
+          use_second_level_cache: false
+          use_query_cache: false
+        show_sql: false
+        format_sql: true
+        globally_quoted_identifiers: true
+    show-sql: false
+
+  data:
+    redis:
+      host: clustercfg.zylo.4jfnkp.apn2.cache.amazonaws.com
+      port: 6379
+
+
+logging:
+  file:
+    path: /var/www/integrated-services
+  level:
+    root: info
+
+server:
+  tomcat:
+    threads:
+      max: 50
+      min-spare: 5
+    max-connections: 100
+    connection-timeout: 5s
+  compression:
+    enabled: true
+    min-response-size: 1024
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+  port: 8080
+  servlet:
+    context-path: /
+
+jwt:
+  secret: 0pn0YXIRtYoz29FzXRzL08k9J284Caw2
+  cookie:
+    secure: true
+    same-site: None
+    domain: .greenlotteon.com
+
+
+---
+# 개발용 설정
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  jackson:
+    default-property-inclusion: always
+
+  application:
+    name: integrated-services
+    version: 0.0.1
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/integrated_services
+    username: root
+    password: 1234
+
+    hikari:
+      connection-timeout: 10000
+      maximum-pool-size: 20
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show_sql: false
+        format_sql: true
+        globally_quoted_identifiers: true
+    show-sql: false
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+logging:
+  level:
+    root: info
+    sql: debug
+    org:
+      springframework: info
+
+server:
+  port: 8081
+  servlet:
+    context-path: /
+
+jwt:
+  secret: 0pn0YXIRtYoz29FzXRzL08k9J284Caw2
+  cookie:
+    secure: false
+    same-site: Lax
+    domain: localhost
+

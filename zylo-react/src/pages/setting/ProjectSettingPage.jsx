@@ -8,7 +8,9 @@ const ProjectSettingPage = () => {
     <BasicLayout title={"설정"}>
       <div id="setting-content-container">
         <SettingSideBar />
-        <Project />
+        <div className="message-scroll-container">
+          <Project />
+        </div>
       </div>
     </BasicLayout>
   );

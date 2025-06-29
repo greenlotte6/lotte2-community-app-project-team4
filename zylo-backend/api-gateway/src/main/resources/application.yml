@@ -1,0 +1,111 @@
+spring:
+  profiles:
+    default: prod
+---
+#배포용 설정
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  application:
+    name: api-gateway
+
+logging:
+  file:
+    path: /var/www/api-gateway
+  level:
+    root: info
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+zylo:
+  endpoints:
+    excluded-paths:
+      - /v1/login
+      - /v1/signup
+      - /v1/integrated/health
+    integrated-services:
+      uri: http://zylo-integrated-services:8080
+      path:
+        health-check: /healthcheck
+        auth:
+          validation: /auth/jwt/validate
+          login: /auth/login
+          signup: /auth/signup
+        query:
+          user-all: /user/all
+          user: /user
+        project:
+          list: /project
+          team: /project/team
+          task: /project/task
+          task-detail: /project/task/{id}
+    drive-service:
+      uri:
+        http://zylo-drive-service:8080
+      path:
+        upload: /drive/upload
+        download: /drive/download
+        list: /drive/list
+    chat-service:
+      uri:
+        http://zylo-chat-service:8080
+      path:
+        friends: /api/channel/friends
+---
+#개발용 설정
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  application:
+    name: api-gateway
+
+logging:
+  level:
+    root: info
+
+server:
+  port: 8082
+  servlet:
+    context-path: /
+
+zylo:
+  endpoints:
+    excluded-paths:
+      - /v1/login
+      - /v1/signup
+      - /v1/integrated/health
+    integrated-services:
+      uri: http://localhost:8081
+      path:
+        health-check: /healthcheck
+        auth:
+          validation: /auth/jwt/validate
+          login: /auth/login
+          signup: /auth/signup
+        query:
+          user-all: /user/all
+          user: /user
+        project:
+          list: /project
+          team: /project/team
+          task: /project/task
+          task-detail: /project/task/{id}
+    drive-service:
+      uri:
+        http://localhost:8083
+      path:
+        upload: /drive/upload
+        download: /drive/download
+        list: /drive/list
+    chat-service:
+      uri:
+        http://localhost:8080
+      path:
+        friends: /api/channel/friends

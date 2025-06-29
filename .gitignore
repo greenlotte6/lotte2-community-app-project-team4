@@ -186,4 +186,6 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+*/*.mwb.bak
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij,java,visualstudiocode,gradle

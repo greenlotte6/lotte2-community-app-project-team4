@@ -9,14 +9,13 @@
   justify-content: space-between;
   width: 1000px;
   gap: 8px;
-  height: 75px;
   margin-top: 50px;
-  margin-bottom: 16px;
-  padding: 16px;
+  margin-bottom: 30px;
 }
 
 .tab-buttons label {
-  width: 140px;
+  width: 350px;
+  height: 40px;
   padding: 10px;
   text-align: center;
   display: flex;
@@ -34,5 +33,13 @@
 .tab-buttons label.active {
   background: #007bff;
   color: white;
-  border-color: #007bff;
+}
+
+.tab-buttons label.dark {
+  background-color: #1b115a;
+}
+
+.tab-buttons label.active.dark {
+  background: #050020;
+  color: white;
 }

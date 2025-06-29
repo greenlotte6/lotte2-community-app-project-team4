@@ -15,6 +15,7 @@
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+  margin-top: 100px;
 }
 
 #main-header {
@@ -87,7 +88,7 @@
 
 .content-page {
   width: 753px;
-  height: 100dvh;
+  height: auto;
   scroll-margin-top: 100px;
   scroll-snap-align: start;
   scroll-snap-stop: always;

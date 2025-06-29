@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const InviteModalTabs = ({ activeTab, setActiveTab }) => {
   return (
@@ -15,14 +15,8 @@ export const InviteModalTabs = ({ activeTab, setActiveTab }) => {
           사용자 검색
         </button>
         <button
-          className={`tab ${activeTab === "org" ? "active" : ""}`}
-          onClick={() => setActiveTab("org")}
-        >
-          조직도
-        </button>
-        <button
-          className={`tab ${activeTab === "favorites" ? "active" : ""}`}
-          onClick={() => setActiveTab("favorites")}
+          className={`tab ${activeTab === "marks" ? "active" : ""}`}
+          onClick={() => setActiveTab("marks")}
         >
           즐겨찾기
         </button>

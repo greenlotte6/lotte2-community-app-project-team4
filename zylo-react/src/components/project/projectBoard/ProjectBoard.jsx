@@ -1,122 +1,376 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+"use client";
+import { useState, useEffect } from "react";
 import "../../../styles/project/board.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboard } from "@fortawesome/free-solid-svg-icons";
+import { Clipboard, Cookie } from "lucide-react";
 import { useDrag, useDrop } from "react-dnd";
+import { ProjectBoardModal } from "./ProjectBoardModal";
+import { TaskDetailModal } from "./TaskDetailModal";
+import { useLocation } from "react-router-dom";
+import useProjectStore from "../../../store/useProjectStore";
+import { PROJECT_TASK_LIST } from "../../../api/_http";
+import Cookies from "js-cookie";
+import axios from "axios";
 
-const initialBoardData = {
-  ready: [
-    "RQ-101 랜딩 페이지 구현",
-    "RQ-202 약관",
-    "RQ-203 회원가입",
-    "RQ-300 메인 대시보드 구현",
-    "RQ-009 캘린더 화면 구현",
-    "RQ-301 페이지 생성",
-    "RQ-302 페이지 작성"
-  ],
-  todo: [],
-  inProgress: [
-    "RQ-011 게시판 화면 구현",
-    "RQ-004 데이터베이스 설계",
-    "RQ-012 프로젝트 화면 구현",
-    "RQ-201 로그인/로그아웃"
-  ],
-  inReview: [
-    "RQ-010 메시지 화면 구현",
-    "RQ-014 설정 화면 구현"
-  ],
-  done: [
-    "RQ-008 페이지 화면 구현",
-    "RQ-007 메인 대시보드 구현",
-    "RQ-002 화면 설계",
-    "RQ-003 프로젝트 아키텍처 설계",
-    "RQ-005 메인 화면 구현",
-    "RQ-006 회원 화면 구현",
-    "RQ-013 드라이브 화면 구현"
-  ]
+// 더미데이터를 객체 형태로 변경
+const groupTasksByColumn = (tasks) => {
+  const columns = {
+    ready: [],
+    todo: [],
+    inProgress: [],
+    inReview: [],
+    done: [],
+  };
+
+  tasks.forEach((task) => {
+    const columnName = task.projectColumns.name.toLowerCase();
+    let columnKey;
+
+    switch (columnName) {
+      case "ready":
+        columnKey = "ready";
+        break;
+      case "to do":
+        columnKey = "todo";
+        break;
+      case "in progress":
+        columnKey = "inProgress";
+        break;
+      case "in review":
+        columnKey = "inReview";
+        break;
+      case "done":
+        columnKey = "done";
+        break;
+      default:
+        columnKey = "todo"; // 기본값
+    }
+
+    if (columns[columnKey]) {
+      columns[columnKey].push(task);
+    }
+  });
+
+  return columns;
 };
 
-const DraggableCard = ({ item, index, column }) => {
-  const [{ isDragging }, dragRef] = useDrag(() => ({
-    type: "CARD",
-    item: { item, index, column },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
+const DraggableCard = ({ item, index, column, onTaskClick }) => {
+  const [{ isDragging }, dragRef] = useDrag(
+    () => ({
+      type: "CARD",
+      item: () => {
+        return { item, index, column };
+      },
+      collect: (monitor) => ({
+        isDragging: monitor.isDragging(),
+      }),
     }),
-  }), [item, index, column]);
+    [item, index, column]
+  );
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!isDragging && onTaskClick) {
+      onTaskClick(item, column);
+    }
+  };
 
   return (
     <div
       ref={dragRef}
-      className="board-card"
+      className="board-card clickable-card"
       style={{ opacity: isDragging ? 0.5 : 1 }}
+      onClick={handleClick}
     >
-      {item}
+      <div className="card-title">{item.title}</div>
     </div>
   );
 };
 
-const DroppableColumn = ({ title, items, color, columnKey, onDropCard }) => {
-  const [, dropRef] = useDrop(() => ({
-    accept: "CARD",
-    drop: (draggedItem) => {
-      if (draggedItem.column !== columnKey) {
-        onDropCard(draggedItem, columnKey);
-        draggedItem.column = columnKey; // 중요: drop된 이후 column을 업데이트함
-      }
-    },
-  }), [onDropCard, columnKey]);
+const DroppableColumn = ({
+  title,
+  items,
+  color,
+  columnKey,
+  onDropCard,
+  onClickAddItem,
+  onTaskClick,
+  projectColumns,
+}) => {
+  const [, dropRef] = useDrop(
+    () => ({
+      accept: "CARD",
+      drop: (draggedItem) => {
+        if (draggedItem.column !== columnKey) {
+          onDropCard(draggedItem, columnKey);
+          draggedItem.column = columnKey;
+        }
+      },
+      collect: (monitor) => ({
+        isOver: monitor.isOver(),
+        canDrop: monitor.canDrop(),
+      }),
+    }),
+    [onDropCard, columnKey]
+  );
 
   return (
-    <div className="board-column">
-      <div className="board-header" style={{ borderBottom: `2px solid ${color}` }}>
-        <span className="board-title" style={{ color }}>{title}</span>
+    <div className="board-column" ref={dropRef}>
+      <div
+        className="board-header"
+        style={{ borderBottom: `2px solid ${color}` }}
+      >
+        <span className="board-title" style={{ color }}>
+          {title}
+        </span>
         <span className="board-count">{items.length}</span>
       </div>
-      <div className="board-items" ref={dropRef}>
+      <div className="board-items">
         {items.map((item, idx) => (
-          <DraggableCard key={idx} item={item} index={idx} column={columnKey} />
+          <DraggableCard
+            key={`${item.id}-${idx}`}
+            item={item}
+            index={idx}
+            column={columnKey}
+            onTaskClick={onTaskClick}
+          />
         ))}
-        <button className="add-item">+ Add item</button>
+        <button
+          className="add-item"
+          onClick={() => onClickAddItem(columnKey, projectColumns)}
+        >
+          + Add item
+        </button>
       </div>
     </div>
   );
 };
 
-const ProjectBoard = ({ projectName }) => {
-  const navigate = useNavigate();
-  const [boardState, setBoardState] = useState(initialBoardData);
+const ProjectBoard = () => {
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const projectId = params.get("id");
 
-  const handleClickProjectTitle = () => {
-    navigate("/project");
+  // zustand 배열
+  const projects = useProjectStore((state) => state.projects);
+
+  const tasks = useProjectStore((state) => state.tasks);
+
+  const project = projects.find(
+    (item) => String(item.id) === String(projectId)
+  );
+
+  const [boardState, setBoardState] = useState({
+    ready: [],
+    todo: [],
+    inProgress: [],
+    inReview: [],
+    done: [],
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [targetColumnForNewItem, setTargetColumnForNewItem] = useState(null);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [selectedTaskColumn, setSelectedTaskColumn] = useState(null);
+  const [isTaskDetailOpen, setIsTaskDetailOpen] = useState(false);
+
+  const [projectColumns, setProjectColumns] = useState("");
+
+  // 컴포넌트 마운트 시 데이터 로드
+  useEffect(() => {
+    loadBoardData();
+  }, [tasks]);
+
+  const loadBoardData = () => {
+    try {
+      setIsLoading(true);
+      // 현재 프로젝트에 해당하는 tasks만 필터링
+      const projectTasks = tasks.filter(
+        (task) => task.project.id === Number.parseInt(projectId)
+      );
+      const groupedTasks = groupTasksByColumn(projectTasks);
+      setBoardState(groupedTasks);
+    } catch (error) {
+      console.error("보드 데이터 로드 실패:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleDropCard = (draggedItem, targetColumn) => {
+  // 컬럼 이름 → 컬럼 ID 매핑 (더 좋게 하려면 project에서 받아와야 함)
+  const columnIdMap = {
+    ready: 1,
+    todo: 2,
+    inProgress: 3,
+    inReview: 4,
+    done: 5,
+  };
+
+  const handleDropCard = async (draggedItem, targetColumn) => {
     const { item, column } = draggedItem;
     if (column === targetColumn) return;
 
+    console.log(
+      `[드래그앤드롭] "${item.title}" (id: ${item.id})를 "${column}"에서 "${targetColumn}"로 이동`
+    );
+
+    // 1. 낙관적 UI 업데이트
     setBoardState((prev) => {
-      const newSource = prev[column].filter((i) => i !== item);
-      const newTarget = [...prev[targetColumn], item];
+      const newSource = prev[column].filter((i) => i.id !== item.id);
+      const newTarget = [
+        ...prev[targetColumn],
+        {
+          ...item,
+          projectColumns: {
+            ...item.projectColumns,
+            name: targetColumn,
+            id: columnIdMap[targetColumn],
+          },
+        },
+      ];
       return {
         ...prev,
         [column]: newSource,
         [targetColumn]: newTarget,
       };
     });
+
+    const payload = JSON.stringify({
+      columnId: columnIdMap[targetColumn], // 숫자 ID 전송
+    });
+    try {
+      await axios
+        .post(`${PROJECT_TASK_LIST}/${item.id}`, payload, {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        })
+        .catch((err) => {
+          alert(err);
+        });
+
+      console.log(
+        `[백엔드 저장 성공] Task ID: ${item.id}, Column: ${targetColumn} (ID: ${columnIdMap[targetColumn]})`
+      );
+    } catch (error) {
+      console.error("카드 이동 실패:", error);
+      loadBoardData(); // 복구
+    }
   };
+
+  const handleClickAddItem = (columnKey, projectColumns) => {
+    setTargetColumnForNewItem(columnKey);
+    setProjectColumns(projectColumns);
+    setIsModalOpen(true);
+  };
+
+  const handleCreateItem = async (title, desc) => {
+    try {
+      // TODO: 실제 API 호출로 새 아이템 생성
+      const newItem = {
+        id: Date.now(), // 임시 ID
+        title,
+        description: desc,
+        project: project,
+        projectColumns: { name: targetColumnForNewItem },
+      };
+
+      // 상태 업데이트
+      setBoardState((prev) => ({
+        ...prev,
+        [targetColumnForNewItem]: [...prev[targetColumnForNewItem], newItem],
+      }));
+
+      return true;
+    } catch (error) {
+      console.error("아이템 생성 실패:", error);
+      return false;
+    }
+  };
+
+  const handleTaskClick = (task, columnKey) => {
+    setSelectedTask(task);
+    setSelectedTaskColumn(columnKey);
+    setIsTaskDetailOpen(true);
+  };
+
+  const handleUpdateTask = async (taskId, newTitle, newDesc) => {
+    try {
+      // API 호출 시뮬레이션
+      await new Promise((resolve) => setTimeout(resolve, 300));
+
+      // 상태 업데이트
+      setBoardState((prev) => {
+        const newState = { ...prev };
+        Object.keys(newState).forEach((columnKey) => {
+          newState[columnKey] = newState[columnKey].map((task) =>
+            task.id === taskId
+              ? { ...task, title: newTitle, desc: newDesc }
+              : task
+          );
+        });
+        return newState;
+      });
+
+      // 선택된 작업 정보도 업데이트
+      setSelectedTask((prev) => ({
+        ...prev,
+        title: newTitle,
+        desc: newDesc,
+      }));
+
+      return true;
+    } catch (error) {
+      console.error("작업 업데이트 실패:", error);
+      throw error;
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="board-wrapper-container">
+        <div className="project-board-header">
+          <Clipboard className="project-board-icon" />
+          <div className="project-board-title">로딩 중...</div>
+        </div>
+        <div className="board-wrapper">
+          <div style={{ padding: "20px", textAlign: "center" }}>
+            데이터를 불러오는 중입니다...
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="board-wrapper-container">
-      <div
-        className="project-board-header clickable-header"
-        onClick={handleClickProjectTitle}
-      >
-        <FontAwesomeIcon icon={faClipboard} className="project-board-icon" />
-        <div className="project-board-title">
-          {projectName || "프로젝트 이름 없음"}
-        </div>
+      {isModalOpen && (
+        <ProjectBoardModal
+          setIsModalOpen={setIsModalOpen}
+          targetColumnForNewItem={targetColumnForNewItem}
+          projectColumns={projectColumns}
+          //onCreateItem={handleCreateItem}
+        />
+      )}
+      {isTaskDetailOpen && (
+        <TaskDetailModal
+          task={selectedTask}
+          isOpen={isTaskDetailOpen}
+          onClose={() => setIsTaskDetailOpen(false)}
+          onUpdateTask={handleUpdateTask}
+          columnTitle={
+            selectedTaskColumn === "inProgress"
+              ? "In Progress"
+              : selectedTaskColumn === "inReview"
+              ? "In Review"
+              : selectedTaskColumn.charAt(0).toUpperCase() +
+                selectedTaskColumn.slice(1)
+          }
+        />
+      )}
+      <div className="project-board-header clickable-header">
+        <Clipboard className="project-board-icon" />
+        <div className="project-board-title">{project.name}</div>
       </div>
       <div className="board-wrapper">
         <DroppableColumn
@@ -125,6 +379,9 @@ const ProjectBoard = ({ projectName }) => {
           color="#27c93f"
           columnKey="ready"
           onDropCard={handleDropCard}
+          onClickAddItem={handleClickAddItem}
+          onTaskClick={handleTaskClick}
+          projectColumns={1}
         />
         <DroppableColumn
           title="To Do"
@@ -132,6 +389,9 @@ const ProjectBoard = ({ projectName }) => {
           color="#1c92f2"
           columnKey="todo"
           onDropCard={handleDropCard}
+          onClickAddItem={handleClickAddItem}
+          onTaskClick={handleTaskClick}
+          projectColumns={2}
         />
         <DroppableColumn
           title="In progress"
@@ -139,6 +399,9 @@ const ProjectBoard = ({ projectName }) => {
           color="#ffb400"
           columnKey="inProgress"
           onDropCard={handleDropCard}
+          onClickAddItem={handleClickAddItem}
+          onTaskClick={handleTaskClick}
+          projectColumns={3}
         />
         <DroppableColumn
           title="In review"
@@ -146,6 +409,9 @@ const ProjectBoard = ({ projectName }) => {
           color="#a259ff"
           columnKey="inReview"
           onDropCard={handleDropCard}
+          onClickAddItem={handleClickAddItem}
+          onTaskClick={handleTaskClick}
+          projectColumns={4}
         />
         <DroppableColumn
           title="Done"
@@ -153,6 +419,9 @@ const ProjectBoard = ({ projectName }) => {
           color="#ff5722"
           columnKey="done"
           onDropCard={handleDropCard}
+          onClickAddItem={handleClickAddItem}
+          onTaskClick={handleTaskClick}
+          projectColumns={5}
         />
       </div>
     </div>
